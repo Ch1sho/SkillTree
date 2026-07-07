@@ -425,9 +425,7 @@ public class ArcaneSkills {
                         ParticleBatch.Rotation.LOOK, 1, 0.05F, 0.1F, 0.0F, 0F)
                         .color(SkillsCommon.ARCANE_COLOR)
         };
-        projectile.client_data.model = new Spell.ProjectileModel();
-        projectile.client_data.model.model_id = "wizards:spell_projectile/arcane_bolt";
-        projectile.client_data.model.scale = 0.5F;
+        projectile.client_data.composite_model = SpellBuilder.ProjectileModels.single("wizards:spell_projectile/arcane_bolt", 0.5F);
         spell.deliver.projectile.projectile = projectile;
 
         var impact = SpellBuilder.Impacts.damage(0.5F, 0.5F);

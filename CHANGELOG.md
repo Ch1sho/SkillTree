@@ -1,6 +1,8 @@
 # 1.4.5
 
 - Small tweaks to some arcane nodes
+- Update rogue passive icon
+- Fix some issues with skill tree node descriptions
 
 # 1.4.4
 

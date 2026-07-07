@@ -1504,7 +1504,7 @@
   },
   "fireball": {
     "description": {
-      "translate": "skill.skill_tree_rpgs.fireball.description"
+      "skill_definition_id": "fireball"
     },
     "icon": {
       "type": "texture",

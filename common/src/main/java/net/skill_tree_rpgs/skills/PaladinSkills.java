@@ -419,14 +419,11 @@ public class PaladinSkills {
         spell.deliver.projectile.projectile.perks.ricochet = 2;
         spell.deliver.projectile.projectile.perks.bounce = 3;
 
-        var model = new Spell.ProjectileModel();
-        model.light_emission = LightEmission.RADIATE;
-        model.model_id = "paladins:spell_projectile/judgement";
-        model.scale = 0.8F;
+        var model = SpellBuilder.ProjectileModels.model("paladins:spell_projectile/judgement", 0.8F, LightEmission.RADIATE);
         model.rotate_degrees_per_tick = 20F;
 
         spell.deliver.projectile.projectile.client_data = new Spell.ProjectileData.Client();
-        spell.deliver.projectile.projectile.client_data.model = model;
+        spell.deliver.projectile.projectile.client_data.composite_model = SpellBuilder.ProjectileModels.composite(model);
 
 
         var impact = SpellBuilder.Impacts.damage(0.5F, 0F);

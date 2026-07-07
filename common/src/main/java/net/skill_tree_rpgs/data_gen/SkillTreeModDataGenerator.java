@@ -65,7 +65,10 @@ public class SkillTreeModDataGenerator implements DataGeneratorEntrypoint {
                 if (skill.title() != null && !skill.title().isEmpty()) {
                     translationBuilder.add(skill.titleTranslationKey(), skill.title());
                 }
-                if (skill.description() != null && !skill.description().isEmpty()) {
+                // Spell-reward nodes resolve their description from the granted spell at runtime, so a
+                // node-level description lang key would be a dead, untranslatable orphan — skip it.
+                if (skill.spellReward() == null
+                        && skill.description() != null && !skill.description().isEmpty()) {
                     translationBuilder.add(skill.descriptionTranslationKey(), skill.description());
                 }
             }
@@ -148,7 +151,13 @@ public class SkillTreeModDataGenerator implements DataGeneratorEntrypoint {
                     title = new Translatable(skill.titleTranslationKey());
                 }
                 Text description;
-                if (skill.description() != null && !skill.description().isEmpty()) {
+                if (skill.spellReward() != null) {
+                    // Spell-reward nodes always resolve the granted spell's fully tokenized description
+                    // through the runtime adapter (ResolvableTextContent -> TranslationUtil -> SpellTooltip).
+                    // A node's own `description` string would route to a static lang key with no token
+                    // substitution, so it is intentionally ignored here for spell rewards.
+                    description = MutableText.of(new ResolvableTextContent(skill.id()));
+                } else if (skill.description() != null && !skill.description().isEmpty()) {
                     description = Text.translatable(skill.descriptionTranslationKey());
                 } else {
                     description = MutableText.of(new ResolvableTextContent(skill.id()));
