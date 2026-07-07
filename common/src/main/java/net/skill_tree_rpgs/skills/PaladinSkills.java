@@ -217,6 +217,34 @@ public class PaladinSkills {
         return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PALADIN));
     }
 
+    // ===================================================================================
+    // PLACEHOLDER weak-root + spell_2 nodes. The underlying second-per-tier Paladin spells
+    // are not implemented yet; these inert stubs complete the tree structure. Tier 3
+    // spell_2 already has its two powerful nodes (real leftovers), so only its weak root is
+    // a placeholder here.
+    // ===================================================================================
+    private static Skills.Entry placeholder(String path) {
+        var id = Identifier.of(NAMESPACE, path);
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.HEALING;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "paladins:placeholder";
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, "PLACEHOLDER", "PLACEHOLDER", null, EnumSet.of(Skills.Category.PALADIN));
+    }
+
+    public static final Skills.Entry paladin_tier_2_spell_1_root = add(placeholder("paladin_tier_2_spell_1_root"));
+    public static final Skills.Entry paladin_tier_3_spell_1_root = add(placeholder("paladin_tier_3_spell_1_root"));
+    public static final Skills.Entry paladin_tier_4_spell_1_root = add(placeholder("paladin_tier_4_spell_1_root"));
+    public static final Skills.Entry paladin_tier_2_spell_2_root = add(placeholder("paladin_tier_2_spell_2_root"));
+    public static final Skills.Entry paladin_tier_2_spell_2_modifier_1 = add(placeholder("paladin_tier_2_spell_2_modifier_1"));
+    public static final Skills.Entry paladin_tier_2_spell_2_modifier_2 = add(placeholder("paladin_tier_2_spell_2_modifier_2"));
+    public static final Skills.Entry paladin_tier_3_spell_2_root = add(placeholder("paladin_tier_3_spell_2_root"));
+    // paladin_tier_3_spell_2_modifier_1 / _2 already exist above (reused leftovers)
+    public static final Skills.Entry paladin_tier_4_spell_2_root = add(placeholder("paladin_tier_4_spell_2_root"));
+    public static final Skills.Entry paladin_tier_4_spell_2_modifier_1 = add(placeholder("paladin_tier_4_spell_2_modifier_1"));
+    public static final Skills.Entry paladin_tier_4_spell_2_modifier_2 = add(placeholder("paladin_tier_4_spell_2_modifier_2"));
+
     public static final Skills.Entry paladin_tier_1_passive_1 = add(paladin_tier_1_passive_1());
     private static Skills.Entry paladin_tier_1_passive_1() {
         var id = Identifier.of(NAMESPACE, "paladin_tier_1_passive_1");

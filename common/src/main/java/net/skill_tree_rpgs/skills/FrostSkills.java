@@ -161,6 +161,151 @@ public class FrostSkills {
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
     }
 
+    // ===================================================================================
+    // Weak "root" spell-improvement nodes.
+    // Each acts as the structural parent gating the two powerful mutex nodes of a spell.
+    // Convention: damaging spells get a flat critical strike chance bonus; buff/summon
+    // spells (which cannot crit) get a flat cooldown reduction (always meaningful).
+    // ===================================================================================
+
+    /** Weak root for a damaging frost spell: a small flat critical strike chance bonus. */
+    private static Skills.Entry frostCritRoot(String path, String title, String spellPattern, String spellName, float critChance) {
+        var id = Identifier.of(NAMESPACE, path);
+        var description = spellName + " has {bonus} increased critical strike chance.";
+        SpellTooltip.DescriptionMutator mutator = (args) ->
+                args.description().replace("{bonus}", SpellTooltip.percent(critChance));
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FROST;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = spellPattern;
+        modifier.power_modifier = new Spell.Impact.Modifier();
+        modifier.power_modifier.critical_chance_bonus = critChance;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.FROST));
+    }
+
+    /** Weak root for a buff/summon frost spell: a flat cooldown reduction. */
+    private static Skills.Entry frostCooldownRoot(String path, String title, String spellPattern, String spellName, float seconds) {
+        var id = Identifier.of(NAMESPACE, path);
+        var description = "Reduces the cooldown of " + spellName + " by " + (int) seconds + " sec.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FROST;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = spellPattern;
+        modifier.cooldown_duration_deduct = seconds;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
+    }
+
+    public static final Skills.Entry frost_tier_2_spell_1_root = add(frostCritRoot(
+            "frost_tier_2_spell_1_root", "Improved Frost Nova", "wizards:frost_nova", "Frost Nova", 0.05F));
+    public static final Skills.Entry frost_tier_2_spell_2_root = add(frostCritRoot(
+            "frost_tier_2_spell_2_root", "Improved Frost Spikes", "wizards:frost_spikes", "Frost Spikes", 0.05F));
+    public static final Skills.Entry frost_tier_3_spell_1_root = add(frostCooldownRoot(
+            "frost_tier_3_spell_1_root", "Improved Frost Shield", "wizards:frost_shield", "Frost Shield", 3F));
+    public static final Skills.Entry frost_tier_3_spell_2_root = add(frostCritRoot(
+            "frost_tier_3_spell_2_root", "Improved Ice Lance", "wizards:frost_lance", "Ice Lance", 0.05F));
+    public static final Skills.Entry frost_tier_4_spell_1_root = add(frostCritRoot(
+            "frost_tier_4_spell_1_root", "Improved Blizzard", "wizards:frost_blizzard", "Blizzard", 0.05F));
+    public static final Skills.Entry frost_tier_4_spell_2_root = add(frostCooldownRoot(
+            "frost_tier_4_spell_2_root", "Improved Frost Elemental", "wizards:frost_elemental", "Frost Elemental", 5F));
+
+    // ===================================================================================
+    // Powerful mutex modifiers for the second spell of each tier (spell_2).
+    // frost_spikes (T2), frost_lance / Ice Lance (T3), frost_elemental (T4).
+    // ===================================================================================
+
+    public static final Skills.Entry frost_tier_2_spell_2_modifier_1 = add(frost_tier_2_spell_2_modifier_1());
+    private static Skills.Entry frost_tier_2_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "frost_tier_2_spell_2_modifier_1");
+        var title = "Deep Spikes";
+        var description = "Frost Spikes apply {effect_amplifier_add} more stack of Freeze effect.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FROST;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:frost_spikes";
+        modifier.effect_amplifier_add = 1;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
+    }
+
+    public static final Skills.Entry frost_tier_2_spell_2_modifier_2 = add(frost_tier_2_spell_2_modifier_2());
+    private static Skills.Entry frost_tier_2_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "frost_tier_2_spell_2_modifier_2");
+        var title = "Glacial Path";
+        var description = "Frost Spikes also slow enemies for {effect_duration} sec.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FROST;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:frost_spikes";
+        var impact = SpellBuilder.Impacts.effectAdd("wizards:frost_slowness", 3, 0, 1);
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(impact);
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
+    }
+
+    public static final Skills.Entry frost_tier_3_spell_2_modifier_1 = add(frost_tier_3_spell_2_modifier_1());
+    private static Skills.Entry frost_tier_3_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "frost_tier_3_spell_2_modifier_1");
+        var title = "Impaling Lance";
+        var critDamage = 0.5F;
+        var description = "Ice Lance deals {bonus} increased critical strike damage.";
+        SpellTooltip.DescriptionMutator mutator = (args) ->
+                args.description().replace("{bonus}", SpellTooltip.percent(critDamage));
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FROST;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:frost_lance";
+        modifier.power_modifier = new Spell.Impact.Modifier();
+        modifier.power_modifier.critical_damage_bonus = critDamage;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.FROST));
+    }
+
+    public static final Skills.Entry frost_tier_3_spell_2_modifier_2 = add(frost_tier_3_spell_2_modifier_2());
+    private static Skills.Entry frost_tier_3_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "frost_tier_3_spell_2_modifier_2");
+        var title = "Lingering Frost";
+        var description = "Increases the Slowness duration of Ice Lance by {effect_duration_add} sec.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FROST;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:frost_lance";
+        modifier.effect_duration_add = 2;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
+    }
+
+    public static final Skills.Entry frost_tier_4_spell_2_modifier_1 = add(frost_tier_4_spell_2_modifier_1());
+    private static Skills.Entry frost_tier_4_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "frost_tier_4_spell_2_modifier_1");
+        var title = "Elemental Legion";
+        var description = "Summons an additional Frost Elemental.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FROST;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:frost_elemental";
+        modifier.summon_spawn_count_add = 1;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
+    }
+
+    public static final Skills.Entry frost_tier_4_spell_2_modifier_2 = add(frost_tier_4_spell_2_modifier_2());
+    private static Skills.Entry frost_tier_4_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "frost_tier_4_spell_2_modifier_2");
+        var title = "Enduring Winter";
+        var seconds = 15;
+        var description = "Frost Elemental lasts " + seconds + " sec longer.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FROST;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:frost_elemental";
+        modifier.summon_behaviour.lifespan.active_seconds_add = seconds;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
+    }
+
     public static final Skills.Entry frost_tier_1_passive_1 = add(frost_tier_1_passive_1());
     private static Skills.Entry frost_tier_1_passive_1() {
         var id = Identifier.of(NAMESPACE, "frost_tier_1_passive_1");

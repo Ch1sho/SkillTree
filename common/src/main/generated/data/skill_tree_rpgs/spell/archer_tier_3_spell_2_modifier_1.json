@@ -1,0 +1,12 @@
+{
+  "school": "spell_power:physical_ranged",
+  "range": 0.0,
+  "tier": 1,
+  "type": "MODIFIER",
+  "modifiers": [
+    {
+      "spell_pattern": "archers:spirit_wolf",
+      "summon_spawn_count_add": 1
+    }
+  ]
+}

@@ -200,6 +200,146 @@ public class ArcaneSkills {
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
     }
 
+    // ===================================================================================
+    // Weak "root" spell-improvement nodes (structural parents of the two powerful mutex
+    // nodes). Damaging spells get flat critical strike chance; buff/summon/utility spells
+    // (Barrage, Blink, Evocation) get a flat cooldown reduction.
+    // ===================================================================================
+
+    /** Weak root for a damaging arcane spell: a small flat critical strike chance bonus. */
+    private static Skills.Entry arcaneCritRoot(String path, String title, String spellPattern, String spellName, float critChance) {
+        var id = Identifier.of(NAMESPACE, path);
+        var description = spellName + " has {bonus} increased critical strike chance.";
+        SpellTooltip.DescriptionMutator mutator = (args) ->
+                args.description().replace("{bonus}", SpellTooltip.percent(critChance));
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.ARCANE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = spellPattern;
+        modifier.power_modifier = new Spell.Impact.Modifier();
+        modifier.power_modifier.critical_chance_bonus = critChance;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    /** Weak root for a buff/summon/utility arcane spell: a flat cooldown reduction. */
+    private static Skills.Entry arcaneCooldownRoot(String path, String title, String spellPattern, String spellName, float seconds) {
+        var id = Identifier.of(NAMESPACE, path);
+        var description = "Reduces the cooldown of " + spellName + " by " + (int) seconds + " sec.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.ARCANE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = spellPattern;
+        modifier.cooldown_duration_deduct = seconds;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    public static final Skills.Entry arcane_tier_2_spell_1_root = add(arcaneCritRoot(
+            "arcane_tier_2_spell_1_root", "Improved Arcane Missiles", "wizards:arcane_missile", "Arcane Missiles", 0.05F));
+    public static final Skills.Entry arcane_tier_2_spell_2_root = add(arcaneCritRoot(
+            "arcane_tier_2_spell_2_root", "Improved Arcane Explosion", "wizards:arcane_explosion", "Arcane Explosion", 0.05F));
+    public static final Skills.Entry arcane_tier_3_spell_1_root = add(arcaneCritRoot(
+            "arcane_tier_3_spell_1_root", "Improved Arcane Beam", "wizards:arcane_beam", "Arcane Beam", 0.05F));
+    public static final Skills.Entry arcane_tier_3_spell_2_root = add(arcaneCooldownRoot(
+            "arcane_tier_3_spell_2_root", "Improved Arcane Barrage", "wizards:arcane_barrage", "Arcane Barrage", 5F));
+    public static final Skills.Entry arcane_tier_4_spell_1_root = add(arcaneCooldownRoot(
+            "arcane_tier_4_spell_1_root", "Improved Blink", "wizards:arcane_blink", "Blink", 3F));
+    public static final Skills.Entry arcane_tier_4_spell_2_root = add(arcaneCooldownRoot(
+            "arcane_tier_4_spell_2_root", "Improved Evocation", "wizards:arcane_evocation", "Evocation", 5F));
+
+    // ===================================================================================
+    // Powerful mutex modifiers for the second spell of each tier (spell_2).
+    // arcane_explosion (T2), arcane_barrage / emitters (T3, summon), arcane_evocation (T4).
+    // ===================================================================================
+
+    public static final Skills.Entry arcane_tier_2_spell_2_modifier_1 = add(arcane_tier_2_spell_2_modifier_1());
+    private static Skills.Entry arcane_tier_2_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_2_spell_2_modifier_1");
+        var title = "Concussive Blast";
+        var description = "Arcane Explosion damage increased by {power_multiplier}.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.ARCANE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:arcane_explosion";
+        modifier.power_modifier = new Spell.Impact.Modifier();
+        modifier.power_modifier.power_multiplier = 0.25F;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    public static final Skills.Entry arcane_tier_2_spell_2_modifier_2 = add(arcane_tier_2_spell_2_modifier_2());
+    private static Skills.Entry arcane_tier_2_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_2_spell_2_modifier_2");
+        var title = "Expanding Blast";
+        var description = "Increases the radius of Arcane Explosion by {range_add}.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.ARCANE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:arcane_explosion";
+        modifier.range_add = 2;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    public static final Skills.Entry arcane_tier_3_spell_2_modifier_1 = add(arcane_tier_3_spell_2_modifier_1());
+    private static Skills.Entry arcane_tier_3_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_3_spell_2_modifier_1");
+        var title = "Arcane Battery";
+        var description = "Conjures an additional Arcane Emitter.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.ARCANE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:arcane_barrage";
+        modifier.summon_spawn_count_add = 1;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    public static final Skills.Entry arcane_tier_3_spell_2_modifier_2 = add(arcane_tier_3_spell_2_modifier_2());
+    private static Skills.Entry arcane_tier_3_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_3_spell_2_modifier_2");
+        var title = "Sustained Barrage";
+        var seconds = 5;
+        var description = "Arcane Emitters last " + seconds + " sec longer.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.ARCANE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:arcane_barrage";
+        modifier.summon_behaviour.lifespan.active_seconds_add = seconds;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    public static final Skills.Entry arcane_tier_4_spell_2_modifier_1 = add(arcane_tier_4_spell_2_modifier_1());
+    private static Skills.Entry arcane_tier_4_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_4_spell_2_modifier_1");
+        var title = "Rapid Evocation";
+        var extraChannels = 2;
+        var description = "Evocation channels " + extraChannels + " additional times, granting more stacks.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.ARCANE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:arcane_evocation";
+        modifier.channel_ticks_add = extraChannels;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    public static final Skills.Entry arcane_tier_4_spell_2_modifier_2 = add(arcane_tier_4_spell_2_modifier_2());
+    private static Skills.Entry arcane_tier_4_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_4_spell_2_modifier_2");
+        var title = "Lasting Evocation";
+        var description = "Increases the duration of Evocation by {effect_duration_add} sec.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.ARCANE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:arcane_evocation";
+        modifier.effect_duration_add = 2;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
     public static final Skills.Entry arcane_tier_1_passive_1 = add(arcane_tier_1_passive_1());
     private static Skills.Entry arcane_tier_1_passive_1() {
         var id = Identifier.of(NAMESPACE, "arcane_tier_1_passive_1");

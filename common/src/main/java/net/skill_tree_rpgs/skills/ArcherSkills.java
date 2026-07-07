@@ -208,6 +208,121 @@ public class ArcherSkills {
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCHER));
     }
 
+    // ===================================================================================
+    // Weak "root" spell-improvement nodes (structural parents of the two powerful mutex
+    // nodes). Damaging spells (Barrage, Magic Arrow, Rain of Arrows) get flat critical
+    // strike chance; utility/control/summon spells (Power Shot, Entangling Roots, Spirit
+    // Wolf) get a flat cooldown reduction.
+    // ===================================================================================
+
+    /** Weak root for a damaging archer spell: a small flat critical strike chance bonus. */
+    private static Skills.Entry archerCritRoot(String path, String title, String spellPattern, String spellName, float critChance) {
+        var id = Identifier.of(NAMESPACE, path);
+        var description = spellName + " has {bonus} increased critical strike chance.";
+        SpellTooltip.DescriptionMutator mutator = (args) ->
+                args.description().replace("{bonus}", SpellTooltip.percent(critChance));
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = spellPattern;
+        modifier.power_modifier = new Spell.Impact.Modifier();
+        modifier.power_modifier.critical_chance_bonus = critChance;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.ARCHER));
+    }
+
+    /** Weak root for a utility/control/summon archer spell: a flat cooldown reduction. */
+    private static Skills.Entry archerCooldownRoot(String path, String title, String spellPattern, String spellName, float seconds) {
+        var id = Identifier.of(NAMESPACE, path);
+        var description = "Reduces the cooldown of " + spellName + " by " + (int) seconds + " sec.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = spellPattern;
+        modifier.cooldown_duration_deduct = seconds;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCHER));
+    }
+
+    public static final Skills.Entry archer_tier_2_spell_1_root = add(archerCooldownRoot(
+            "archer_tier_2_spell_1_root", "Improved Power Shot", "archers:power_shot", "Power Shot", 2F));
+    public static final Skills.Entry archer_tier_2_spell_2_root = add(archerCooldownRoot(
+            "archer_tier_2_spell_2_root", "Improved Entangling Roots", "archers:entangling_roots", "Entangling Roots", 3F));
+    public static final Skills.Entry archer_tier_3_spell_1_root = add(archerCritRoot(
+            "archer_tier_3_spell_1_root", "Improved Barrage", "archers:barrage", "Barrage", 0.05F));
+    public static final Skills.Entry archer_tier_3_spell_2_root = add(archerCooldownRoot(
+            "archer_tier_3_spell_2_root", "Improved Spirit Wolf", "archers:spirit_wolf", "Spirit Wolf", 5F));
+    public static final Skills.Entry archer_tier_4_spell_1_root = add(archerCritRoot(
+            "archer_tier_4_spell_1_root", "Improved Magic Arrow", "archers:magic_arrow", "Magic Arrow", 0.05F));
+    public static final Skills.Entry archer_tier_4_spell_2_root = add(archerCritRoot(
+            "archer_tier_4_spell_2_root", "Improved Rain of Arrows", "archers:rain_of_arrows", "Rain of Arrows", 0.05F));
+
+    // ===================================================================================
+    // Powerful mutex modifiers for the second spell of tiers 3 and 4 (spell_2).
+    // Tier 2 spell_2 (Entangling Roots) already has its two powerful nodes above
+    // (Nettle Sprouts / Nature's Grasp) — reused from an earlier merge.
+    // spirit_wolf (T3, summon), rain_of_arrows (T4).
+    // ===================================================================================
+
+    public static final Skills.Entry archer_tier_3_spell_2_modifier_1 = add(archer_tier_3_spell_2_modifier_1());
+    private static Skills.Entry archer_tier_3_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "archer_tier_3_spell_2_modifier_1");
+        var title = "Pack Leader";
+        var description = "Summons an additional Spirit Wolf.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "archers:spirit_wolf";
+        modifier.summon_spawn_count_add = 1;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCHER));
+    }
+
+    public static final Skills.Entry archer_tier_3_spell_2_modifier_2 = add(archer_tier_3_spell_2_modifier_2());
+    private static Skills.Entry archer_tier_3_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "archer_tier_3_spell_2_modifier_2");
+        var title = "Enduring Bond";
+        var seconds = 10;
+        var description = "Spirit Wolf lasts " + seconds + " sec longer.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "archers:spirit_wolf";
+        modifier.summon_behaviour.lifespan.active_seconds_add = seconds;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCHER));
+    }
+
+    public static final Skills.Entry archer_tier_4_spell_2_modifier_1 = add(archer_tier_4_spell_2_modifier_1());
+    private static Skills.Entry archer_tier_4_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "archer_tier_4_spell_2_modifier_1");
+        var title = "Torrential Arrows";
+        var description = "Rain of Arrows damage increased by {power_multiplier}.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "archers:rain_of_arrows";
+        modifier.power_modifier = new Spell.Impact.Modifier();
+        modifier.power_modifier.power_multiplier = 0.25F;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCHER));
+    }
+
+    public static final Skills.Entry archer_tier_4_spell_2_modifier_2 = add(archer_tier_4_spell_2_modifier_2());
+    private static Skills.Entry archer_tier_4_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "archer_tier_4_spell_2_modifier_2");
+        var title = "Endless Volley";
+        var description = "Rain of Arrows rains down {extra_launch} additional arrows.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "archers:rain_of_arrows";
+        modifier.projectile_launch = Spell.LaunchProperties.EMPTY();
+        modifier.projectile_launch.extra_launch_count = 10;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCHER));
+    }
+
     private static final float RHYTHM_DURATION = 6F;
     private static Spell.Impact rhythmImpact() {
         var impact = SpellBuilder.Impacts.effectAdd(SkillEffects.RHYTHM.id.toString(), RHYTHM_DURATION, 1, 4);

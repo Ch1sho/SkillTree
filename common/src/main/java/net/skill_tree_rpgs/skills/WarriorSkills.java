@@ -164,6 +164,34 @@ public class WarriorSkills {
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WARRIOR));
     }
 
+    // ===================================================================================
+    // PLACEHOLDER weak-root + spell_2 nodes. The underlying second-per-tier Warrior spells
+    // are not implemented yet; these inert stubs complete the tree structure and can be
+    // filled in with real modifiers once the spells ship.
+    // ===================================================================================
+    private static Skills.Entry placeholder(String path) {
+        var id = Identifier.of(NAMESPACE, path);
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "rogues:placeholder";
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, "PLACEHOLDER", "PLACEHOLDER", null, EnumSet.of(Skills.Category.WARRIOR));
+    }
+
+    public static final Skills.Entry warrior_tier_2_spell_1_root = add(placeholder("warrior_tier_2_spell_1_root"));
+    public static final Skills.Entry warrior_tier_3_spell_1_root = add(placeholder("warrior_tier_3_spell_1_root"));
+    public static final Skills.Entry warrior_tier_4_spell_1_root = add(placeholder("warrior_tier_4_spell_1_root"));
+    public static final Skills.Entry warrior_tier_2_spell_2_root = add(placeholder("warrior_tier_2_spell_2_root"));
+    public static final Skills.Entry warrior_tier_2_spell_2_modifier_1 = add(placeholder("warrior_tier_2_spell_2_modifier_1"));
+    public static final Skills.Entry warrior_tier_2_spell_2_modifier_2 = add(placeholder("warrior_tier_2_spell_2_modifier_2"));
+    public static final Skills.Entry warrior_tier_3_spell_2_root = add(placeholder("warrior_tier_3_spell_2_root"));
+    public static final Skills.Entry warrior_tier_3_spell_2_modifier_1 = add(placeholder("warrior_tier_3_spell_2_modifier_1"));
+    public static final Skills.Entry warrior_tier_3_spell_2_modifier_2 = add(placeholder("warrior_tier_3_spell_2_modifier_2"));
+    public static final Skills.Entry warrior_tier_4_spell_2_root = add(placeholder("warrior_tier_4_spell_2_root"));
+    public static final Skills.Entry warrior_tier_4_spell_2_modifier_1 = add(placeholder("warrior_tier_4_spell_2_modifier_1"));
+    public static final Skills.Entry warrior_tier_4_spell_2_modifier_2 = add(placeholder("warrior_tier_4_spell_2_modifier_2"));
+
     public static final Skills.Entry warrior_tier_1_passive_1 = add(warrior_tier_1_passive_1());
     private static Skills.Entry warrior_tier_1_passive_1() {
         var id = Identifier.of(NAMESPACE, "warrior_tier_1_passive_1");

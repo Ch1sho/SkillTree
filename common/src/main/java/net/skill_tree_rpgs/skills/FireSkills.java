@@ -148,6 +148,149 @@ public class FireSkills {
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
     }
 
+    // ===================================================================================
+    // Weak "root" spell-improvement nodes (structural parents of the two powerful mutex
+    // nodes). Damaging spells get flat critical strike chance; the Fire Hydra summon gets
+    // a flat cooldown reduction (crit is meaningless on a summon).
+    // ===================================================================================
+
+    /** Weak root for a damaging fire spell: a small flat critical strike chance bonus. */
+    private static Skills.Entry fireCritRoot(String path, String title, String spellPattern, String spellName, float critChance) {
+        var id = Identifier.of(NAMESPACE, path);
+        var description = spellName + " has {bonus} increased critical strike chance.";
+        SpellTooltip.DescriptionMutator mutator = (args) ->
+                args.description().replace("{bonus}", SpellTooltip.percent(critChance));
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FIRE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = spellPattern;
+        modifier.power_modifier = new Spell.Impact.Modifier();
+        modifier.power_modifier.critical_chance_bonus = critChance;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.FIRE));
+    }
+
+    /** Weak root for a summon fire spell: a flat cooldown reduction. */
+    private static Skills.Entry fireCooldownRoot(String path, String title, String spellPattern, String spellName, float seconds) {
+        var id = Identifier.of(NAMESPACE, path);
+        var description = "Reduces the cooldown of " + spellName + " by " + (int) seconds + " sec.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FIRE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = spellPattern;
+        modifier.cooldown_duration_deduct = seconds;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
+    }
+
+    public static final Skills.Entry fire_tier_2_spell_1_root = add(fireCritRoot(
+            "fire_tier_2_spell_1_root", "Improved Fire Breath", "wizards:fire_breath", "Fire Breath", 0.05F));
+    public static final Skills.Entry fire_tier_2_spell_2_root = add(fireCritRoot(
+            "fire_tier_2_spell_2_root", "Improved Flame Slash", "wizards:fire_slash", "Flame Slash", 0.05F));
+    public static final Skills.Entry fire_tier_3_spell_1_root = add(fireCritRoot(
+            "fire_tier_3_spell_1_root", "Improved Meteor", "wizards:fire_meteor", "Meteor", 0.05F));
+    public static final Skills.Entry fire_tier_3_spell_2_root = add(fireCritRoot(
+            "fire_tier_3_spell_2_root", "Improved Firestorm", "wizards:fire_storm", "Firestorm", 0.05F));
+    public static final Skills.Entry fire_tier_4_spell_1_root = add(fireCritRoot(
+            "fire_tier_4_spell_1_root", "Improved Wall of Flames", "wizards:fire_wall", "Wall of Flames", 0.05F));
+    public static final Skills.Entry fire_tier_4_spell_2_root = add(fireCooldownRoot(
+            "fire_tier_4_spell_2_root", "Improved Fire Hydra", "wizards:fire_hydra", "Fire Hydra", 5F));
+
+    // ===================================================================================
+    // Powerful mutex modifiers for the second spell of each tier (spell_2).
+    // fire_slash / Flame Slash (T2), fire_storm / Firestorm (T3), fire_hydra (T4, summon).
+    // ===================================================================================
+
+    public static final Skills.Entry fire_tier_2_spell_2_modifier_1 = add(fire_tier_2_spell_2_modifier_1());
+    private static Skills.Entry fire_tier_2_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "fire_tier_2_spell_2_modifier_1");
+        var title = "Raging Slash";
+        var description = "Flame Slash damage increased by {power_multiplier}.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FIRE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:fire_slash";
+        modifier.power_modifier = new Spell.Impact.Modifier();
+        modifier.power_modifier.power_multiplier = 0.25F;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
+    }
+
+    public static final Skills.Entry fire_tier_2_spell_2_modifier_2 = add(fire_tier_2_spell_2_modifier_2());
+    private static Skills.Entry fire_tier_2_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "fire_tier_2_spell_2_modifier_2");
+        var title = "Lasting Flames";
+        var seconds = 4;
+        var description = "Flame Slash sets enemies ablaze for an additional " + seconds + " sec.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FIRE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:fire_slash";
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(SpellBuilder.Impacts.fire(seconds));
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
+    }
+
+    public static final Skills.Entry fire_tier_3_spell_2_modifier_1 = add(fire_tier_3_spell_2_modifier_1());
+    private static Skills.Entry fire_tier_3_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "fire_tier_3_spell_2_modifier_1");
+        var title = "Raging Firestorm";
+        var description = "Firestorm damage increased by {power_multiplier}.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FIRE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:fire_storm";
+        modifier.power_modifier = new Spell.Impact.Modifier();
+        modifier.power_modifier.power_multiplier = 0.25F;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
+    }
+
+    public static final Skills.Entry fire_tier_3_spell_2_modifier_2 = add(fire_tier_3_spell_2_modifier_2());
+    private static Skills.Entry fire_tier_3_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "fire_tier_3_spell_2_modifier_2");
+        var title = "Enduring Firestorm";
+        var extraPulses = 2;
+        var description = "Firestorm channels " + extraPulses + " additional times.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FIRE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:fire_storm";
+        modifier.channel_ticks_add = extraPulses;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
+    }
+
+    public static final Skills.Entry fire_tier_4_spell_2_modifier_1 = add(fire_tier_4_spell_2_modifier_1());
+    private static Skills.Entry fire_tier_4_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "fire_tier_4_spell_2_modifier_1");
+        var title = "Hydra Brood";
+        var description = "Conjures an additional Fire Hydra head.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FIRE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:fire_hydra";
+        modifier.summon_spawn_count_add = 1;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
+    }
+
+    public static final Skills.Entry fire_tier_4_spell_2_modifier_2 = add(fire_tier_4_spell_2_modifier_2());
+    private static Skills.Entry fire_tier_4_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "fire_tier_4_spell_2_modifier_2");
+        var title = "Ancient Hydra";
+        var seconds = 15;
+        var description = "Fire Hydra lasts " + seconds + " sec longer.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.FIRE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "wizards:fire_hydra";
+        modifier.summon_behaviour.lifespan.active_seconds_add = seconds;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
+    }
+
     public static final int FIRE_VULNERABILITY_DURATION = 8; // seconds
 
     public static final Skills.Entry fire_tier_1_passive_1 = add(fire_tier_1_passive_1());

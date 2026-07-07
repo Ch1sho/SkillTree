@@ -1,0 +1,16 @@
+{
+  "school": "spell_power:physical_ranged",
+  "range": 0.0,
+  "tier": 1,
+  "type": "MODIFIER",
+  "modifiers": [
+    {
+      "spell_pattern": "archers:rain_of_arrows",
+      "projectile_launch": {
+        "velocity": 0.0,
+        "extra_launch_count": 10,
+        "extra_launch_delay": 0
+      }
+    }
+  ]
+}

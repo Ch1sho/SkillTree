@@ -278,6 +278,154 @@
       "translate": "skill.skill_tree_rpgs.arcane_tier_2_spell_1_modifier_2.title"
     }
   },
+  "arcane_tier_2_spell_1_root": {
+    "description": {
+      "skill_definition_id": "arcane_tier_2_spell_1_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/arcane_missile.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:arcane_tier_2_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.arcane_tier_2_spell_1_root.title"
+    }
+  },
+  "arcane_tier_2_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "arcane_tier_2_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/arcane_explosion.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:arcane_tier_2_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.arcane_tier_2_spell_2_modifier_1.title"
+    }
+  },
+  "arcane_tier_2_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "arcane_tier_2_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/arcane_explosion.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:arcane_tier_2_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.arcane_tier_2_spell_2_modifier_2.title"
+    }
+  },
+  "arcane_tier_2_spell_2_root": {
+    "description": {
+      "skill_definition_id": "arcane_tier_2_spell_2_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/arcane_explosion.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:arcane_tier_2_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.arcane_tier_2_spell_2_root.title"
+    }
+  },
   "arcane_tier_3_passive_1": {
     "description": {
       "skill_definition_id": "arcane_tier_3_passive_1"
@@ -426,6 +574,154 @@
       "translate": "skill.skill_tree_rpgs.arcane_tier_3_spell_1_modifier_2.title"
     }
   },
+  "arcane_tier_3_spell_1_root": {
+    "description": {
+      "skill_definition_id": "arcane_tier_3_spell_1_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/arcane_beam.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:arcane_tier_3_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.arcane_tier_3_spell_1_root.title"
+    }
+  },
+  "arcane_tier_3_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "arcane_tier_3_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/arcane_barrage.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:arcane_tier_3_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.arcane_tier_3_spell_2_modifier_1.title"
+    }
+  },
+  "arcane_tier_3_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "arcane_tier_3_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/arcane_barrage.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:arcane_tier_3_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.arcane_tier_3_spell_2_modifier_2.title"
+    }
+  },
+  "arcane_tier_3_spell_2_root": {
+    "description": {
+      "skill_definition_id": "arcane_tier_3_spell_2_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/arcane_barrage.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:arcane_tier_3_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.arcane_tier_3_spell_2_root.title"
+    }
+  },
   "arcane_tier_4_spell_1_modifier_1": {
     "description": {
       "skill_definition_id": "arcane_tier_4_spell_1_modifier_1"
@@ -498,6 +794,154 @@
     ],
     "title": {
       "translate": "skill.skill_tree_rpgs.arcane_tier_4_spell_1_modifier_2.title"
+    }
+  },
+  "arcane_tier_4_spell_1_root": {
+    "description": {
+      "skill_definition_id": "arcane_tier_4_spell_1_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/arcane_blink.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:arcane_tier_4_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.arcane_tier_4_spell_1_root.title"
+    }
+  },
+  "arcane_tier_4_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "arcane_tier_4_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/arcane_evocation.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:arcane_tier_4_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.arcane_tier_4_spell_2_modifier_1.title"
+    }
+  },
+  "arcane_tier_4_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "arcane_tier_4_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/arcane_evocation.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:arcane_tier_4_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.arcane_tier_4_spell_2_modifier_2.title"
+    }
+  },
+  "arcane_tier_4_spell_2_root": {
+    "description": {
+      "skill_definition_id": "arcane_tier_4_spell_2_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/arcane_evocation.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:arcane_tier_4_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.arcane_tier_4_spell_2_root.title"
     }
   },
   "archer_boost": {
@@ -779,6 +1223,154 @@
       "translate": "skill.skill_tree_rpgs.archer_tier_2_spell_1_modifier_2.title"
     }
   },
+  "archer_tier_2_spell_1_root": {
+    "description": {
+      "skill_definition_id": "archer_tier_2_spell_1_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "archers:textures/spell/power_shot.png"
+      }
+    },
+    "required_mods": [
+      "archers"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:archer_tier_2_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.archer_tier_2_spell_1_root.title"
+    }
+  },
+  "archer_tier_2_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "archer_tier_2_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "archers:textures/spell/entangling_roots.png"
+      }
+    },
+    "required_mods": [
+      "archers"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:archer_tier_2_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.archer_tier_2_spell_2_modifier_1.title"
+    }
+  },
+  "archer_tier_2_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "archer_tier_2_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "archers:textures/spell/entangling_roots.png"
+      }
+    },
+    "required_mods": [
+      "archers"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:archer_tier_2_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.archer_tier_2_spell_2_modifier_2.title"
+    }
+  },
+  "archer_tier_2_spell_2_root": {
+    "description": {
+      "skill_definition_id": "archer_tier_2_spell_2_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "archers:textures/spell/entangling_roots.png"
+      }
+    },
+    "required_mods": [
+      "archers"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:archer_tier_2_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.archer_tier_2_spell_2_root.title"
+    }
+  },
   "archer_tier_3_passive_1": {
     "description": {
       "skill_definition_id": "archer_tier_3_passive_1"
@@ -927,6 +1519,154 @@
       "translate": "skill.skill_tree_rpgs.archer_tier_3_spell_1_modifier_2.title"
     }
   },
+  "archer_tier_3_spell_1_root": {
+    "description": {
+      "skill_definition_id": "archer_tier_3_spell_1_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "archers:textures/spell/barrage.png"
+      }
+    },
+    "required_mods": [
+      "archers"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:archer_tier_3_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.archer_tier_3_spell_1_root.title"
+    }
+  },
+  "archer_tier_3_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "archer_tier_3_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "archers:textures/spell/spirit_wolf.png"
+      }
+    },
+    "required_mods": [
+      "archers"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:archer_tier_3_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.archer_tier_3_spell_2_modifier_1.title"
+    }
+  },
+  "archer_tier_3_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "archer_tier_3_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "archers:textures/spell/spirit_wolf.png"
+      }
+    },
+    "required_mods": [
+      "archers"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:archer_tier_3_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.archer_tier_3_spell_2_modifier_2.title"
+    }
+  },
+  "archer_tier_3_spell_2_root": {
+    "description": {
+      "skill_definition_id": "archer_tier_3_spell_2_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "archers:textures/spell/spirit_wolf.png"
+      }
+    },
+    "required_mods": [
+      "archers"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:archer_tier_3_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.archer_tier_3_spell_2_root.title"
+    }
+  },
   "archer_tier_4_spell_1_modifier_1": {
     "description": {
       "skill_definition_id": "archer_tier_4_spell_1_modifier_1"
@@ -999,6 +1739,154 @@
     ],
     "title": {
       "translate": "skill.skill_tree_rpgs.archer_tier_4_spell_1_modifier_2.title"
+    }
+  },
+  "archer_tier_4_spell_1_root": {
+    "description": {
+      "skill_definition_id": "archer_tier_4_spell_1_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "archers:textures/spell/magic_arrow.png"
+      }
+    },
+    "required_mods": [
+      "archers"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:archer_tier_4_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.archer_tier_4_spell_1_root.title"
+    }
+  },
+  "archer_tier_4_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "archer_tier_4_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "archers:textures/spell/rain_of_arrows.png"
+      }
+    },
+    "required_mods": [
+      "archers"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:archer_tier_4_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.archer_tier_4_spell_2_modifier_1.title"
+    }
+  },
+  "archer_tier_4_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "archer_tier_4_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "archers:textures/spell/rain_of_arrows.png"
+      }
+    },
+    "required_mods": [
+      "archers"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:archer_tier_4_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.archer_tier_4_spell_2_modifier_2.title"
+    }
+  },
+  "archer_tier_4_spell_2_root": {
+    "description": {
+      "skill_definition_id": "archer_tier_4_spell_2_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "archers:textures/spell/rain_of_arrows.png"
+      }
+    },
+    "required_mods": [
+      "archers"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:archer_tier_4_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.archer_tier_4_spell_2_root.title"
     }
   },
   "fire_boost": {
@@ -1280,6 +2168,154 @@
       "translate": "skill.skill_tree_rpgs.fire_tier_2_spell_1_modifier_2.title"
     }
   },
+  "fire_tier_2_spell_1_root": {
+    "description": {
+      "skill_definition_id": "fire_tier_2_spell_1_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/fire_breath.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:fire_tier_2_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.fire_tier_2_spell_1_root.title"
+    }
+  },
+  "fire_tier_2_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "fire_tier_2_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/fire_slash.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:fire_tier_2_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.fire_tier_2_spell_2_modifier_1.title"
+    }
+  },
+  "fire_tier_2_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "fire_tier_2_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/fire_slash.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:fire_tier_2_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.fire_tier_2_spell_2_modifier_2.title"
+    }
+  },
+  "fire_tier_2_spell_2_root": {
+    "description": {
+      "skill_definition_id": "fire_tier_2_spell_2_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/fire_slash.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:fire_tier_2_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.fire_tier_2_spell_2_root.title"
+    }
+  },
   "fire_tier_3_passive_1": {
     "description": {
       "skill_definition_id": "fire_tier_3_passive_1"
@@ -1428,6 +2464,154 @@
       "translate": "skill.skill_tree_rpgs.fire_tier_3_spell_1_modifier_2.title"
     }
   },
+  "fire_tier_3_spell_1_root": {
+    "description": {
+      "skill_definition_id": "fire_tier_3_spell_1_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/fire_meteor.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:fire_tier_3_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.fire_tier_3_spell_1_root.title"
+    }
+  },
+  "fire_tier_3_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "fire_tier_3_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/fire_storm.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:fire_tier_3_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.fire_tier_3_spell_2_modifier_1.title"
+    }
+  },
+  "fire_tier_3_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "fire_tier_3_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/fire_storm.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:fire_tier_3_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.fire_tier_3_spell_2_modifier_2.title"
+    }
+  },
+  "fire_tier_3_spell_2_root": {
+    "description": {
+      "skill_definition_id": "fire_tier_3_spell_2_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/fire_storm.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:fire_tier_3_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.fire_tier_3_spell_2_root.title"
+    }
+  },
   "fire_tier_4_spell_1_modifier_1": {
     "description": {
       "skill_definition_id": "fire_tier_4_spell_1_modifier_1"
@@ -1500,6 +2684,154 @@
     ],
     "title": {
       "translate": "skill.skill_tree_rpgs.fire_tier_4_spell_1_modifier_2.title"
+    }
+  },
+  "fire_tier_4_spell_1_root": {
+    "description": {
+      "skill_definition_id": "fire_tier_4_spell_1_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/fire_wall.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:fire_tier_4_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.fire_tier_4_spell_1_root.title"
+    }
+  },
+  "fire_tier_4_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "fire_tier_4_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/fire_hydra.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:fire_tier_4_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.fire_tier_4_spell_2_modifier_1.title"
+    }
+  },
+  "fire_tier_4_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "fire_tier_4_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/fire_hydra.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:fire_tier_4_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.fire_tier_4_spell_2_modifier_2.title"
+    }
+  },
+  "fire_tier_4_spell_2_root": {
+    "description": {
+      "skill_definition_id": "fire_tier_4_spell_2_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/fire_hydra.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:fire_tier_4_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.fire_tier_4_spell_2_root.title"
     }
   },
   "fireball": {
@@ -1818,6 +3150,154 @@
       "translate": "skill.skill_tree_rpgs.frost_tier_2_spell_1_modifier_2.title"
     }
   },
+  "frost_tier_2_spell_1_root": {
+    "description": {
+      "skill_definition_id": "frost_tier_2_spell_1_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/frost_nova.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:frost_tier_2_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.frost_tier_2_spell_1_root.title"
+    }
+  },
+  "frost_tier_2_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "frost_tier_2_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/frost_spikes.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:frost_tier_2_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.frost_tier_2_spell_2_modifier_1.title"
+    }
+  },
+  "frost_tier_2_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "frost_tier_2_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/frost_spikes.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:frost_tier_2_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.frost_tier_2_spell_2_modifier_2.title"
+    }
+  },
+  "frost_tier_2_spell_2_root": {
+    "description": {
+      "skill_definition_id": "frost_tier_2_spell_2_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/frost_spikes.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:frost_tier_2_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.frost_tier_2_spell_2_root.title"
+    }
+  },
   "frost_tier_3_passive_1": {
     "description": {
       "skill_definition_id": "frost_tier_3_passive_1"
@@ -1966,6 +3446,154 @@
       "translate": "skill.skill_tree_rpgs.frost_tier_3_spell_1_modifier_2.title"
     }
   },
+  "frost_tier_3_spell_1_root": {
+    "description": {
+      "skill_definition_id": "frost_tier_3_spell_1_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/frost_shield.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:frost_tier_3_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.frost_tier_3_spell_1_root.title"
+    }
+  },
+  "frost_tier_3_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "frost_tier_3_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/frost_lance.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:frost_tier_3_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.frost_tier_3_spell_2_modifier_1.title"
+    }
+  },
+  "frost_tier_3_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "frost_tier_3_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/frost_lance.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:frost_tier_3_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.frost_tier_3_spell_2_modifier_2.title"
+    }
+  },
+  "frost_tier_3_spell_2_root": {
+    "description": {
+      "skill_definition_id": "frost_tier_3_spell_2_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/frost_lance.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:frost_tier_3_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.frost_tier_3_spell_2_root.title"
+    }
+  },
   "frost_tier_4_spell_1_modifier_1": {
     "description": {
       "skill_definition_id": "frost_tier_4_spell_1_modifier_1"
@@ -2038,6 +3666,154 @@
     ],
     "title": {
       "translate": "skill.skill_tree_rpgs.frost_tier_4_spell_1_modifier_2.title"
+    }
+  },
+  "frost_tier_4_spell_1_root": {
+    "description": {
+      "skill_definition_id": "frost_tier_4_spell_1_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/frost_blizzard.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:frost_tier_4_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.frost_tier_4_spell_1_root.title"
+    }
+  },
+  "frost_tier_4_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "frost_tier_4_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/frost_elemental.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:frost_tier_4_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.frost_tier_4_spell_2_modifier_1.title"
+    }
+  },
+  "frost_tier_4_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "frost_tier_4_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/frost_elemental.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:frost_tier_4_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.frost_tier_4_spell_2_modifier_2.title"
+    }
+  },
+  "frost_tier_4_spell_2_root": {
+    "description": {
+      "skill_definition_id": "frost_tier_4_spell_2_root"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "wizards:textures/spell/frost_elemental.png"
+      }
+    },
+    "required_mods": [
+      "wizards"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:frost_tier_4_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.frost_tier_4_spell_2_root.title"
     }
   },
   "paladin_boost": {
@@ -2319,6 +4095,154 @@
       "translate": "skill.skill_tree_rpgs.paladin_tier_2_spell_1_modifier_2.title"
     }
   },
+  "paladin_tier_2_spell_1_root": {
+    "description": {
+      "skill_definition_id": "paladin_tier_2_spell_1_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:paladin_tier_2_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.paladin_tier_2_spell_1_root.title"
+    }
+  },
+  "paladin_tier_2_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "paladin_tier_2_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:paladin_tier_2_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.paladin_tier_2_spell_2_modifier_1.title"
+    }
+  },
+  "paladin_tier_2_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "paladin_tier_2_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:paladin_tier_2_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.paladin_tier_2_spell_2_modifier_2.title"
+    }
+  },
+  "paladin_tier_2_spell_2_root": {
+    "description": {
+      "skill_definition_id": "paladin_tier_2_spell_2_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:paladin_tier_2_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.paladin_tier_2_spell_2_root.title"
+    }
+  },
   "paladin_tier_3_passive_1": {
     "description": {
       "skill_definition_id": "paladin_tier_3_passive_1"
@@ -2467,6 +4391,154 @@
       "translate": "skill.skill_tree_rpgs.paladin_tier_3_spell_1_modifier_2.title"
     }
   },
+  "paladin_tier_3_spell_1_root": {
+    "description": {
+      "skill_definition_id": "paladin_tier_3_spell_1_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:paladin_tier_3_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.paladin_tier_3_spell_1_root.title"
+    }
+  },
+  "paladin_tier_3_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "paladin_tier_3_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "paladins:textures/spell/judgement.png"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:paladin_tier_3_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.paladin_tier_3_spell_2_modifier_1.title"
+    }
+  },
+  "paladin_tier_3_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "paladin_tier_3_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "texture",
+      "data": {
+        "texture": "paladins:textures/spell/judgement.png"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:paladin_tier_3_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.paladin_tier_3_spell_2_modifier_2.title"
+    }
+  },
+  "paladin_tier_3_spell_2_root": {
+    "description": {
+      "skill_definition_id": "paladin_tier_3_spell_2_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:paladin_tier_3_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.paladin_tier_3_spell_2_root.title"
+    }
+  },
   "paladin_tier_4_spell_1_modifier_1": {
     "description": {
       "skill_definition_id": "paladin_tier_4_spell_1_modifier_1"
@@ -2539,6 +4611,154 @@
     ],
     "title": {
       "translate": "skill.skill_tree_rpgs.paladin_tier_4_spell_1_modifier_2.title"
+    }
+  },
+  "paladin_tier_4_spell_1_root": {
+    "description": {
+      "skill_definition_id": "paladin_tier_4_spell_1_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:paladin_tier_4_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.paladin_tier_4_spell_1_root.title"
+    }
+  },
+  "paladin_tier_4_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "paladin_tier_4_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:paladin_tier_4_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.paladin_tier_4_spell_2_modifier_1.title"
+    }
+  },
+  "paladin_tier_4_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "paladin_tier_4_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:paladin_tier_4_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.paladin_tier_4_spell_2_modifier_2.title"
+    }
+  },
+  "paladin_tier_4_spell_2_root": {
+    "description": {
+      "skill_definition_id": "paladin_tier_4_spell_2_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:paladin_tier_4_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.paladin_tier_4_spell_2_root.title"
     }
   },
   "priest_boost": {
@@ -2820,6 +5040,154 @@
       "translate": "skill.skill_tree_rpgs.priest_tier_2_spell_1_modifier_2.title"
     }
   },
+  "priest_tier_2_spell_1_root": {
+    "description": {
+      "skill_definition_id": "priest_tier_2_spell_1_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:priest_tier_2_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.priest_tier_2_spell_1_root.title"
+    }
+  },
+  "priest_tier_2_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "priest_tier_2_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:priest_tier_2_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.priest_tier_2_spell_2_modifier_1.title"
+    }
+  },
+  "priest_tier_2_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "priest_tier_2_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:priest_tier_2_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.priest_tier_2_spell_2_modifier_2.title"
+    }
+  },
+  "priest_tier_2_spell_2_root": {
+    "description": {
+      "skill_definition_id": "priest_tier_2_spell_2_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:priest_tier_2_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.priest_tier_2_spell_2_root.title"
+    }
+  },
   "priest_tier_3_passive_1": {
     "description": {
       "skill_definition_id": "priest_tier_3_passive_1"
@@ -2968,6 +5336,154 @@
       "translate": "skill.skill_tree_rpgs.priest_tier_3_spell_1_modifier_2.title"
     }
   },
+  "priest_tier_3_spell_1_root": {
+    "description": {
+      "skill_definition_id": "priest_tier_3_spell_1_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:priest_tier_3_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.priest_tier_3_spell_1_root.title"
+    }
+  },
+  "priest_tier_3_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "priest_tier_3_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:priest_tier_3_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.priest_tier_3_spell_2_modifier_1.title"
+    }
+  },
+  "priest_tier_3_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "priest_tier_3_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:priest_tier_3_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.priest_tier_3_spell_2_modifier_2.title"
+    }
+  },
+  "priest_tier_3_spell_2_root": {
+    "description": {
+      "skill_definition_id": "priest_tier_3_spell_2_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:priest_tier_3_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.priest_tier_3_spell_2_root.title"
+    }
+  },
   "priest_tier_4_spell_1_modifier_1": {
     "description": {
       "skill_definition_id": "priest_tier_4_spell_1_modifier_1"
@@ -3040,6 +5556,154 @@
     ],
     "title": {
       "translate": "skill.skill_tree_rpgs.priest_tier_4_spell_1_modifier_2.title"
+    }
+  },
+  "priest_tier_4_spell_1_root": {
+    "description": {
+      "skill_definition_id": "priest_tier_4_spell_1_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:priest_tier_4_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.priest_tier_4_spell_1_root.title"
+    }
+  },
+  "priest_tier_4_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "priest_tier_4_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:priest_tier_4_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.priest_tier_4_spell_2_modifier_1.title"
+    }
+  },
+  "priest_tier_4_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "priest_tier_4_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:priest_tier_4_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.priest_tier_4_spell_2_modifier_2.title"
+    }
+  },
+  "priest_tier_4_spell_2_root": {
+    "description": {
+      "skill_definition_id": "priest_tier_4_spell_2_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "paladins"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:priest_tier_4_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.priest_tier_4_spell_2_root.title"
     }
   },
   "rogue_boost": {
@@ -3321,6 +5985,154 @@
       "translate": "skill.skill_tree_rpgs.rogue_tier_2_spell_1_modifier_2.title"
     }
   },
+  "rogue_tier_2_spell_1_root": {
+    "description": {
+      "skill_definition_id": "rogue_tier_2_spell_1_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:rogue_tier_2_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.rogue_tier_2_spell_1_root.title"
+    }
+  },
+  "rogue_tier_2_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "rogue_tier_2_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:rogue_tier_2_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.rogue_tier_2_spell_2_modifier_1.title"
+    }
+  },
+  "rogue_tier_2_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "rogue_tier_2_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:rogue_tier_2_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.rogue_tier_2_spell_2_modifier_2.title"
+    }
+  },
+  "rogue_tier_2_spell_2_root": {
+    "description": {
+      "skill_definition_id": "rogue_tier_2_spell_2_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:rogue_tier_2_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.rogue_tier_2_spell_2_root.title"
+    }
+  },
   "rogue_tier_3_passive_1": {
     "description": {
       "skill_definition_id": "rogue_tier_3_passive_1"
@@ -3469,6 +6281,154 @@
       "translate": "skill.skill_tree_rpgs.rogue_tier_3_spell_1_modifier_2.title"
     }
   },
+  "rogue_tier_3_spell_1_root": {
+    "description": {
+      "skill_definition_id": "rogue_tier_3_spell_1_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:rogue_tier_3_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.rogue_tier_3_spell_1_root.title"
+    }
+  },
+  "rogue_tier_3_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "rogue_tier_3_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:rogue_tier_3_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.rogue_tier_3_spell_2_modifier_1.title"
+    }
+  },
+  "rogue_tier_3_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "rogue_tier_3_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:rogue_tier_3_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.rogue_tier_3_spell_2_modifier_2.title"
+    }
+  },
+  "rogue_tier_3_spell_2_root": {
+    "description": {
+      "skill_definition_id": "rogue_tier_3_spell_2_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:rogue_tier_3_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.rogue_tier_3_spell_2_root.title"
+    }
+  },
   "rogue_tier_4_spell_1_modifier_1": {
     "description": {
       "skill_definition_id": "rogue_tier_4_spell_1_modifier_1"
@@ -3541,6 +6501,154 @@
     ],
     "title": {
       "translate": "skill.skill_tree_rpgs.rogue_tier_4_spell_1_modifier_2.title"
+    }
+  },
+  "rogue_tier_4_spell_1_root": {
+    "description": {
+      "skill_definition_id": "rogue_tier_4_spell_1_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:rogue_tier_4_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.rogue_tier_4_spell_1_root.title"
+    }
+  },
+  "rogue_tier_4_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "rogue_tier_4_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:rogue_tier_4_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.rogue_tier_4_spell_2_modifier_1.title"
+    }
+  },
+  "rogue_tier_4_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "rogue_tier_4_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:rogue_tier_4_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.rogue_tier_4_spell_2_modifier_2.title"
+    }
+  },
+  "rogue_tier_4_spell_2_root": {
+    "description": {
+      "skill_definition_id": "rogue_tier_4_spell_2_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:rogue_tier_4_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.rogue_tier_4_spell_2_root.title"
     }
   },
   "warrior_boost": {
@@ -3822,6 +6930,154 @@
       "translate": "skill.skill_tree_rpgs.warrior_tier_2_spell_1_modifier_2.title"
     }
   },
+  "warrior_tier_2_spell_1_root": {
+    "description": {
+      "skill_definition_id": "warrior_tier_2_spell_1_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:warrior_tier_2_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.warrior_tier_2_spell_1_root.title"
+    }
+  },
+  "warrior_tier_2_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "warrior_tier_2_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:warrior_tier_2_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.warrior_tier_2_spell_2_modifier_1.title"
+    }
+  },
+  "warrior_tier_2_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "warrior_tier_2_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:warrior_tier_2_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.warrior_tier_2_spell_2_modifier_2.title"
+    }
+  },
+  "warrior_tier_2_spell_2_root": {
+    "description": {
+      "skill_definition_id": "warrior_tier_2_spell_2_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:warrior_tier_2_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.warrior_tier_2_spell_2_root.title"
+    }
+  },
   "warrior_tier_3_passive_1": {
     "description": {
       "skill_definition_id": "warrior_tier_3_passive_1"
@@ -3970,6 +7226,154 @@
       "translate": "skill.skill_tree_rpgs.warrior_tier_3_spell_1_modifier_2.title"
     }
   },
+  "warrior_tier_3_spell_1_root": {
+    "description": {
+      "skill_definition_id": "warrior_tier_3_spell_1_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:warrior_tier_3_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.warrior_tier_3_spell_1_root.title"
+    }
+  },
+  "warrior_tier_3_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "warrior_tier_3_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:warrior_tier_3_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.warrior_tier_3_spell_2_modifier_1.title"
+    }
+  },
+  "warrior_tier_3_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "warrior_tier_3_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:warrior_tier_3_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.warrior_tier_3_spell_2_modifier_2.title"
+    }
+  },
+  "warrior_tier_3_spell_2_root": {
+    "description": {
+      "skill_definition_id": "warrior_tier_3_spell_2_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:warrior_tier_3_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.warrior_tier_3_spell_2_root.title"
+    }
+  },
   "warrior_tier_4_spell_1_modifier_1": {
     "description": {
       "skill_definition_id": "warrior_tier_4_spell_1_modifier_1"
@@ -4042,6 +7446,154 @@
     ],
     "title": {
       "translate": "skill.skill_tree_rpgs.warrior_tier_4_spell_1_modifier_2.title"
+    }
+  },
+  "warrior_tier_4_spell_1_root": {
+    "description": {
+      "skill_definition_id": "warrior_tier_4_spell_1_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:warrior_tier_4_spell_1_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.warrior_tier_4_spell_1_root.title"
+    }
+  },
+  "warrior_tier_4_spell_2_modifier_1": {
+    "description": {
+      "skill_definition_id": "warrior_tier_4_spell_2_modifier_1"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:warrior_tier_4_spell_2_modifier_1"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.warrior_tier_4_spell_2_modifier_1.title"
+    }
+  },
+  "warrior_tier_4_spell_2_modifier_2": {
+    "description": {
+      "skill_definition_id": "warrior_tier_4_spell_2_modifier_2"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:warrior_tier_4_spell_2_modifier_2"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.warrior_tier_4_spell_2_modifier_2.title"
+    }
+  },
+  "warrior_tier_4_spell_2_root": {
+    "description": {
+      "skill_definition_id": "warrior_tier_4_spell_2_root"
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "required_mods": [
+      "rogues"
+    ],
+    "rewards": [
+      {
+        "type": "skill_tree_rpgs:spell",
+        "data": {
+          "containers": [
+            {
+              "access": "NONE",
+              "access_param": "",
+              "extra_tier_binding": 0,
+              "max_spell_count": 0,
+              "pool": "",
+              "slot": "",
+              "spell_ids": [
+                "skill_tree_rpgs:warrior_tier_4_spell_2_root"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "title": {
+      "translate": "skill.skill_tree_rpgs.warrior_tier_4_spell_2_root.title"
     }
   },
   "weapon_arcane_blast_modifier_1": {

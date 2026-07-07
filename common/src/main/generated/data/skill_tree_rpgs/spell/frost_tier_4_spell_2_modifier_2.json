@@ -1,0 +1,16 @@
+{
+  "school": "spell_power:frost",
+  "range": 0.0,
+  "tier": 1,
+  "type": "MODIFIER",
+  "modifiers": [
+    {
+      "spell_pattern": "wizards:frost_elemental",
+      "summon_behaviour": {
+        "lifespan": {
+          "active_seconds_add": 15
+        }
+      }
+    }
+  ]
+}

@@ -766,5 +766,581 @@
 		"x": -320,
 		"y": 332.55375505322434,
 		"root": false
+	},
+	"dtjgjzuz9dbozhks": {
+		"definition": "frost_tier_2_spell_1_root",
+		"x": 208,
+		"y": -193.99,
+		"root": false
+	},
+	"xk0zup4vlq2bpia8": {
+		"definition": "frost_tier_3_spell_1_root",
+		"x": 304,
+		"y": -249.42,
+		"root": false
+	},
+	"fsoh4wr8biwxyx1m": {
+		"definition": "frost_tier_4_spell_1_root",
+		"x": 400,
+		"y": -304.84,
+		"root": false
+	},
+	"y4f4bxrmm634xlgz": {
+		"definition": "frost_tier_2_spell_2_root",
+		"x": 272,
+		"y": -249.42,
+		"root": false
+	},
+	"uz6pupqhw27im61o": {
+		"definition": "frost_tier_2_spell_2_modifier_1",
+		"x": 272,
+		"y": -304.84,
+		"root": false
+	},
+	"k2hyynsy53w5ory1": {
+		"definition": "frost_tier_2_spell_2_modifier_2",
+		"x": 336,
+		"y": -277.13,
+		"root": false
+	},
+	"t7boplcuqumobewj": {
+		"definition": "frost_tier_3_spell_2_root",
+		"x": 368,
+		"y": -304.84,
+		"root": false
+	},
+	"y1t8dbqvi429cep3": {
+		"definition": "frost_tier_3_spell_2_modifier_1",
+		"x": 352,
+		"y": -360.27,
+		"root": false
+	},
+	"mf3t0splsf6vg6ld": {
+		"definition": "frost_tier_3_spell_2_modifier_2",
+		"x": 432,
+		"y": -332.55,
+		"root": false
+	},
+	"ur6lrbrjx4u52zdp": {
+		"definition": "frost_tier_4_spell_2_root",
+		"x": 464,
+		"y": -360.27,
+		"root": false
+	},
+	"vdvrw73xcm2k0lry": {
+		"definition": "frost_tier_4_spell_2_modifier_1",
+		"x": 448,
+		"y": -415.69,
+		"root": false
+	},
+	"6573dwuvyl7khs0w": {
+		"definition": "frost_tier_4_spell_2_modifier_2",
+		"x": 528,
+		"y": -388.0,
+		"root": false
+	},
+	"lwmfdsnzvemm492u": {
+		"definition": "fire_tier_2_spell_1_root",
+		"x": 0,
+		"y": -277.1281292,
+		"root": false
+	},
+	"36aeqseyzs70feif": {
+		"definition": "fire_tier_3_spell_1_root",
+		"x": 0,
+		"y": -387.97938088,
+		"root": false
+	},
+	"8a2c8jxv7k4vhlui": {
+		"definition": "fire_tier_4_spell_1_root",
+		"x": 0,
+		"y": -498.83063256,
+		"root": false
+	},
+	"qvbapaoh8ietgvcm": {
+		"definition": "fire_tier_2_spell_2_root",
+		"x": 0,
+		"y": -554.2562584,
+		"root": false
+	},
+	"ws0zvn5xtenhjfg2": {
+		"definition": "fire_tier_2_spell_2_modifier_1",
+		"x": -32,
+		"y": -554.2562584,
+		"root": false
+	},
+	"it7ddytaje5w6sng": {
+		"definition": "fire_tier_2_spell_2_modifier_2",
+		"x": 32,
+		"y": -554.2562584,
+		"root": false
+	},
+	"u1341ylh0390jabt": {
+		"definition": "fire_tier_3_spell_2_root",
+		"x": 0,
+		"y": -609.68188424,
+		"root": false
+	},
+	"r7g5dpybimhe6u1y": {
+		"definition": "fire_tier_3_spell_2_modifier_1",
+		"x": -32,
+		"y": -609.68188424,
+		"root": false
+	},
+	"svm2prnqs03uqent": {
+		"definition": "fire_tier_3_spell_2_modifier_2",
+		"x": 32,
+		"y": -609.68188424,
+		"root": false
+	},
+	"kjssmt5q3gi8r8lx": {
+		"definition": "fire_tier_4_spell_2_root",
+		"x": 0,
+		"y": -665.10751008,
+		"root": false
+	},
+	"c7q7jjwu534zqyng": {
+		"definition": "fire_tier_4_spell_2_modifier_1",
+		"x": -32,
+		"y": -665.10751008,
+		"root": false
+	},
+	"uqqt8dzye5nbpzg4": {
+		"definition": "fire_tier_4_spell_2_modifier_2",
+		"x": 32,
+		"y": -665.10751008,
+		"root": false
+	},
+	"h4kc1gscqd3pcg78": {
+		"definition": "arcane_tier_2_spell_1_root",
+		"x": -208,
+		"y": -193.99,
+		"root": false
+	},
+	"j0s748bxsykvp5uc": {
+		"definition": "arcane_tier_3_spell_1_root",
+		"x": -304,
+		"y": -249.42,
+		"root": false
+	},
+	"3e85mfvd1q8w78gv": {
+		"definition": "arcane_tier_4_spell_1_root",
+		"x": -400,
+		"y": -304.84,
+		"root": false
+	},
+	"uepo8apqsbk5ftuc": {
+		"definition": "arcane_tier_2_spell_2_root",
+		"x": -272,
+		"y": -249.42,
+		"root": false
+	},
+	"pwxw3k20k7fa7npt": {
+		"definition": "arcane_tier_2_spell_2_modifier_1",
+		"x": -272,
+		"y": -304.84,
+		"root": false
+	},
+	"h0xnm5h6fvtmrm43": {
+		"definition": "arcane_tier_2_spell_2_modifier_2",
+		"x": -336,
+		"y": -277.13,
+		"root": false
+	},
+	"bg6vzs7jj6kn1ine": {
+		"definition": "arcane_tier_3_spell_2_root",
+		"x": -368,
+		"y": -304.84,
+		"root": false
+	},
+	"53qir353ol1s2jcn": {
+		"definition": "arcane_tier_3_spell_2_modifier_1",
+		"x": -352,
+		"y": -360.27,
+		"root": false
+	},
+	"4tpryefmykr266d7": {
+		"definition": "arcane_tier_3_spell_2_modifier_2",
+		"x": -432,
+		"y": -332.55,
+		"root": false
+	},
+	"wpgi3mwi6k8e9b2v": {
+		"definition": "arcane_tier_4_spell_2_root",
+		"x": -464,
+		"y": -360.27,
+		"root": false
+	},
+	"b591cob8oxjl6m4v": {
+		"definition": "arcane_tier_4_spell_2_modifier_1",
+		"x": -448,
+		"y": -415.69,
+		"root": false
+	},
+	"0bygnkeq1yau0hvy": {
+		"definition": "arcane_tier_4_spell_2_modifier_2",
+		"x": -528,
+		"y": -388.0,
+		"root": false
+	},
+	"dpc7m2zi18kvsb9m": {
+		"definition": "archer_tier_2_spell_1_root",
+		"x": -256,
+		"y": 0,
+		"root": false
+	},
+	"gjr4udkeds3xxd4r": {
+		"definition": "archer_tier_3_spell_1_root",
+		"x": -384,
+		"y": 0,
+		"root": false
+	},
+	"p6s5xw9eameqccoa": {
+		"definition": "archer_tier_4_spell_1_root",
+		"x": -512,
+		"y": 0,
+		"root": false
+	},
+	"4fpejc67n60p5fam": {
+		"definition": "archer_tier_2_spell_2_root",
+		"x": -576,
+		"y": 0,
+		"root": false
+	},
+	"44brnsv86ojbiczk": {
+		"definition": "archer_tier_2_spell_2_modifier_1",
+		"x": -576,
+		"y": -36.95041722813605,
+		"root": false
+	},
+	"j29t0a5bhm1sk6cu": {
+		"definition": "archer_tier_2_spell_2_modifier_2",
+		"x": -576,
+		"y": 36.95041722813605,
+		"root": false
+	},
+	"8ljpp1mctqikkk62": {
+		"definition": "archer_tier_3_spell_2_root",
+		"x": -640,
+		"y": 0,
+		"root": false
+	},
+	"ld5rcyfe7x9szg7x": {
+		"definition": "archer_tier_3_spell_2_modifier_1",
+		"x": -640,
+		"y": -36.95041722813605,
+		"root": false
+	},
+	"rq93um3lkddwblys": {
+		"definition": "archer_tier_3_spell_2_modifier_2",
+		"x": -640,
+		"y": 36.95041722813605,
+		"root": false
+	},
+	"d42ph71z9w39yvfe": {
+		"definition": "archer_tier_4_spell_2_root",
+		"x": -704,
+		"y": 0,
+		"root": false
+	},
+	"xbx25koztd8yb4ai": {
+		"definition": "archer_tier_4_spell_2_modifier_1",
+		"x": -704,
+		"y": -36.95041722813605,
+		"root": false
+	},
+	"2yufzyn46sfp20tv": {
+		"definition": "archer_tier_4_spell_2_modifier_2",
+		"x": -704,
+		"y": 36.95041722813605,
+		"root": false
+	},
+	"li4iluy7adnytclb": {
+		"definition": "priest_tier_2_spell_1_root",
+		"x": 256,
+		"y": 0,
+		"root": false
+	},
+	"c768e8r0ctc9lwd0": {
+		"definition": "priest_tier_3_spell_1_root",
+		"x": 384,
+		"y": 0,
+		"root": false
+	},
+	"635oa1722ipi71hq": {
+		"definition": "priest_tier_4_spell_1_root",
+		"x": 512,
+		"y": 0,
+		"root": false
+	},
+	"mra78xekcqttdwbx": {
+		"definition": "priest_tier_2_spell_2_root",
+		"x": 576,
+		"y": 0,
+		"root": false
+	},
+	"wnv6qx3q3o2p8o08": {
+		"definition": "priest_tier_2_spell_2_modifier_1",
+		"x": 576,
+		"y": -36.95,
+		"root": false
+	},
+	"nfxzl65awdpibu3x": {
+		"definition": "priest_tier_2_spell_2_modifier_2",
+		"x": 576,
+		"y": 36.95,
+		"root": false
+	},
+	"jrp4nqgtcbvyot3s": {
+		"definition": "priest_tier_3_spell_2_root",
+		"x": 640,
+		"y": 0,
+		"root": false
+	},
+	"w92f6zohy81zxobi": {
+		"definition": "priest_tier_3_spell_2_modifier_1",
+		"x": 640,
+		"y": -36.95,
+		"root": false
+	},
+	"nwmxo0f0bc17nvin": {
+		"definition": "priest_tier_3_spell_2_modifier_2",
+		"x": 640,
+		"y": 36.95,
+		"root": false
+	},
+	"hg4zcfzw8h0grszh": {
+		"definition": "priest_tier_4_spell_2_root",
+		"x": 704,
+		"y": 0,
+		"root": false
+	},
+	"xviy9i3hrle9h68f": {
+		"definition": "priest_tier_4_spell_2_modifier_1",
+		"x": 704,
+		"y": -36.95,
+		"root": false
+	},
+	"h5cevm6tcv9fveo1": {
+		"definition": "priest_tier_4_spell_2_modifier_2",
+		"x": 704,
+		"y": 36.95,
+		"root": false
+	},
+	"zt7gapibsbn7uaum": {
+		"definition": "warrior_tier_2_spell_1_root",
+		"x": 0,
+		"y": 277.13,
+		"root": false
+	},
+	"vlqekajstfb8u3nm": {
+		"definition": "warrior_tier_3_spell_1_root",
+		"x": 0,
+		"y": 387.98,
+		"root": false
+	},
+	"7hncdrcodz1oiheu": {
+		"definition": "warrior_tier_4_spell_1_root",
+		"x": 0,
+		"y": 498.83,
+		"root": false
+	},
+	"q4lmy0pz6l5utkdh": {
+		"definition": "warrior_tier_2_spell_2_root",
+		"x": 0,
+		"y": 554.26,
+		"root": false
+	},
+	"68drx082m4i4rptv": {
+		"definition": "warrior_tier_2_spell_2_modifier_1",
+		"x": -32,
+		"y": 554.26,
+		"root": false
+	},
+	"t4zq9a1eyr1w5n5o": {
+		"definition": "warrior_tier_2_spell_2_modifier_2",
+		"x": 32,
+		"y": 554.26,
+		"root": false
+	},
+	"ckcbtzj8s9hnp0tb": {
+		"definition": "warrior_tier_3_spell_2_root",
+		"x": 0,
+		"y": 609.68,
+		"root": false
+	},
+	"j18k53nmzxbd3ifn": {
+		"definition": "warrior_tier_3_spell_2_modifier_1",
+		"x": -32,
+		"y": 609.68,
+		"root": false
+	},
+	"rgweaxlbyzcxe3vn": {
+		"definition": "warrior_tier_3_spell_2_modifier_2",
+		"x": 32,
+		"y": 609.68,
+		"root": false
+	},
+	"1n5uedeewpooh3fu": {
+		"definition": "warrior_tier_4_spell_2_root",
+		"x": 0,
+		"y": 665.11,
+		"root": false
+	},
+	"1zpkq3m845w5oxwc": {
+		"definition": "warrior_tier_4_spell_2_modifier_1",
+		"x": -32,
+		"y": 665.11,
+		"root": false
+	},
+	"gvfngt3qr4kn3flb": {
+		"definition": "warrior_tier_4_spell_2_modifier_2",
+		"x": 32,
+		"y": 665.11,
+		"root": false
+	},
+	"m57f3k6par3w36v7": {
+		"definition": "paladin_tier_2_spell_1_root",
+		"x": 208,
+		"y": 193.99,
+		"root": false
+	},
+	"jrammznsez4yabio": {
+		"definition": "paladin_tier_3_spell_1_root",
+		"x": 304,
+		"y": 249.42,
+		"root": false
+	},
+	"c1jm4e1hmf87kgvp": {
+		"definition": "paladin_tier_4_spell_1_root",
+		"x": 400,
+		"y": 304.84,
+		"root": false
+	},
+	"zxohfro64rbwjvan": {
+		"definition": "paladin_tier_2_spell_2_root",
+		"x": 272,
+		"y": 249.42,
+		"root": false
+	},
+	"we0c3anfaaxapwgx": {
+		"definition": "paladin_tier_2_spell_2_modifier_1",
+		"x": 272,
+		"y": 304.84,
+		"root": false
+	},
+	"qbnei2hrj4glubzh": {
+		"definition": "paladin_tier_2_spell_2_modifier_2",
+		"x": 336,
+		"y": 277.13,
+		"root": false
+	},
+	"7bcrhxw8omose9qq": {
+		"definition": "paladin_tier_3_spell_2_root",
+		"x": 368,
+		"y": 304.84,
+		"root": false
+	},
+	"2a4wwukjg0mkehv6": {
+		"definition": "paladin_tier_3_spell_2_modifier_1",
+		"x": 352,
+		"y": 360.27,
+		"root": false
+	},
+	"ejfg1pskxgynqepq": {
+		"definition": "paladin_tier_3_spell_2_modifier_2",
+		"x": 432,
+		"y": 332.55,
+		"root": false
+	},
+	"nq5m15dhmva3d2lw": {
+		"definition": "paladin_tier_4_spell_2_root",
+		"x": 464,
+		"y": 360.27,
+		"root": false
+	},
+	"efm5r7265orb88k1": {
+		"definition": "paladin_tier_4_spell_2_modifier_1",
+		"x": 448,
+		"y": 415.69,
+		"root": false
+	},
+	"wdx27dhyygzoy85x": {
+		"definition": "paladin_tier_4_spell_2_modifier_2",
+		"x": 528,
+		"y": 388,
+		"root": false
+	},
+	"iyw38unpp57qjhrm": {
+		"definition": "rogue_tier_2_spell_1_root",
+		"x": -208,
+		"y": 193.99,
+		"root": false
+	},
+	"xgerunbqzlw91it9": {
+		"definition": "rogue_tier_3_spell_1_root",
+		"x": -304,
+		"y": 249.42,
+		"root": false
+	},
+	"x3n92mbljrncs8zs": {
+		"definition": "rogue_tier_4_spell_1_root",
+		"x": -400,
+		"y": 304.84,
+		"root": false
+	},
+	"13a6scounq6942da": {
+		"definition": "rogue_tier_2_spell_2_root",
+		"x": -272,
+		"y": 249.42,
+		"root": false
+	},
+	"n10s6dgxher29el6": {
+		"definition": "rogue_tier_2_spell_2_modifier_1",
+		"x": -272,
+		"y": 304.84,
+		"root": false
+	},
+	"w5q9flwgia4tils3": {
+		"definition": "rogue_tier_2_spell_2_modifier_2",
+		"x": -336,
+		"y": 277.13,
+		"root": false
+	},
+	"6boa4fda55fz2pqj": {
+		"definition": "rogue_tier_3_spell_2_root",
+		"x": -368,
+		"y": 304.84,
+		"root": false
+	},
+	"oj5usoz1opf31zcy": {
+		"definition": "rogue_tier_3_spell_2_modifier_1",
+		"x": -352,
+		"y": 360.27,
+		"root": false
+	},
+	"hch97ajsib3f1f3m": {
+		"definition": "rogue_tier_3_spell_2_modifier_2",
+		"x": -432,
+		"y": 332.55,
+		"root": false
+	},
+	"auggg4kns9og02ab": {
+		"definition": "rogue_tier_4_spell_2_root",
+		"x": -464,
+		"y": 360.27,
+		"root": false
+	},
+	"453ut4fxsmgr9or0": {
+		"definition": "rogue_tier_4_spell_2_modifier_1",
+		"x": -448,
+		"y": 415.69,
+		"root": false
+	},
+	"6v782r16movicn2w": {
+		"definition": "rogue_tier_4_spell_2_modifier_2",
+		"x": -528,
+		"y": 388,
+		"root": false
 	}
 }
