@@ -749,7 +749,7 @@
     "icon": {
       "type": "texture",
       "data": {
-        "texture": "archers:textures/spell/entangling_roots.png"
+        "texture": "archers:textures/spell/power_shot.png"
       }
     },
     "required_mods": [
@@ -2289,7 +2289,7 @@
     "icon": {
       "type": "texture",
       "data": {
-        "texture": "paladins:textures/spell/divine_protection.png"
+        "texture": "paladins:textures/spell/flash_heal.png"
       }
     },
     "required_mods": [
@@ -2400,7 +2400,7 @@
     "icon": {
       "type": "texture",
       "data": {
-        "texture": "paladins:textures/spell/judgement.png"
+        "texture": "paladins:textures/spell/divine_protection.png"
       }
     },
     "required_mods": [
@@ -2437,7 +2437,7 @@
     "icon": {
       "type": "texture",
       "data": {
-        "texture": "paladins:textures/spell/judgement.png"
+        "texture": "paladins:textures/spell/divine_protection.png"
       }
     },
     "required_mods": [

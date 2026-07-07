@@ -39,11 +39,17 @@
           "bounce": 3
         },
         "client_data": {
-          "model": {
-            "model_id": "paladins:spell_projectile/judgement",
-            "light_emission": "RADIATE",
-            "scale": 0.8,
-            "rotate_degrees_per_tick": 20.0
+          "composite_model": {
+            "models": [
+              {
+                "rotate_degrees_per_tick": 20.0,
+                "fx": {
+                  "model_id": "paladins:spell_projectile/judgement",
+                  "light_emission": "RADIATE",
+                  "scale": 0.8
+                }
+              }
+            ]
           }
         }
       }

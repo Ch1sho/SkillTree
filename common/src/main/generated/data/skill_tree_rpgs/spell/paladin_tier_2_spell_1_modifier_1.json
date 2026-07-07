@@ -12,27 +12,32 @@
           "action": {
             "type": "STATUS_EFFECT",
             "status_effect": {
-              "amplifier": 1,
-              "apply_mode": "REMOVE",
-              "remove": {
-                "id": "!minecraft:trial_omen"
-              }
+              "effect_id": "skill_tree_rpgs:divine_strength",
+              "duration": 8.0
             }
           },
           "particles": [
             {
-              "particle_id": "spell_engine:magic_heal_decelerate",
-              "origin": "CENTER",
-              "shape": "SPHERE",
+              "particle_id": "spell_engine:magic_stripe_float",
+              "origin": "FEET",
+              "shape": "WIDE_PIPE",
               "count": 20.0,
-              "min_speed": 0.25,
-              "max_speed": 0.3,
-              "color_rgba": 4294954239
+              "min_speed": 0.05,
+              "max_speed": 0.1,
+              "color_rgba": 3439329279
+            },
+            {
+              "particle_id": "spell_engine:sign_fist",
+              "origin": "CENTER",
+              "shape": "LINE_VERTICAL",
+              "count": 1.0,
+              "min_speed": 0.8,
+              "max_speed": 0.8,
+              "color_rgba": 3439329279,
+              "scale": 0.8,
+              "follow_entity": true
             }
-          ],
-          "sound": {
-            "id": "spell_engine:generic_dispel_1"
-          }
+          ]
         }
       ]
     }
