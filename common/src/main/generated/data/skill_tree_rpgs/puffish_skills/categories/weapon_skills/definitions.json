@@ -7159,7 +7159,7 @@
     "icon": {
       "type": "texture",
       "data": {
-        "texture": "rogues:textures/spell/shout.png"
+        "texture": "rogues:textures/spell/charge.png"
       }
     },
     "required_mods": [
@@ -7196,7 +7196,7 @@
     "icon": {
       "type": "texture",
       "data": {
-        "texture": "rogues:textures/spell/shout.png"
+        "texture": "rogues:textures/spell/charge.png"
       }
     },
     "required_mods": [
@@ -7268,9 +7268,9 @@
       "skill_definition_id": "warrior_tier_3_spell_2_modifier_1"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/shout.png"
       }
     },
     "required_mods": [
@@ -7305,9 +7305,9 @@
       "skill_definition_id": "warrior_tier_3_spell_2_modifier_2"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/shout.png"
       }
     },
     "required_mods": [
@@ -7381,7 +7381,7 @@
     "icon": {
       "type": "texture",
       "data": {
-        "texture": "rogues:textures/spell/charge.png"
+        "texture": "rogues:textures/spell/mortal_strike.png"
       }
     },
     "required_mods": [
@@ -7418,7 +7418,7 @@
     "icon": {
       "type": "texture",
       "data": {
-        "texture": "rogues:textures/spell/charge.png"
+        "texture": "rogues:textures/spell/mortal_strike.png"
       }
     },
     "required_mods": [

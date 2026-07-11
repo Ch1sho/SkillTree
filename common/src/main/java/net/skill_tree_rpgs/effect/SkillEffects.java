@@ -48,6 +48,25 @@ public class SkillEffects {
                     )
             )
     ));
+    public static Effects.Entry RECKLESSNESS = add(new Effects.Entry(Identifier.of(SkillTreeMod.NAMESPACE, "recklessness"),
+            "Recklessness",
+            "Increases critical strike chance, but also damage taken.",
+            new CustomStatusEffect(StatusEffectCategory.BENEFICIAL, 0xcc0000),
+            new EffectConfig(
+                    List.of(
+                            new AttributeModifier(
+                                    "critical_strike:chance",
+                                    1.0F,
+                                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                            ),
+                            new AttributeModifier(
+                                    "spell_engine:damage_taken",
+                                    1.0F,
+                                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                            )
+                    )
+            )
+    ));
     public static Effects.Entry FLEET_FOOTED = add(new Effects.Entry(Identifier.of(SkillTreeMod.NAMESPACE, "fleet_footed"),
             "Fleet Footed",
             "Increased movement speed.",

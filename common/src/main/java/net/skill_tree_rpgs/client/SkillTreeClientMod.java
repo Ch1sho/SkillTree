@@ -45,6 +45,24 @@ public class SkillTreeClientMod {
     }
 
     private static void registerEffectRenderers() {
+        // Arcing sparks in the warrior RAGE color, mirroring Wizards' Evocation look.
+        final var recklessnessParticles = new ParticleBatch[]{
+                new ParticleBatch(SpellEngineParticles.lightning_arc_A.id().toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        1F, 0.05F, 0.1F)
+                        .color(Color.RAGE.toRGBA())
+                        .extent(0.5F),
+                new ParticleBatch(SpellEngineParticles.lightning_arc_B.id().toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        1F, 0.05F, 0.1F)
+                        .color(Color.RAGE.toRGBA())
+                        .extent(0.5F)
+        };
+        CustomParticleStatusEffect.register(
+                SkillEffects.RECKLESSNESS.effect,
+                new BuffParticleSpawner(recklessnessParticles).withFrequency(4)
+        );
+
         final var magicSnareParticles = new ParticleBatch(
                 SpellEngineParticles.MagicParticles.get(
                         SpellEngineParticles.MagicParticles.Shape.SPARK,

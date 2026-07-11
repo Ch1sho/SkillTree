@@ -65,6 +65,88 @@ public class WarriorSkills {
     public static final Skills.Entry warrior_tier_3_spell_1_modifier_1 = add(warrior_tier_3_spell_1_modifier_1());
     private static Skills.Entry warrior_tier_3_spell_1_modifier_1() {
         var id = Identifier.of(NAMESPACE, "warrior_tier_3_spell_1_modifier_1");
+        var title = "Endurance";
+        var description = "Charge lasts {effect_duration_add} sec longer.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "rogues:charge";
+        modifier.effect_duration_add = 1;
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WARRIOR));
+    }
+
+    public static final Skills.Entry warrior_tier_3_spell_1_modifier_2 = add(warrior_tier_3_spell_1_modifier_2());
+    private static Skills.Entry warrior_tier_3_spell_1_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "warrior_tier_3_spell_1_modifier_2");
+        var title = "Concussion Blow";
+        var description = "Next attack after using Charge, stuns the target for {effect_duration} sec.";
+        var stashEffect = SkillEffects.CONCUSSION_BLOW;
+
+        var spell = SkillsCommon.createModifierAlikePassiveSpell();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+        spell.range = 0;
+
+        var trigger = SpellBuilder.Triggers.specificSpellCast("rogues:charge");
+        spell.passive.triggers = List.of(trigger);
+
+        spell.deliver.type = Spell.Delivery.Type.STASH_EFFECT;
+        spell.deliver.stash_effect = new Spell.Delivery.StashEffect();
+        spell.deliver.stash_effect.id = stashEffect.id.toString();
+        spell.deliver.stash_effect.triggers = List.of(
+                SpellBuilder.Triggers.meleeAttackImpact());
+        spell.deliver.stash_effect.consumed_next_tick = true;
+
+        var impact = SpellBuilder.Impacts.stun(2F);
+        spell.impacts = List.of(impact);
+
+        SpellBuilder.Cost.cooldown(spell, 10F);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WARRIOR));
+    }
+
+    public static final Skills.Entry warrior_tier_4_spell_1_modifier_1 = add(warrior_tier_4_spell_1_modifier_1());
+    private static Skills.Entry warrior_tier_4_spell_1_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "warrior_tier_4_spell_1_modifier_1");
+        var title = "Recklessness";
+        var description = "Mortal Strike also grants you Recklessness for {effect_duration} sec, increasing critical strike chance by 100%%, but also the damage you take by 100%%.";
+        var effect = SkillEffects.RECKLESSNESS;
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "rogues:mortal_strike";
+
+        var impact = SpellBuilder.Impacts.effectSet(effect.id.toString(), 6, 0);
+        impact.action.apply_to_caster = true;
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(impact);
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WARRIOR));
+    }
+
+    public static final Skills.Entry warrior_tier_4_spell_1_modifier_2 = add(warrior_tier_4_spell_1_modifier_2());
+    private static Skills.Entry warrior_tier_4_spell_1_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "warrior_tier_4_spell_1_modifier_2");
+        var title = "Deep Wounds";
+        var description = "Mortal Strike's Bleed lasts {effect_duration_add} sec longer.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "rogues:mortal_strike";
+        modifier.effect_duration_add = 3;
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WARRIOR));
+    }
+
+    public static final Skills.Entry warrior_tier_3_spell_2_modifier_1 = add(warrior_tier_3_spell_2_modifier_1());
+    private static Skills.Entry warrior_tier_3_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "warrior_tier_3_spell_2_modifier_1");
         var title = "Battle Shout";
         var description = "Shout increases Attack Damage of allies by {bonus}, lasting {effect_duration} sec.";
         var spell = SpellBuilder.createSpellPassive();
@@ -97,9 +179,9 @@ public class WarriorSkills {
         return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.WARRIOR));
     }
 
-    public static final Skills.Entry warrior_tier_3_spell_1_modifier_2 = add(warrior_tier_3_spell_1_modifier_2());
-    private static Skills.Entry warrior_tier_3_spell_1_modifier_2() {
-        var id = Identifier.of(NAMESPACE, "warrior_tier_3_spell_1_modifier_2");
+    public static final Skills.Entry warrior_tier_3_spell_2_modifier_2 = add(warrior_tier_3_spell_2_modifier_2());
+    private static Skills.Entry warrior_tier_3_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "warrior_tier_3_spell_2_modifier_2");
         var title = "Challenging Shout";
         var description = "Shout taunts all affected enemies.";
         var spell = SpellBuilder.createSpellModifier();
@@ -115,51 +197,6 @@ public class WarriorSkills {
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
         modifier.impacts = List.of(impact);
         spell.modifiers = List.of(modifier);
-
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WARRIOR));
-    }
-
-    public static final Skills.Entry warrior_tier_4_spell_1_modifier_1 = add(warrior_tier_4_spell_1_modifier_1());
-    private static Skills.Entry warrior_tier_4_spell_1_modifier_1() {
-        var id = Identifier.of(NAMESPACE, "warrior_tier_4_spell_1_modifier_1");
-        var title = "Endurance";
-        var description = "Charge lasts {effect_duration_add} sec longer.";
-        var spell = SpellBuilder.createSpellModifier();
-        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
-
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:charge";
-        modifier.effect_duration_add = 1;
-        spell.modifiers = List.of(modifier);
-
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WARRIOR));
-    }
-
-    public static final Skills.Entry warrior_tier_4_spell_1_modifier_2 = add(warrior_tier_4_spell_1_modifier_2());
-    private static Skills.Entry warrior_tier_4_spell_1_modifier_2() {
-        var id = Identifier.of(NAMESPACE, "warrior_tier_4_spell_1_modifier_2");
-        var title = "Concussion Blow";
-        var description = "Next attack after using Charge, stuns the target for {effect_duration} sec.";
-        var stashEffect = SkillEffects.CONCUSSION_BLOW;
-
-        var spell = SkillsCommon.createModifierAlikePassiveSpell();
-        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
-        spell.range = 0;
-
-        var trigger = SpellBuilder.Triggers.specificSpellCast("rogues:charge");
-        spell.passive.triggers = List.of(trigger);
-
-        spell.deliver.type = Spell.Delivery.Type.STASH_EFFECT;
-        spell.deliver.stash_effect = new Spell.Delivery.StashEffect();
-        spell.deliver.stash_effect.id = stashEffect.id.toString();
-        spell.deliver.stash_effect.triggers = List.of(
-                SpellBuilder.Triggers.meleeAttackImpact());
-        spell.deliver.stash_effect.consumed_next_tick = true;
-
-        var impact = SpellBuilder.Impacts.stun(2F);
-        spell.impacts = List.of(impact);
-
-        SpellBuilder.Cost.cooldown(spell, 10F);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WARRIOR));
     }
@@ -186,8 +223,6 @@ public class WarriorSkills {
     public static final Skills.Entry warrior_tier_2_spell_2_modifier_1 = add(placeholder("warrior_tier_2_spell_2_modifier_1"));
     public static final Skills.Entry warrior_tier_2_spell_2_modifier_2 = add(placeholder("warrior_tier_2_spell_2_modifier_2"));
     public static final Skills.Entry warrior_tier_3_spell_2_root = add(placeholder("warrior_tier_3_spell_2_root"));
-    public static final Skills.Entry warrior_tier_3_spell_2_modifier_1 = add(placeholder("warrior_tier_3_spell_2_modifier_1"));
-    public static final Skills.Entry warrior_tier_3_spell_2_modifier_2 = add(placeholder("warrior_tier_3_spell_2_modifier_2"));
     public static final Skills.Entry warrior_tier_4_spell_2_root = add(placeholder("warrior_tier_4_spell_2_root"));
     public static final Skills.Entry warrior_tier_4_spell_2_modifier_1 = add(placeholder("warrior_tier_4_spell_2_modifier_1"));
     public static final Skills.Entry warrior_tier_4_spell_2_modifier_2 = add(placeholder("warrior_tier_4_spell_2_modifier_2"));
