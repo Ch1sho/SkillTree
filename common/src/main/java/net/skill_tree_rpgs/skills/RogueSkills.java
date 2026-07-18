@@ -474,14 +474,14 @@ public class RogueSkills {
         spell.passive.triggers = List.of(trigger);
 
         spell.release.particles = new ParticleBatch[]{
-                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_fist.id(), Color.from(0xffcc66)),
+                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_crit.id(), Color.from(0xffcc66)),
                 new ParticleBatch(
                         SpellEngineParticles.MagicParticles.get(
                                 SpellEngineParticles.MagicParticles.Shape.SPARK,
                                 SpellEngineParticles.MagicParticles.Motion.DECELERATE).id().toString(),
                         ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
-                        15, 0.2F, 0.3F)
-                        .color(Color.from(0xffcc66).toRGBA())
+                        25, 0.3F, 0.5F)
+                        .color(Color.from(0xcc2900).toRGBA())
         };
         spell.release.sound = new Sound(SpellEngineSounds.SIGNAL_SPELL_CRIT.id());
 
