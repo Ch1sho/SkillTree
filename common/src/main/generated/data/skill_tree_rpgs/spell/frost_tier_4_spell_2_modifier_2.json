@@ -6,10 +6,53 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:frost_elemental",
-      "summon_behaviour": {
-        "lifespan": {
-          "active_seconds_add": 15
-        }
+      "summon_attribute_scaling": {
+        "entries": [
+          {
+            "attribute_id": "minecraft:generic.scale",
+            "modifiers": [
+              {
+                "attribute_id": "spell_power:frost",
+                "operation": "ADD_VALUE",
+                "base": 0.0,
+                "coefficient": 0.05
+              }
+            ]
+          },
+          {
+            "attribute_id": "minecraft:generic.max_health",
+            "modifiers": [
+              {
+                "attribute_id": "spell_power:frost",
+                "operation": "ADD_VALUE",
+                "base": 0.0,
+                "coefficient": 1.0
+              }
+            ]
+          },
+          {
+            "attribute_id": "minecraft:generic.armor",
+            "modifiers": [
+              {
+                "attribute_id": "spell_power:frost",
+                "operation": "ADD_VALUE",
+                "base": 5.0,
+                "coefficient": 0.05
+              }
+            ]
+          },
+          {
+            "attribute_id": "minecraft:generic.knockback_resistance",
+            "modifiers": [
+              {
+                "attribute_id": "spell_power:frost",
+                "operation": "ADD_VALUE",
+                "base": 2.5,
+                "coefficient": 0.025
+              }
+            ]
+          }
+        ]
       }
     }
   ]

@@ -184,13 +184,14 @@ public class FireSkills {
     private static Skills.Entry fire_tier_2_spell_2_modifier_1() {
         var id = Identifier.of(NAMESPACE, "fire_tier_2_spell_2_modifier_1");
         var title = "Towering Slash";
-        var description = "Flame Slash is 33% larger.";
+        var bonus = 0.33F;
+        var description = "Flame Slash is " + SpellTooltip.percent(bonus) + "% larger.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FIRE;
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = "wizards:fire_slash";
         // Stacks on top of the base spell's charge growth (up to 2x at full charge -> up to 2.33x).
-        modifier.projectile_scale_multiply = 0.33F;
+        modifier.projectile_scale_multiply = bonus;
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
     }

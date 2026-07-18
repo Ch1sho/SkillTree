@@ -1,10 +1,13 @@
 package net.skill_tree_rpgs.skills;
 
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.util.Identifier;
 import net.skill_tree_rpgs.SkillTreeMod;
 import net.skill_tree_rpgs.effect.SkillEffects;
 import net.spell_engine.api.datagen.SpellBuilder;
 import net.spell_engine.api.spell.Spell;
+import net.spell_engine.api.spell.summon.AttributeScaling;
 import net.spell_engine.api.spell.fx.ParticleBatch;
 import net.spell_engine.api.spell.fx.Sound;
 import net.spell_engine.client.gui.SpellTooltip;
@@ -242,7 +245,7 @@ public class FrostSkills {
         var id = Identifier.of(NAMESPACE, "frost_tier_3_spell_2_modifier_1");
         var title = "Colossal Lance";
         var bonus = 0.5F;
-        var description = "Ice Lance is " + SpellTooltip.percent(bonus) + " larger.";
+        var description = "Ice Lance is " + SpellTooltip.percent(bonus) + "% larger.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FROST;
         var modifier = new Spell.Modifier();
@@ -311,16 +314,37 @@ public class FrostSkills {
     public static final Skills.Entry frost_tier_4_spell_2_modifier_2 = add(frost_tier_4_spell_2_modifier_2());
     private static Skills.Entry frost_tier_4_spell_2_modifier_2() {
         var id = Identifier.of(NAMESPACE, "frost_tier_4_spell_2_modifier_2");
-        var title = "Enduring Winter";
-        var seconds = 15;
-        var description = "Frost Elemental lasts " + seconds + " sec longer.";
+        var title = "Elemental Colossus";
+        var description = "Your Frost Elemental grows in size with your Frost Spell Power, and is far more durable.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FROST;
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = "wizards:frost_elemental";
-        modifier.summon_behaviour.lifespan.active_seconds_add = seconds;
+
+        // Restores what the base summon gave up for this node: the size scaling, plus the
+        // halved-away portion of the defensive inheritance (entries merge additively with
+        // the summon's own by attribute_id).
+        var s = SpellSchools.FROST.id.toString();
+        modifier.summon_attribute_scaling = new AttributeScaling();
+        modifier.summon_attribute_scaling.entries = List.of(
+                summonScaling(EntityAttributes.GENERIC_SCALE.getIdAsString(), s, 0, 0.05),
+                summonScaling(EntityAttributes.GENERIC_MAX_HEALTH.getIdAsString(), s, 0, 1.0),
+                summonScaling(EntityAttributes.GENERIC_ARMOR.getIdAsString(), s, 5, 0.05),
+                summonScaling(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE.getIdAsString(), s, 2.5, 0.025)
+        );
+
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
+    }
+
+    /// A single owner-scaled attribute entry: `targetAttribute += base + ownerAttribute * coefficient`.
+    private static AttributeScaling.Entry summonScaling(String targetAttribute, String ownerAttribute,
+                                                        double base, double coefficient) {
+        var entry = new AttributeScaling.Entry();
+        entry.attribute_id = targetAttribute;
+        entry.modifiers = List.of(new AttributeScaling.Entry.OwnerModifier(
+                ownerAttribute, EntityAttributeModifier.Operation.ADD_VALUE, base, coefficient));
+        return entry;
     }
 
     public static final Skills.Entry frost_tier_1_passive_1 = add(frost_tier_1_passive_1());
