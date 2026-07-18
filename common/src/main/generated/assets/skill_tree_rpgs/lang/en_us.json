@@ -565,7 +565,7 @@
   "spell.skill_tree_rpgs.frost_tier_3_spell_2_modifier_1.name": "Colossal Lance",
   "spell.skill_tree_rpgs.frost_tier_3_spell_2_modifier_2.description": "Ice Lance hits explode, damaging enemies within {impact_range} blocks.",
   "spell.skill_tree_rpgs.frost_tier_3_spell_2_modifier_2.name": "Shattering Lance",
-  "spell.skill_tree_rpgs.frost_tier_3_spell_2_root.description": "Ice Lance power increased by {power_multiplier}.",
+  "spell.skill_tree_rpgs.frost_tier_3_spell_2_root.description": "Reduces the cooldown of Ice Lance by {cooldown_duration_deduct} sec.",
   "spell.skill_tree_rpgs.frost_tier_3_spell_2_root.name": "Improved Ice Lance",
   "spell.skill_tree_rpgs.frost_tier_4_spell_1_modifier_1.description": "Blizzard damage increased by {power_multiplier}.",
   "spell.skill_tree_rpgs.frost_tier_4_spell_1_modifier_1.name": "Hail Storm",

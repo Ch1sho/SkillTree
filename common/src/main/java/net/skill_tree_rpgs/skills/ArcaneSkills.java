@@ -29,6 +29,14 @@ public class ArcaneSkills {
         return entry;
     }
 
+    public static final String ARCANE_MISSILE = "wizards:arcane_missile";
+    public static final String ARCANE_BEAM = "wizards:arcane_beam";
+    public static final String ARCANE_BLINK = "wizards:arcane_blink";
+    public static final String ARCANE_EXPLOSION = "wizards:arcane_explosion";
+    public static final String ARCANE_BARRAGE = "wizards:arcane_barrage";
+    public static final String ARCANE_EVOCATION = "wizards:arcane_evocation";
+    public static final String ARCANE_SPELL_TAG = "#wizards:arcane";
+
     public static final Skills.Entry arcane_tier_2_spell_1_modifier_1 = add(arcane_tier_2_spell_1_modifier_1());
     private static Skills.Entry arcane_tier_2_spell_1_modifier_1() {
         var id = Identifier.of(NAMESPACE, "arcane_tier_2_spell_1_modifier_1");
@@ -39,7 +47,7 @@ public class ArcaneSkills {
         spell.school = SpellSchools.ARCANE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:arcane_missile";
+        modifier.spell_pattern = ARCANE_MISSILE;
 
         modifier.projectile_launch = Spell.LaunchProperties.EMPTY();
         modifier.projectile_launch.extra_launch_count = 1;
@@ -71,7 +79,7 @@ public class ArcaneSkills {
         spell.school = SpellSchools.ARCANE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:arcane_missile";
+        modifier.spell_pattern = ARCANE_MISSILE;
 
         var impact = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 4, 0, 2);
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
@@ -95,7 +103,7 @@ public class ArcaneSkills {
         spell.school = SpellSchools.ARCANE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:arcane_beam";
+        modifier.spell_pattern = ARCANE_BEAM;
         var impact = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 6, 1, 9);
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
         modifier.impacts = List.of(impact);
@@ -119,7 +127,7 @@ public class ArcaneSkills {
         spell.school = SpellSchools.ARCANE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:arcane_beam";
+        modifier.spell_pattern = ARCANE_BEAM;
         var impact = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 3, 1, 4);
         impact.action.apply_to_caster = true;
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
@@ -155,10 +163,10 @@ public class ArcaneSkills {
                         15, 0.1F, 0.3F).color(Color.ARCANE.toRGBA())
         };
 
-        var trigger = SpellBuilder.Triggers.specificSpellCast("wizards:arcane_blink");
+        var trigger = SpellBuilder.Triggers.specificSpellCast(ARCANE_BLINK);
         spell.passive.triggers = List.of(trigger);
 
-        var stashTrigger = SpellBuilder.Triggers.specificSpellCast("#wizards:arcane");
+        var stashTrigger = SpellBuilder.Triggers.specificSpellCast(ARCANE_SPELL_TAG);
         SpellBuilder.Deliver.stash(spell, effect.id.toString(), duration, stashTrigger);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
@@ -195,7 +203,7 @@ public class ArcaneSkills {
         impact2.action.status_effect.amplifier = -1;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:arcane_blink";
+        modifier.spell_pattern = ARCANE_BLINK;
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
         modifier.impacts = List.of(impact1, impact2);
         spell.modifiers = List.of(modifier);
@@ -210,18 +218,18 @@ public class ArcaneSkills {
 
     public static final Skills.Entry arcane_tier_2_spell_1_root = add(SkillsCommon.powerRoot(
             Skills.Category.ARCANE, SpellSchools.ARCANE,
-            "arcane_tier_2_spell_1_root", "wizards:arcane_missile", "Arcane Missiles", 0.1F));
+            "arcane_tier_2_spell_1_root", ARCANE_MISSILE, "Arcane Missiles", 0.1F));
     public static final Skills.Entry arcane_tier_2_spell_2_root = add(SkillsCommon.radiusRoot(
             Skills.Category.ARCANE, SpellSchools.ARCANE,
-            "arcane_tier_2_spell_2_root", "wizards:arcane_explosion", "Arcane Explosion", 1F));
+            "arcane_tier_2_spell_2_root", ARCANE_EXPLOSION, "Arcane Explosion", 1F));
     public static final Skills.Entry arcane_tier_3_spell_1_root = add(SkillsCommon.critRoot(
             Skills.Category.ARCANE, SpellSchools.ARCANE,
-            "arcane_tier_3_spell_1_root", "wizards:arcane_beam", "Arcane Beam", 0.05F));
+            "arcane_tier_3_spell_1_root", ARCANE_BEAM, "Arcane Beam", 0.05F));
     // Flat +10% critical strike chance on the summoned emitters (crit chance attribute is
     // baseline-100, so a flat +10 with no owner scaling reads as +10%).
     public static final Skills.Entry arcane_tier_3_spell_2_root = add(SkillsCommon.spellRoot(
             Skills.Category.ARCANE, SpellSchools.ARCANE,
-            "arcane_tier_3_spell_2_root", "wizards:arcane_barrage", "Arcane Barrage",
+            "arcane_tier_3_spell_2_root", ARCANE_BARRAGE, "Arcane Barrage",
             "Arcane Barrage emitters gain 10% increased critical strike chance.",
             modifier -> {
                 var critChance = new AttributeScaling.Entry();
@@ -234,10 +242,10 @@ public class ArcaneSkills {
             }));
     public static final Skills.Entry arcane_tier_4_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.ARCANE, SpellSchools.ARCANE,
-            "arcane_tier_4_spell_1_root", "wizards:arcane_blink", "Blink", 3F));
+            "arcane_tier_4_spell_1_root", ARCANE_BLINK, "Blink", 3F));
     public static final Skills.Entry arcane_tier_4_spell_2_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.ARCANE, SpellSchools.ARCANE,
-            "arcane_tier_4_spell_2_root", "wizards:arcane_evocation", "Evocation", 5F));
+            "arcane_tier_4_spell_2_root", ARCANE_EVOCATION, "Evocation", 5F));
 
     // ===================================================================================
     // Powerful mutex modifiers for the second spell of each tier (spell_2).
@@ -255,7 +263,7 @@ public class ArcaneSkills {
 
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
-        var trigger = SpellBuilder.Triggers.specificSpellHit("wizards:arcane_explosion");
+        var trigger = SpellBuilder.Triggers.specificSpellHit(ARCANE_EXPLOSION);
         trigger.chance = 0.25F;
         trigger.cap_per_tick = 1;
         trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
@@ -266,7 +274,7 @@ public class ArcaneSkills {
         };
         spell.release.sound = new Sound(SpellEngineSounds.SIGNAL_SPELL_CRIT.id());
 
-        var reset = SpellBuilder.Impacts.resetCooldownActive("wizards:arcane_explosion");
+        var reset = SpellBuilder.Impacts.resetCooldownActive(ARCANE_EXPLOSION);
         reset.action.apply_to_caster = true;
         spell.impacts = List.of(reset);
 
@@ -288,7 +296,7 @@ public class ArcaneSkills {
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
         spell.deliver.delay = 7;
 
-        var trigger = SpellBuilder.Triggers.specificSpellHit("wizards:arcane_explosion");
+        var trigger = SpellBuilder.Triggers.specificSpellHit(ARCANE_EXPLOSION);
         spell.passive.triggers = List.of(trigger);
 
         var radius = 3.0F;
@@ -328,7 +336,7 @@ public class ArcaneSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.ARCANE;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:arcane_barrage";
+        modifier.spell_pattern = ARCANE_BARRAGE;
         modifier.summon_spawn_count_add = 1;
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
@@ -342,7 +350,7 @@ public class ArcaneSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.ARCANE;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:arcane_barrage";
+        modifier.spell_pattern = ARCANE_BARRAGE;
 
         // Mirror the owner's Haste onto the emitters, so their (haste-affected) firing cadence
         // matches the caster's. Haste is a percent stat where 100 = neutral; the emitter seeds
@@ -369,7 +377,7 @@ public class ArcaneSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.ARCANE;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:arcane_evocation";
+        modifier.spell_pattern = ARCANE_EVOCATION;
         modifier.channel_ticks_add = extraChannels;
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
@@ -383,7 +391,7 @@ public class ArcaneSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.ARCANE;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:arcane_evocation";
+        modifier.spell_pattern = ARCANE_EVOCATION;
         modifier.effect_duration_add = 2;
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));

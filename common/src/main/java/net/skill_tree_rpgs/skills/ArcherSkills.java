@@ -29,6 +29,13 @@ public class ArcherSkills {
         return entry;
     }
 
+    public static final String POWER_SHOT = "archers:power_shot";
+    public static final String ENTANGLING_ROOTS = "archers:entangling_roots";
+    public static final String BARRAGE = "archers:barrage";
+    public static final String MAGIC_ARROW = "archers:magic_arrow";
+    public static final String SPIRIT_WOLF = "archers:spirit_wolf";
+    public static final String RAIN_OF_ARROWS = "archers:rain_of_arrows";
+
     public static final Skills.Entry archer_tier_2_spell_1_modifier_1 = add(archer_tier_2_spell_1_modifier_1());
     private static Skills.Entry archer_tier_2_spell_1_modifier_1() {
         var id = Identifier.of(NAMESPACE, "archer_tier_2_spell_1_modifier_1");
@@ -38,7 +45,7 @@ public class ArcherSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "archers:power_shot";
+        modifier.spell_pattern = POWER_SHOT;
         modifier.stash_amplifier_add = 1;
         modifier.effect_amplifier_cap_add = 1;
         spell.modifiers = List.of(modifier);
@@ -57,7 +64,7 @@ public class ArcherSkills {
         var radius = 3F;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "archers:power_shot";
+        modifier.spell_pattern = POWER_SHOT;
 
         var impact = SpellBuilder.Impacts.damage(0.5F, 0);
         impact.action.allow_on_center_target = false;
@@ -98,7 +105,7 @@ public class ArcherSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "archers:entangling_roots";
+        modifier.spell_pattern = ENTANGLING_ROOTS;
 
         var impact = SpellBuilder.Impacts.effectAdd(StatusEffects.POISON.getIdAsString(), 5, 1, 1);
         impact.chance = 0.5F;
@@ -124,7 +131,7 @@ public class ArcherSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "archers:entangling_roots";
+        modifier.spell_pattern = ENTANGLING_ROOTS;
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
         var impact = SpellBuilder.Impacts.effectSet(effect.id.toString(), 2, 0);
         impact.chance = 0.3F;
@@ -144,7 +151,7 @@ public class ArcherSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "archers:barrage";
+        modifier.spell_pattern = BARRAGE;
         modifier.projectile_launch = Spell.LaunchProperties.EMPTY();
         modifier.projectile_launch.extra_launch_count = 1; // TODO: Check if works for arrows
         spell.modifiers = List.of(modifier);
@@ -161,7 +168,7 @@ public class ArcherSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "archers:barrage";
+        modifier.spell_pattern = BARRAGE;
         var impact = SpellBuilder.Impacts.heal(0.1F);
         impact.sound = Sound.withVolume(SpellEngineSounds.LEECHING_IMPACT.id(), 0.75F);
         impact.action.apply_to_caster = true;
@@ -181,11 +188,11 @@ public class ArcherSkills {
         var spell = SkillsCommon.createModifierAlikePassiveSpell();
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
 
-        var trigger = SpellBuilder.Triggers.specificSpellCast("archers:magic_arrow");
+        var trigger = SpellBuilder.Triggers.specificSpellCast(MAGIC_ARROW);
         trigger.chance = 0.4F;
         spell.passive.triggers = List.of(trigger);
 
-        var impact = SpellBuilder.Impacts.resetCooldownActive("archers:magic_arrow");
+        var impact = SpellBuilder.Impacts.resetCooldownActive(MAGIC_ARROW);
         impact.action.apply_to_caster = true;
         spell.impacts = List.of(impact);
 
@@ -201,7 +208,7 @@ public class ArcherSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "archers:magic_arrow";
+        modifier.spell_pattern = MAGIC_ARROW;
         modifier.knockback_multiply_base = 1.5F;
         spell.modifiers = List.of(modifier);
 
@@ -215,22 +222,22 @@ public class ArcherSkills {
 
     public static final Skills.Entry archer_tier_2_spell_1_root = add(SkillsCommon.lingerRoot(
             Skills.Category.ARCHER, ExternalSpellSchools.PHYSICAL_RANGED,
-            "archer_tier_2_spell_1_root", "archers:power_shot", "Power Shot", 2F));
+            "archer_tier_2_spell_1_root", POWER_SHOT, "Power Shot", 2F));
     public static final Skills.Entry archer_tier_2_spell_2_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.ARCHER, ExternalSpellSchools.PHYSICAL_RANGED,
-            "archer_tier_2_spell_2_root", "archers:entangling_roots", "Entangling Roots", 3F));
+            "archer_tier_2_spell_2_root", ENTANGLING_ROOTS, "Entangling Roots", 3F));
     public static final Skills.Entry archer_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.ARCHER, ExternalSpellSchools.PHYSICAL_RANGED,
-            "archer_tier_3_spell_1_root", "archers:barrage", "Barrage", 1F));
+            "archer_tier_3_spell_1_root", BARRAGE, "Barrage", 1F));
     public static final Skills.Entry archer_tier_3_spell_2_root = add(SkillsCommon.companionRoot(
             Skills.Category.ARCHER, ExternalSpellSchools.PHYSICAL_RANGED,
-            "archer_tier_3_spell_2_root", "archers:spirit_wolf", "Spirit Wolf", 5));
+            "archer_tier_3_spell_2_root", SPIRIT_WOLF, "Spirit Wolf", 5));
     public static final Skills.Entry archer_tier_4_spell_1_root = add(SkillsCommon.powerRoot(
             Skills.Category.ARCHER, ExternalSpellSchools.PHYSICAL_RANGED,
-            "archer_tier_4_spell_1_root", "archers:magic_arrow", "Magic Arrow", 0.1F));
+            "archer_tier_4_spell_1_root", MAGIC_ARROW, "Magic Arrow", 0.1F));
     public static final Skills.Entry archer_tier_4_spell_2_root = add(SkillsCommon.critRoot(
             Skills.Category.ARCHER, ExternalSpellSchools.PHYSICAL_RANGED,
-            "archer_tier_4_spell_2_root", "archers:rain_of_arrows", "Rain of Arrows", 0.05F));
+            "archer_tier_4_spell_2_root", RAIN_OF_ARROWS, "Rain of Arrows", 0.05F));
 
     // ===================================================================================
     // Powerful mutex modifiers for the second spell of tiers 3 and 4 (spell_2).
@@ -247,7 +254,7 @@ public class ArcherSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "archers:spirit_wolf";
+        modifier.spell_pattern = SPIRIT_WOLF;
         modifier.summon_spawn_count_add = 1;
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCHER));
@@ -262,7 +269,7 @@ public class ArcherSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "archers:spirit_wolf";
+        modifier.spell_pattern = SPIRIT_WOLF;
         modifier.summon_behaviour.lifespan.active_seconds_add = seconds;
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCHER));
@@ -276,7 +283,7 @@ public class ArcherSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "archers:rain_of_arrows";
+        modifier.spell_pattern = RAIN_OF_ARROWS;
         modifier.projectile_launch = Spell.LaunchProperties.EMPTY();
         modifier.projectile_launch.extra_launch_count = 10;
         modifier.meteor_launch_radius_add = 1.5F;
@@ -296,7 +303,7 @@ public class ArcherSkills {
 
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
-        var trigger = SpellBuilder.Triggers.specificSpellHit("archers:rain_of_arrows");
+        var trigger = SpellBuilder.Triggers.specificSpellHit(RAIN_OF_ARROWS);
         trigger.chance = 0.1F;
         trigger.cap_per_tick = 1;
         trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
@@ -307,7 +314,7 @@ public class ArcherSkills {
         };
         spell.release.sound = new Sound(SpellEngineSounds.SIGNAL_SPELL_CRIT.id());
 
-        var reset = SpellBuilder.Impacts.resetCooldownActive("archers:rain_of_arrows");
+        var reset = SpellBuilder.Impacts.resetCooldownActive(RAIN_OF_ARROWS);
         reset.action.apply_to_caster = true;
         spell.impacts = List.of(reset);
 

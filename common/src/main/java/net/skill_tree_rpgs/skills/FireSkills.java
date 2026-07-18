@@ -31,6 +31,13 @@ public class FireSkills {
 
     public static final Color FIRE_MAGIC_COLOR = Color.from(0xff6600);
 
+    public static final String FIRE_BREATH = "wizards:fire_breath";
+    public static final String FIRE_SLASH = "wizards:fire_slash";
+    public static final String FIRE_METEOR = "wizards:fire_meteor";
+    public static final String FIRE_STORM = "wizards:fire_storm";
+    public static final String FIRE_WALL = "wizards:fire_wall";
+    public static final String FIRE_HYDRA = "wizards:fire_hydra";
+
     public static final Skills.Entry fire_tier_2_spell_1_modifier_1 = add(fire_tier_2_spell_1_modifier_1());
     private static Skills.Entry fire_tier_2_spell_1_modifier_1() {
         var id = Identifier.of(NAMESPACE, "fire_tier_2_spell_1_modifier_1");
@@ -42,7 +49,7 @@ public class FireSkills {
 
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
-        var trigger = SpellBuilder.Triggers.specificSpellHit("wizards:fire_breath");
+        var trigger = SpellBuilder.Triggers.specificSpellHit(FIRE_BREATH);
         trigger.chance = 0.1F;
         spell.passive.triggers = List.of(trigger);
 
@@ -62,7 +69,7 @@ public class FireSkills {
         spell.school = SpellSchools.FIRE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:fire_breath";
+        modifier.spell_pattern = FIRE_BREATH;
         modifier.range_add = 2;
         spell.modifiers = List.of(modifier);
 
@@ -82,7 +89,7 @@ public class FireSkills {
         spell.school = SpellSchools.FIRE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:fire_meteor";
+        modifier.spell_pattern = FIRE_METEOR;
         modifier.projectile_launch = Spell.LaunchProperties.EMPTY();
         modifier.projectile_launch.extra_launch_count = 1;
         spell.modifiers = List.of(modifier);
@@ -102,7 +109,7 @@ public class FireSkills {
 
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
-        var trigger = SpellBuilder.Triggers.specificSpellAreaImpact("wizards:fire_meteor");
+        var trigger = SpellBuilder.Triggers.specificSpellAreaImpact(FIRE_METEOR);
         spell.passive.triggers = List.of(trigger);
 
         SpellBuilder.Complex.flameCloud(spell, 3.0F, 0.3F, 6, null);
@@ -120,7 +127,7 @@ public class FireSkills {
         spell.school = SpellSchools.FIRE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:fire_wall";
+        modifier.spell_pattern = FIRE_WALL;
         modifier.additional_placements = List.of(
                 SpellBuilder.Deliver.placementByLook(6.4f, -72, 4),
                 SpellBuilder.Deliver.placementByLook(6.4f, 72, 4)
@@ -140,7 +147,7 @@ public class FireSkills {
         spell.school = SpellSchools.FIRE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:fire_wall";
+        modifier.spell_pattern = FIRE_WALL;
         var impact = SpellBuilder.Impacts.heal(0.025F);
         impact.sound = new Sound(SpellEngineSounds.GENERIC_HEALING_IMPACT_4.id());
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
@@ -158,22 +165,22 @@ public class FireSkills {
 
     public static final Skills.Entry fire_tier_2_spell_1_root = add(SkillsCommon.critRoot(
             Skills.Category.FIRE, SpellSchools.FIRE,
-            "fire_tier_2_spell_1_root", "wizards:fire_breath", "Fire Breath", 0.05F));
+            "fire_tier_2_spell_1_root", FIRE_BREATH, "Fire Breath", 0.05F));
     public static final Skills.Entry fire_tier_2_spell_2_root = add(SkillsCommon.reachRoot(
             Skills.Category.FIRE, SpellSchools.FIRE,
-            "fire_tier_2_spell_2_root", "wizards:fire_slash", "Flame Slash", 5F));
+            "fire_tier_2_spell_2_root", FIRE_SLASH, "Flame Slash", 5F));
     public static final Skills.Entry fire_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.FIRE, SpellSchools.FIRE,
-            "fire_tier_3_spell_1_root", "wizards:fire_meteor", "Meteor", 2F));
+            "fire_tier_3_spell_1_root", FIRE_METEOR, "Meteor", 2F));
     public static final Skills.Entry fire_tier_3_spell_2_root = add(SkillsCommon.powerRoot(
             Skills.Category.FIRE, SpellSchools.FIRE,
-            "fire_tier_3_spell_2_root", "wizards:fire_storm", "Firestorm", 0.1F));
+            "fire_tier_3_spell_2_root", FIRE_STORM, "Firestorm", 0.1F));
     public static final Skills.Entry fire_tier_4_spell_1_root = add(SkillsCommon.fieldRoot(
             Skills.Category.FIRE, SpellSchools.FIRE,
-            "fire_tier_4_spell_1_root", "wizards:fire_wall", "Wall of Flames", 2F));
+            "fire_tier_4_spell_1_root", FIRE_WALL, "Wall of Flames", 2F));
     public static final Skills.Entry fire_tier_4_spell_2_root = add(SkillsCommon.companionRoot(
             Skills.Category.FIRE, SpellSchools.FIRE,
-            "fire_tier_4_spell_2_root", "wizards:fire_hydra", "Fire Hydra", 5));
+            "fire_tier_4_spell_2_root", FIRE_HYDRA, "Fire Hydra", 5));
 
     // ===================================================================================
     // Powerful mutex modifiers for the second spell of each tier (spell_2).
@@ -189,7 +196,7 @@ public class FireSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FIRE;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:fire_slash";
+        modifier.spell_pattern = FIRE_SLASH;
         // Stacks on top of the base spell's charge growth (up to 2x at full charge -> up to 2.33x).
         modifier.projectile_scale_multiply = bonus;
         spell.modifiers = List.of(modifier);
@@ -207,7 +214,7 @@ public class FireSkills {
 
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
-        var trigger = SpellBuilder.Triggers.specificSpellHit("wizards:fire_slash");
+        var trigger = SpellBuilder.Triggers.specificSpellHit(FIRE_SLASH);
         trigger.chance = 0.33F;
         trigger.cap_per_tick = 1;
         trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
@@ -218,7 +225,7 @@ public class FireSkills {
         };
         spell.release.sound = new Sound(SpellEngineSounds.SIGNAL_SPELL_CRIT.id());
 
-        var reset = SpellBuilder.Impacts.resetCooldownActive("wizards:fire_slash");
+        var reset = SpellBuilder.Impacts.resetCooldownActive(FIRE_SLASH);
         reset.action.apply_to_caster = true;
         spell.impacts = List.of(reset);
 
@@ -236,7 +243,7 @@ public class FireSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FIRE;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:fire_storm";
+        modifier.spell_pattern = FIRE_STORM;
 
         var slow = SpellBuilder.Impacts.effectSet(StatusEffects.SLOWNESS.getIdAsString(), 1, 0);
 
@@ -259,7 +266,7 @@ public class FireSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FIRE;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:fire_storm";
+        modifier.spell_pattern = FIRE_STORM;
         modifier.channel_ticks_add = 2;
         modifier.knockback_multiply_base = 1F;
         spell.modifiers = List.of(modifier);
@@ -274,7 +281,7 @@ public class FireSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FIRE;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:fire_hydra";
+        modifier.spell_pattern = FIRE_HYDRA;
         modifier.summon_group_count_add = 1;
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
@@ -289,7 +296,7 @@ public class FireSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FIRE;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:fire_hydra";
+        modifier.spell_pattern = FIRE_HYDRA;
         modifier.summon_behaviour.lifespan.active_seconds_add = seconds;
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));

@@ -29,6 +29,13 @@ public class PriestSkills {
         return entry;
     }
 
+    public static final String HOLY_BEAM = "paladins:holy_beam";
+    public static final String CIRCLE_OF_HEALING = "paladins:circle_of_healing";
+    public static final String BARRIER = "paladins:barrier";
+    public static final String LEVITATE = "paladins:levitate";
+    public static final String PENANCE = "paladins:penance";
+    public static final String LIGHTWELL = "paladins:lightwell";
+
     public static final Skills.Entry priest_tier_2_spell_1_modifier_1 = add(priest_tier_2_spell_1_modifier_1());
     private static Skills.Entry priest_tier_2_spell_1_modifier_1() {
         var id = Identifier.of(NAMESPACE, "priest_tier_2_spell_1_modifier_1");
@@ -38,7 +45,7 @@ public class PriestSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:holy_beam";
+        modifier.spell_pattern = HOLY_BEAM;
         modifier.channel_ticks_add = 2;
         spell.modifiers = List.of(modifier);
 
@@ -54,7 +61,7 @@ public class PriestSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:holy_beam";
+        modifier.spell_pattern = HOLY_BEAM;
         modifier.power_modifier = new Spell.Impact.Modifier();
         modifier.power_modifier.power_multiplier = 0.1F;
 
@@ -87,7 +94,7 @@ public class PriestSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:circle_of_healing";
+        modifier.spell_pattern = CIRCLE_OF_HEALING;
 
         var impact = SpellBuilder.Impacts.effectCleanse();
         impact.particles = new ParticleBatch[]{
@@ -124,7 +131,7 @@ public class PriestSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:circle_of_healing";
+        modifier.spell_pattern = CIRCLE_OF_HEALING;
 
         // The absorption shield Circle of Healing used to apply as part of its base kit,
         // now opt-in via this node ("paladins:priest_absorption" scales with healing power).
@@ -157,7 +164,7 @@ public class PriestSkills {
 
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
-        var trigger = SpellBuilder.Triggers.specificSpellCast("paladins:barrier");
+        var trigger = SpellBuilder.Triggers.specificSpellCast(BARRIER);
         trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
         trigger.aoe_source_override = Spell.Trigger.TargetSelector.CASTER;
         spell.passive.triggers = List.of(trigger);
@@ -215,7 +222,7 @@ public class PriestSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:barrier";
+        modifier.spell_pattern = BARRIER;
         modifier.spawn_duration_add = 4;
         spell.modifiers = List.of(modifier);
 
@@ -229,22 +236,22 @@ public class PriestSkills {
 
     public static final Skills.Entry priest_tier_2_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
-            "priest_tier_2_spell_1_root", "paladins:holy_beam", "Holy Light", 2F));
+            "priest_tier_2_spell_1_root", HOLY_BEAM, "Holy Light", 2F));
     public static final Skills.Entry priest_tier_3_spell_1_root = add(SkillsCommon.powerRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
-            "priest_tier_3_spell_1_root", "paladins:circle_of_healing", "Circle of Healing", 0.1F));
+            "priest_tier_3_spell_1_root", CIRCLE_OF_HEALING, "Circle of Healing", 0.1F));
     public static final Skills.Entry priest_tier_4_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
-            "priest_tier_4_spell_1_root", "paladins:barrier", "Barrier", 5F));
+            "priest_tier_4_spell_1_root", BARRIER, "Barrier", 5F));
     public static final Skills.Entry priest_tier_2_spell_2_root = add(SkillsCommon.lingerRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
-            "priest_tier_2_spell_2_root", "paladins:levitate", "Levitate", 2F));
+            "priest_tier_2_spell_2_root", LEVITATE, "Levitate", 2F));
     public static final Skills.Entry priest_tier_3_spell_2_root = add(SkillsCommon.lingerRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
-            "priest_tier_3_spell_2_root", "paladins:penance", "Penance", 2F));
+            "priest_tier_3_spell_2_root", PENANCE, "Penance", 2F));
     public static final Skills.Entry priest_tier_4_spell_2_root = add(SkillsCommon.companionRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
-            "priest_tier_4_spell_2_root", "paladins:lightwell", "Lightwell", 4));
+            "priest_tier_4_spell_2_root", LIGHTWELL, "Lightwell", 4));
 
     // ===================================================================================
     // Powerful mutex nodes for the second spell of each tier (spell_2):
@@ -260,7 +267,7 @@ public class PriestSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:levitate";
+        modifier.spell_pattern = LEVITATE;
 
         // Splash the caster-targeted impacts (upward kick + Floating) onto nearby allies. The kick
         // uses reset_velocity, so the caster receiving it twice (directly + via the splash's center
@@ -288,7 +295,7 @@ public class PriestSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:levitate";
+        modifier.spell_pattern = LEVITATE;
 
         // One stack per channel release (Levitate releases 4 times): a full channel reaches
         // 4 x 20% = 80% damage reduction, lingering as long as the Floating effect does.
@@ -322,7 +329,7 @@ public class PriestSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:penance";
+        modifier.spell_pattern = PENANCE;
 
         // Beneficial, so Penance's Atonement splash carries it to allies near the struck
         // enemy (alongside the absorption shield) — one stack per bolt, 3 bolts per volley.
@@ -356,7 +363,7 @@ public class PriestSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:penance";
+        modifier.spell_pattern = PENANCE;
 
         var chastise = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 5, 1, 2);
         chastise.particles = new ParticleBatch[]{
@@ -418,7 +425,7 @@ public class PriestSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:lightwell";
+        modifier.spell_pattern = LIGHTWELL;
 
         // Give the well a second spell-cast action; its cadence comes from the cleanse
         // spell's own cooldown, and it fires at the same acquired friendly target.
@@ -442,7 +449,7 @@ public class PriestSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:lightwell";
+        modifier.spell_pattern = LIGHTWELL;
 
         // The well's base scaling copies 0.5x of the owner's healing power; merging in another
         // 0.25x raises that to 0.75x — i.e. +50% of the well's own healing power.

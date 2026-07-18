@@ -30,6 +30,11 @@ public class WeaponSkillModifiers {
     private static final String BOW_WEAPONS = "#minecraft:enchantable/bow";
     private static final String CROSSBOW_WEAPONS = "#minecraft:enchantable/crossbow";
 
+    public static final String ARCANE_BLAST = "wizards:arcane_blast";
+    public static final String FIRE_BLAST = "wizards:fire_blast";
+    public static final String FROSTBOLT = "wizards:frostbolt";
+    public static final String HOLY_SHOCK = "paladins:holy_shock";
+
     public static final List<Skills.Entry> ENTRIES = new ArrayList<>();
     private static Skills.Entry add(Skills.Entry entry) {
         ENTRIES.add(entry);
@@ -47,7 +52,7 @@ public class WeaponSkillModifiers {
         spell.school = SpellSchools.ARCANE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:arcane_blast";
+        modifier.spell_pattern = ARCANE_BLAST;
         modifier.power_modifier = new Spell.Impact.Modifier();
         modifier.power_modifier.power_multiplier = 0.05F;
         spell.modifiers = List.of(modifier);
@@ -64,7 +69,7 @@ public class WeaponSkillModifiers {
         spell.school = SpellSchools.ARCANE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:arcane_blast";
+        modifier.spell_pattern = ARCANE_BLAST;
         modifier.effect_amplifier_cap_add = 1;
         spell.modifiers = List.of(modifier);
 
@@ -80,7 +85,7 @@ public class WeaponSkillModifiers {
         spell.school = SpellSchools.ARCANE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:arcane_blast";
+        modifier.spell_pattern = ARCANE_BLAST;
         modifier.effect_duration_add = 2;
         spell.modifiers = List.of(modifier);
 
@@ -101,7 +106,7 @@ public class WeaponSkillModifiers {
         spell.school = SpellSchools.FIRE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:fire_blast";
+        modifier.spell_pattern = FIRE_BLAST;
         modifier.power_modifier = new Spell.Impact.Modifier();
         modifier.power_modifier.critical_chance_bonus = critChance;
         spell.modifiers = List.of(modifier);
@@ -127,7 +132,7 @@ public class WeaponSkillModifiers {
         spell.school = SpellSchools.FIRE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:fire_blast";
+        modifier.spell_pattern = FIRE_BLAST;
         var extendedRadius = 2.5F * (1F + bonus);
         modifier.replacing_area_impact = SpellBuilder.Complex.fireExplosion(extendedRadius);
 
@@ -149,7 +154,7 @@ public class WeaponSkillModifiers {
         var bonus = 0.5F;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:fire_blast";
+        modifier.spell_pattern = FIRE_BLAST;
         modifier.knockback_multiply_base = bonus;
         spell.modifiers = List.of(modifier);
 
@@ -170,7 +175,7 @@ public class WeaponSkillModifiers {
         spell.school = SpellSchools.FROST;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:frostbolt";
+        modifier.spell_pattern = FROSTBOLT;
         modifier.power_modifier = new Spell.Impact.Modifier();
         modifier.power_modifier.critical_damage_bonus = critDamage;
         spell.modifiers = List.of(modifier);
@@ -187,7 +192,7 @@ public class WeaponSkillModifiers {
         spell.school = SpellSchools.FROST;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:frostbolt";
+        modifier.spell_pattern = FROSTBOLT;
         modifier.projectile_perks = Spell.ProjectileData.Perks.EMPTY();
         modifier.projectile_perks.ricochet = 1;
         spell.modifiers = List.of(modifier);
@@ -204,7 +209,7 @@ public class WeaponSkillModifiers {
         spell.school = SpellSchools.FROST;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:frostbolt";
+        modifier.spell_pattern = FROSTBOLT;
         modifier.effect_duration_add = 2;
         spell.modifiers = List.of(modifier);
 
@@ -222,7 +227,7 @@ public class WeaponSkillModifiers {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:holy_shock";
+        modifier.spell_pattern = HOLY_SHOCK;
         modifier.cooldown_duration_deduct = 3;
         spell.modifiers = List.of(modifier);
 
@@ -240,7 +245,7 @@ public class WeaponSkillModifiers {
         var bonus = 0.2F;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:holy_shock";
+        modifier.spell_pattern = HOLY_SHOCK;
         modifier.power_modifier = new Spell.Impact.Modifier();
         modifier.power_modifier.power_multiplier = bonus;
 
@@ -262,7 +267,7 @@ public class WeaponSkillModifiers {
         var radius = 2.5F;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:holy_shock";
+        modifier.spell_pattern = HOLY_SHOCK;
         var area_impact = new Spell.AreaImpact();
         area_impact.triggering_action_type = Spell.Impact.Action.Type.DAMAGE;
         area_impact.radius = radius;

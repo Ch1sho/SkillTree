@@ -30,6 +30,13 @@ public class RogueSkills {
 
     public static final Color ROGUE_SHADOW_COLOR = Color.from(0x6600FF);
 
+    public static final String SLICE_AND_DICE = "rogues:slice_and_dice";
+    public static final String SHOCK_POWDER = "rogues:shock_powder";
+    public static final String SHADOW_STEP = "rogues:shadow_step";
+    public static final String VANISH = "rogues:vanish";
+    public static final String BEAR_TRAP = "rogues:bear_trap";
+    public static final String MUTILATE = "rogues:mutilate";
+    public static final String ROGUE_SPELL_TAG = "#rogues:rogue";
 
     public static final Skills.Entry rogue_tier_2_spell_1_modifier_1 = add(rogue_tier_2_spell_1_modifier_1());
     private static Skills.Entry rogue_tier_2_spell_1_modifier_1() {
@@ -40,7 +47,7 @@ public class RogueSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:slice_and_dice";
+        modifier.spell_pattern = SLICE_AND_DICE;
         modifier.effect_amplifier_cap_add = 2;
         spell.modifiers = List.of(modifier);
 
@@ -62,7 +69,7 @@ public class RogueSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:slice_and_dice";
+        modifier.spell_pattern = SLICE_AND_DICE;
 
         var impact = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 4, 1, 4);
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
@@ -84,7 +91,7 @@ public class RogueSkills {
 
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
-        var trigger = SpellBuilder.Triggers.specificSpellHit("rogues:shock_powder");
+        var trigger = SpellBuilder.Triggers.specificSpellHit(SHOCK_POWDER);
         trigger.impact.impact_type = null;
         trigger.chance = 0.5F;
         spell.passive.triggers = List.of(trigger);
@@ -106,7 +113,7 @@ public class RogueSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:shock_powder";
+        modifier.spell_pattern = SHOCK_POWDER;
         modifier.effect_duration_add = 1F;
         spell.modifiers = List.of(modifier);
 
@@ -130,7 +137,7 @@ public class RogueSkills {
 
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
-        var trigger = SpellBuilder.Triggers.specificSpellCast("rogues:shock_powder");
+        var trigger = SpellBuilder.Triggers.specificSpellCast(SHOCK_POWDER);
         trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
         trigger.aoe_source_override = Spell.Trigger.TargetSelector.CASTER;
         spell.passive.triggers = List.of(trigger);
@@ -168,7 +175,7 @@ public class RogueSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:shadow_step";
+        modifier.spell_pattern = SHADOW_STEP;
 
         var impact = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 5, 0, 1);
         impact.particles = new ParticleBatch[]{
@@ -203,7 +210,7 @@ public class RogueSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:shadow_step";
+        modifier.spell_pattern = SHADOW_STEP;
 
         var impact = SpellBuilder.Impacts.effectSet(effect.id.toString(), 5, 0);
         impact.action.apply_to_caster = true;
@@ -226,7 +233,7 @@ public class RogueSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:vanish";
+        modifier.spell_pattern = VANISH;
 
         var impact = SpellBuilder.Impacts.effectSet("rogues:stealth_speed", 8, 0);
         impact.action.apply_to_caster = true;
@@ -247,7 +254,7 @@ public class RogueSkills {
 
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:vanish";
+        modifier.spell_pattern = VANISH;
         modifier.effect_duration_add = 8;
         spell.modifiers = List.of(modifier);
 
@@ -261,22 +268,22 @@ public class RogueSkills {
 
     public static final Skills.Entry rogue_tier_2_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
-            "rogue_tier_2_spell_1_root", "rogues:slice_and_dice", "Slice and Dice", 2F));
+            "rogue_tier_2_spell_1_root", SLICE_AND_DICE, "Slice and Dice", 2F));
     public static final Skills.Entry rogue_tier_3_spell_1_root = add(SkillsCommon.reachRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
-            "rogue_tier_3_spell_1_root", "rogues:shadow_step", "Shadow Step", 3F));
+            "rogue_tier_3_spell_1_root", SHADOW_STEP, "Shadow Step", 3F));
     public static final Skills.Entry rogue_tier_4_spell_1_root = add(SkillsCommon.lingerRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
-            "rogue_tier_4_spell_1_root", "rogues:vanish", "Vanish", 2F));
+            "rogue_tier_4_spell_1_root", VANISH, "Vanish", 2F));
     public static final Skills.Entry rogue_tier_2_spell_2_root = add(SkillsCommon.lingerRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
-            "rogue_tier_2_spell_2_root", "rogues:shock_powder", "Shock Powder", 1F));
+            "rogue_tier_2_spell_2_root", SHOCK_POWDER, "Shock Powder", 1F));
     public static final Skills.Entry rogue_tier_3_spell_2_root = add(SkillsCommon.critRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
-            "rogue_tier_3_spell_2_root", "rogues:bear_trap", "Bear Trap", 0.05F));
+            "rogue_tier_3_spell_2_root", BEAR_TRAP, "Bear Trap", 0.05F));
     public static final Skills.Entry rogue_tier_4_spell_2_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
-            "rogue_tier_4_spell_2_root", "rogues:mutilate", "Mutilate", 2F));
+            "rogue_tier_4_spell_2_root", MUTILATE, "Mutilate", 2F));
 
     // ===================================================================================
     // Powerful mutex nodes for the second spell of tiers 3 and 4 (spell_2):
@@ -292,7 +299,7 @@ public class RogueSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:bear_trap";
+        modifier.spell_pattern = BEAR_TRAP;
 
         // The same Bleed Mortal Strike applies, amplifier scaled by power.
         var bleed = SpellBuilder.Impacts.effectSet_ScaledAmplifier(
@@ -319,7 +326,7 @@ public class RogueSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:bear_trap";
+        modifier.spell_pattern = BEAR_TRAP;
 
         // An outer ring at double the base radius, rotated so the traps fall between the
         // built-in ones (the base ring sits at 0/120/240 — a symmetric 3-ring repeats every
@@ -344,7 +351,7 @@ public class RogueSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:mutilate";
+        modifier.spell_pattern = MUTILATE;
 
         // The self-heal Mutilate used to have as part of its base kit, now opt-in here.
         var leech = SpellBuilder.Impacts.heal(0.1F);
@@ -368,7 +375,7 @@ public class RogueSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:mutilate";
+        modifier.spell_pattern = MUTILATE;
 
         // Same additive poison convention as the Coated Blades passive (power-scaled stack
         // cap), so the two build the same poison together.
@@ -582,7 +589,7 @@ public class RogueSkills {
         trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
         spell.passive.triggers = List.of(trigger);
 
-        var impact = SpellBuilder.Impacts.resetCooldownActive("#rogues:rogue");
+        var impact = SpellBuilder.Impacts.resetCooldownActive(ROGUE_SPELL_TAG);
         impact.action.apply_to_caster = true;
         impact.particles = new ParticleBatch[]{
                 SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_hourglass.id(), SkillsCommon.MIGHT_COLOR),

@@ -29,6 +29,14 @@ public class FrostSkills {
         return entry;
     }
 
+    public static final String FROST_NOVA = "wizards:frost_nova";
+    public static final String FROST_SHIELD = "wizards:frost_shield";
+    public static final String FROST_BLIZZARD = "wizards:frost_blizzard";
+    public static final String FROST_SPIKES = "wizards:frost_spikes";
+    public static final String FROST_LANCE = "wizards:frost_lance";
+    public static final String FROST_ELEMENTAL = "wizards:frost_elemental";
+    public static final String FROST_SPELL_TAG = "#wizards:frost";
+
     public static final Skills.Entry frost_tier_2_spell_1_modifier_1 = add(frost_tier_2_spell_1_modifier_1());
     private static Skills.Entry frost_tier_2_spell_1_modifier_1() {
         var id = Identifier.of(NAMESPACE, "frost_tier_2_spell_1_modifier_1");
@@ -41,7 +49,7 @@ public class FrostSkills {
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
         spell.deliver.delay = 7;
 
-        var trigger = SpellBuilder.Triggers.specificSpellHit("wizards:frost_nova");
+        var trigger = SpellBuilder.Triggers.specificSpellHit(FROST_NOVA);
         spell.passive.triggers = List.of(trigger);
 
         var radius = 3.0F;
@@ -79,7 +87,7 @@ public class FrostSkills {
         spell.school = SpellSchools.FROST;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:frost_nova";
+        modifier.spell_pattern = FROST_NOVA;
         modifier.effect_amplifier_add = 1;
         spell.modifiers = List.of(modifier);
 
@@ -97,7 +105,7 @@ public class FrostSkills {
         spell.school = SpellSchools.FROST;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:frost_shield";
+        modifier.spell_pattern = FROST_SHIELD;
         var impact = SpellBuilder.Impacts.effectSet(effect.id.toString(), 8F, 0);
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
         modifier.impacts = List.of(impact);
@@ -116,7 +124,7 @@ public class FrostSkills {
         spell.school = SpellSchools.FROST;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:frost_shield";
+        modifier.spell_pattern = FROST_SHIELD;
         modifier.effect_duration_add = 2;
         spell.modifiers = List.of(modifier);
 
@@ -133,7 +141,7 @@ public class FrostSkills {
         spell.range = 0;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:frost_blizzard";
+        modifier.spell_pattern = FROST_BLIZZARD;
         modifier.power_modifier = new Spell.Impact.Modifier();
         modifier.power_modifier.power_multiplier = 0.2F;
         spell.modifiers = List.of(modifier);
@@ -154,7 +162,7 @@ public class FrostSkills {
         var effect = SkillEffects.BLIZZARD_SLOW;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:frost_blizzard";
+        modifier.spell_pattern = FROST_BLIZZARD;
         var impact = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 3, 1, 2);
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
         modifier.impacts = List.of(impact);
@@ -172,22 +180,22 @@ public class FrostSkills {
 
     public static final Skills.Entry frost_tier_2_spell_1_root = add(SkillsCommon.lingerRoot(
             Skills.Category.FROST, SpellSchools.FROST,
-            "frost_tier_2_spell_1_root", "wizards:frost_nova", "Frost Nova", 1F));
+            "frost_tier_2_spell_1_root", FROST_NOVA, "Frost Nova", 1F));
     public static final Skills.Entry frost_tier_2_spell_2_root = add(SkillsCommon.powerRoot(
             Skills.Category.FROST, SpellSchools.FROST,
-            "frost_tier_2_spell_2_root", "wizards:frost_spikes", "Frost Spikes", 0.1F));
+            "frost_tier_2_spell_2_root", FROST_SPIKES, "Frost Spikes", 0.1F));
     public static final Skills.Entry frost_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.FROST, SpellSchools.FROST,
-            "frost_tier_3_spell_1_root", "wizards:frost_shield", "Frost Shield", 3F));
-    public static final Skills.Entry frost_tier_3_spell_2_root = add(SkillsCommon.powerRoot(
+            "frost_tier_3_spell_1_root", FROST_SHIELD, "Frost Shield", 3F));
+    public static final Skills.Entry frost_tier_3_spell_2_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.FROST, SpellSchools.FROST,
-            "frost_tier_3_spell_2_root", "wizards:frost_lance", "Ice Lance", 0.1F));
+            "frost_tier_3_spell_2_root", FROST_LANCE, "Ice Lance", 2F));
     public static final Skills.Entry frost_tier_4_spell_1_root = add(SkillsCommon.channelRoot(
             Skills.Category.FROST, SpellSchools.FROST,
-            "frost_tier_4_spell_1_root", "wizards:frost_blizzard", "Blizzard", 3));
+            "frost_tier_4_spell_1_root", FROST_BLIZZARD, "Blizzard", 3));
     public static final Skills.Entry frost_tier_4_spell_2_root = add(SkillsCommon.companionRoot(
             Skills.Category.FROST, SpellSchools.FROST,
-            "frost_tier_4_spell_2_root", "wizards:frost_elemental", "Frost Elemental", 5));
+            "frost_tier_4_spell_2_root", FROST_ELEMENTAL, "Frost Elemental", 5));
 
     // ===================================================================================
     // Powerful mutex modifiers for the second spell of each tier (spell_2).
@@ -202,7 +210,7 @@ public class FrostSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FROST;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:frost_spikes";
+        modifier.spell_pattern = FROST_SPIKES;
 
         // Continues the base row: 5 spikes end at 1.5 + 4 * 1.5 = 7.5 blocks, erupting at delays
         // 0/2/4/6/8 — the extension starts one spacing further and keeps the same cascade.
@@ -224,7 +232,7 @@ public class FrostSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FROST;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:frost_spikes";
+        modifier.spell_pattern = FROST_SPIKES;
 
         // Two rows mirroring the base one at +/-45 degrees, sharing its 2-tick eruption cascade
         // so all three rows march outward together.
@@ -249,7 +257,7 @@ public class FrostSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FROST;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:frost_lance";
+        modifier.spell_pattern = FROST_LANCE;
         // Stacks on top of the base spell's charge growth (up to 2x at full charge -> up to 2.5x).
         modifier.projectile_scale_multiply = bonus;
         spell.modifiers = List.of(modifier);
@@ -266,7 +274,7 @@ public class FrostSkills {
         var radius = 2.5F;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:frost_lance";
+        modifier.spell_pattern = FROST_LANCE;
 
         // Same shape as the Holy Blast weapon-skill node: each damaging hit re-executes the
         // spell's damage as a small burst around the struck enemy.
@@ -305,7 +313,7 @@ public class FrostSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FROST;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:frost_elemental";
+        modifier.spell_pattern = FROST_ELEMENTAL;
         modifier.summon_spawn_count_add = 1;
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
@@ -319,7 +327,7 @@ public class FrostSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FROST;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:frost_elemental";
+        modifier.spell_pattern = FROST_ELEMENTAL;
 
         // Restores what the base summon gave up for this node: the size scaling, plus the
         // halved-away portion of the defensive inheritance (entries merge additively with
@@ -506,7 +514,7 @@ public class FrostSkills {
         trigger.chance = 0.25F;
         spell.passive.triggers = List.of(trigger);
 
-        var stashTrigger = SpellBuilder.Triggers.specificSpellCast("#wizards:frost");
+        var stashTrigger = SpellBuilder.Triggers.specificSpellCast(FROST_SPELL_TAG);
         SpellBuilder.Deliver.stash(spell, effect.id.toString(), duration, stashTrigger);
 
         // No impacts, stash will just be consumed
@@ -532,7 +540,7 @@ public class FrostSkills {
         trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
         spell.passive.triggers = List.of(trigger);
 
-        var impact = SpellBuilder.Impacts.resetCooldownActive("#wizards:frost");
+        var impact = SpellBuilder.Impacts.resetCooldownActive(FROST_SPELL_TAG);
         impact.particles = new ParticleBatch[]{
                 SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_hourglass.id(), Color.FROST),
                 new ParticleBatch(

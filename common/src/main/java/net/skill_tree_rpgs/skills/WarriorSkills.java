@@ -27,6 +27,13 @@ public class WarriorSkills {
         return entry;
     }
 
+    public static final String THROW = "rogues:throw";
+    public static final String CHARGE = "rogues:charge";
+    public static final String MORTAL_STRIKE = "rogues:mortal_strike";
+    public static final String THROW_NET = "rogues:throw_net";
+    public static final String SHOUT = "rogues:shout";
+    public static final String LAST_STAND = "rogues:last_stand";
+
     public static final Skills.Entry warrior_tier_2_spell_1_modifier_1 = add(warrior_tier_2_spell_1_modifier_1());
     private static Skills.Entry warrior_tier_2_spell_1_modifier_1() {
         var id = Identifier.of(NAMESPACE, "warrior_tier_2_spell_1_modifier_1");
@@ -36,7 +43,7 @@ public class WarriorSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:throw";
+        modifier.spell_pattern = THROW;
         modifier.projectile_perks = Spell.ProjectileData.Perks.EMPTY();
         modifier.projectile_perks.ricochet = 1;
         spell.modifiers = List.of(modifier);
@@ -55,7 +62,7 @@ public class WarriorSkills {
         var bonus = 0.5F;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:throw";
+        modifier.spell_pattern = THROW;
         modifier.knockback_multiply_base = bonus;
         spell.modifiers = List.of(modifier);
 
@@ -71,7 +78,7 @@ public class WarriorSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:charge";
+        modifier.spell_pattern = CHARGE;
         modifier.effect_duration_add = 1;
         spell.modifiers = List.of(modifier);
 
@@ -89,7 +96,7 @@ public class WarriorSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
         spell.range = 0;
 
-        var trigger = SpellBuilder.Triggers.specificSpellCast("rogues:charge");
+        var trigger = SpellBuilder.Triggers.specificSpellCast(CHARGE);
         spell.passive.triggers = List.of(trigger);
 
         spell.deliver.type = Spell.Delivery.Type.STASH_EFFECT;
@@ -117,7 +124,7 @@ public class WarriorSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:mortal_strike";
+        modifier.spell_pattern = MORTAL_STRIKE;
 
         var impact = SpellBuilder.Impacts.effectSet(effect.id.toString(), 6, 0);
         impact.action.apply_to_caster = true;
@@ -137,7 +144,7 @@ public class WarriorSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:mortal_strike";
+        modifier.spell_pattern = MORTAL_STRIKE;
         modifier.effect_duration_add = 3;
         spell.modifiers = List.of(modifier);
 
@@ -167,7 +174,7 @@ public class WarriorSkills {
         spell.target.area = new Spell.Target.Area();
         spell.target.area.include_caster = true;
 
-        var trigger = SpellBuilder.Triggers.specificSpellCast("rogues:shout");
+        var trigger = SpellBuilder.Triggers.specificSpellCast(SHOUT);
         spell.passive.triggers = List.of(trigger);
 
         var impact = SpellBuilder.Impacts.effectSet(effect.id.toString(), 6, 0);
@@ -188,7 +195,7 @@ public class WarriorSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:shout";
+        modifier.spell_pattern = SHOUT;
 
         var impact = SpellBuilder.Impacts.taunt();
         impact.particles = new ParticleBatch[]{
@@ -208,22 +215,22 @@ public class WarriorSkills {
 
     public static final Skills.Entry warrior_tier_2_spell_1_root = add(SkillsCommon.powerRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
-            "warrior_tier_2_spell_1_root", "rogues:throw", "Shattering Throw", 0.1F));
+            "warrior_tier_2_spell_1_root", THROW, "Shattering Throw", 0.1F));
     public static final Skills.Entry warrior_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
-            "warrior_tier_3_spell_1_root", "rogues:charge", "Charge", 2F));
+            "warrior_tier_3_spell_1_root", CHARGE, "Charge", 2F));
     public static final Skills.Entry warrior_tier_4_spell_1_root = add(SkillsCommon.meleeRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
-            "warrior_tier_4_spell_1_root", "rogues:mortal_strike", "Mortal Strike", 0.1F));
+            "warrior_tier_4_spell_1_root", MORTAL_STRIKE, "Mortal Strike", 0.1F));
     public static final Skills.Entry warrior_tier_2_spell_2_root = add(SkillsCommon.reachRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
-            "warrior_tier_2_spell_2_root", "rogues:throw_net", "Throw Net", 5F));
+            "warrior_tier_2_spell_2_root", THROW_NET, "Throw Net", 5F));
     public static final Skills.Entry warrior_tier_3_spell_2_root = add(SkillsCommon.radiusRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
-            "warrior_tier_3_spell_2_root", "rogues:shout", "Shout", 2F));
+            "warrior_tier_3_spell_2_root", SHOUT, "Shout", 2F));
     public static final Skills.Entry warrior_tier_4_spell_2_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
-            "warrior_tier_4_spell_2_root", "rogues:last_stand", "Last Stand", 5F));
+            "warrior_tier_4_spell_2_root", LAST_STAND, "Last Stand", 5F));
 
     // ===================================================================================
     // Powerful mutex nodes for the second spell of tiers 2 and 4 (spell_2):
@@ -239,7 +246,7 @@ public class WarriorSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:throw_net";
+        modifier.spell_pattern = THROW_NET;
         modifier.projectile_perks = new Spell.ProjectileData.Perks();
         modifier.projectile_perks.ricochet = 2;
         spell.modifiers = List.of(modifier);
@@ -256,7 +263,7 @@ public class WarriorSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:throw_net";
+        modifier.spell_pattern = THROW_NET;
         modifier.effect_duration_add = 2F;
         spell.modifiers = List.of(modifier);
 
@@ -277,7 +284,7 @@ public class WarriorSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:last_stand";
+        modifier.spell_pattern = LAST_STAND;
 
         // Mirrors the base buff's stacking: one Juggernaut stack per channel release, same
         // 10s duration, so size tracks the Last Stand stack count.
@@ -426,7 +433,7 @@ public class WarriorSkills {
         trigger.chance = 0.25F;
         spell.passive.triggers = List.of(trigger);
 
-        var impact = SpellBuilder.Impacts.resetCooldownActive("rogues:charge");
+        var impact = SpellBuilder.Impacts.resetCooldownActive(CHARGE);
         impact.particles = new ParticleBatch[]{
                 SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_hourglass.id(), Color.RAGE)
         };

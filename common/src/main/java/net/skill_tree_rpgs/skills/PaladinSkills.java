@@ -30,6 +30,14 @@ public class PaladinSkills {
         return entry;
     }
 
+    public static final String FLASH_HEAL = "paladins:flash_heal";
+    public static final String DIVINE_PROTECTION = "paladins:divine_protection";
+    public static final String JUDGEMENT = "paladins:judgement";
+    public static final String BATTLE_BANNER = "paladins:battle_banner";
+    public static final String BLESSED_STRIKES = "paladins:blessed_strikes";
+    public static final String IMMOLATION = "paladins:immolation";
+    public static final String PLACEHOLDER_SPELL = "paladins:placeholder";
+
     public static final Skills.Entry paladin_tier_2_spell_1_modifier_1 = add(paladin_tier_2_spell_1_modifier_1());
     private static Skills.Entry paladin_tier_2_spell_1_modifier_1() {
         var effect = SkillEffects.DIVINE_STRENGTH;
@@ -48,7 +56,7 @@ public class PaladinSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:flash_heal";
+        modifier.spell_pattern = FLASH_HEAL;
 
         var impact = SpellBuilder.Impacts.effectSet(SkillEffects.DIVINE_STRENGTH.id.toString(), 8, 0);
         impact.particles = new ParticleBatch[]{
@@ -79,7 +87,7 @@ public class PaladinSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:flash_heal";
+        modifier.spell_pattern = FLASH_HEAL;
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
         var impact = SpellBuilder.Impacts.effectCleanse();
         impact.particles = new ParticleBatch[]{
@@ -112,7 +120,7 @@ public class PaladinSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:divine_protection";
+        modifier.spell_pattern = DIVINE_PROTECTION;
 
         var impact = SpellBuilder.Impacts.effectSet(effect.id.toString(), 4, 0);
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
@@ -132,7 +140,7 @@ public class PaladinSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:divine_protection";
+        modifier.spell_pattern = DIVINE_PROTECTION;
         modifier.effect_amplifier_add = 1;
         modifier.effect_amplifier_cap_add = 1;
         spell.modifiers = List.of(modifier);
@@ -149,7 +157,7 @@ public class PaladinSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:judgement";
+        modifier.spell_pattern = JUDGEMENT;
         modifier.power_modifier = new Spell.Impact.Modifier();
         modifier.power_modifier.power_multiplier = 0.2F;
         spell.modifiers = List.of(modifier);
@@ -166,7 +174,7 @@ public class PaladinSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:judgement";
+        modifier.spell_pattern = JUDGEMENT;
 
         var impact = SpellBuilder.Impacts.taunt();
         impact.particles = new ParticleBatch[]{
@@ -188,7 +196,7 @@ public class PaladinSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:battle_banner";
+        modifier.spell_pattern = BATTLE_BANNER;
         modifier.spawn_duration_add = 4;
         spell.modifiers = List.of(modifier);
 
@@ -210,7 +218,7 @@ public class PaladinSkills {
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:battle_banner";
+        modifier.spell_pattern = BATTLE_BANNER;
         var impact = SpellBuilder.Impacts.effectSet(effect.id.toString(), 2, 0);
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
         modifier.impacts = List.of(impact);
@@ -226,22 +234,22 @@ public class PaladinSkills {
 
     public static final Skills.Entry paladin_tier_2_spell_1_root = add(SkillsCommon.powerRoot(
             Skills.Category.PALADIN, SpellSchools.HEALING,
-            "paladin_tier_2_spell_1_root", "paladins:flash_heal", "Flash Heal", 0.1F));
+            "paladin_tier_2_spell_1_root", FLASH_HEAL, "Flash Heal", 0.1F));
     public static final Skills.Entry paladin_tier_3_spell_1_root = add(SkillsCommon.lingerRoot(
             Skills.Category.PALADIN, SpellSchools.HEALING,
-            "paladin_tier_3_spell_1_root", "paladins:divine_protection", "Divine Protection", 2F));
+            "paladin_tier_3_spell_1_root", DIVINE_PROTECTION, "Divine Protection", 2F));
     public static final Skills.Entry paladin_tier_4_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.PALADIN, SpellSchools.HEALING,
-            "paladin_tier_4_spell_1_root", "paladins:battle_banner", "Battle Banner", 5F));
+            "paladin_tier_4_spell_1_root", BATTLE_BANNER, "Battle Banner", 5F));
     public static final Skills.Entry paladin_tier_2_spell_2_root = add(SkillsCommon.powerRoot(
             Skills.Category.PALADIN, SpellSchools.HEALING,
-            "paladin_tier_2_spell_2_root", "paladins:blessed_strikes", "Blessed Strikes", 0.1F));
+            "paladin_tier_2_spell_2_root", BLESSED_STRIKES, "Blessed Strikes", 0.1F));
     public static final Skills.Entry paladin_tier_3_spell_2_root = add(SkillsCommon.critRoot(
             Skills.Category.PALADIN, SpellSchools.HEALING,
-            "paladin_tier_3_spell_2_root", "paladins:judgement", "Judgement", 0.05F));
+            "paladin_tier_3_spell_2_root", JUDGEMENT, "Judgement", 0.05F));
     public static final Skills.Entry paladin_tier_4_spell_2_root = add(SkillsCommon.radiusRoot(
             Skills.Category.PALADIN, SpellSchools.HEALING,
-            "paladin_tier_4_spell_2_root", "paladins:immolation", "Immolation", 1F));
+            "paladin_tier_4_spell_2_root", IMMOLATION, "Immolation", 1F));
 
     // ===================================================================================
     // PLACEHOLDER powerful mutex nodes for tier 2 spell_2 (Blessed Strikes) — the last
@@ -253,7 +261,7 @@ public class PaladinSkills {
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.HEALING;
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:placeholder";
+        modifier.spell_pattern = PLACEHOLDER_SPELL;
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, "PLACEHOLDER", "PLACEHOLDER", null, EnumSet.of(Skills.Category.PALADIN));
     }
@@ -269,7 +277,7 @@ public class PaladinSkills {
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:immolation";
+        modifier.spell_pattern = IMMOLATION;
 
         // Radial pull: -Z in the ORIGIN frame points towards the blast centre (the caster),
         // with a small upward pop so victims are lifted off their footing.
@@ -296,7 +304,7 @@ public class PaladinSkills {
 
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
-        var trigger = SpellBuilder.Triggers.specificSpellCast("paladins:immolation");
+        var trigger = SpellBuilder.Triggers.specificSpellCast(IMMOLATION);
         trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
         trigger.aoe_source_override = Spell.Trigger.TargetSelector.CASTER;
         spell.passive.triggers = List.of(trigger);
@@ -500,8 +508,8 @@ public class PaladinSkills {
         trigger.chance = 0.25F;
         spell.passive.triggers = List.of(trigger);
 
-        //var impact = SpellBuilder.Impacts.resetCooldownActive("paladins:flash_heal"); // Used to be in place with 50% chance
-        var impact = SpellBuilder.Impacts.resetCooldownActive("paladins:divine_protection");
+        //var impact = SpellBuilder.Impacts.resetCooldownActive(FLASH_HEAL); // Used to be in place with 50% chance
+        var impact = SpellBuilder.Impacts.resetCooldownActive(DIVINE_PROTECTION);
 
         impact.particles = new ParticleBatch[]{
                 SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_hourglass.id(), Color.HOLY),
