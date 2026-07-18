@@ -332,7 +332,10 @@ public class NodeTypes {
     public static final Entry PRIEST_TIER_2_SPELL_1_MODIFIER_2 = add(modifierSpell(PriestSkills.priest_tier_2_spell_1_modifier_2).require(PALADINS));
     public static final Entry PRIEST_TIER_3_SPELL_1_MODIFIER_1 = add(modifierSpell(PriestSkills.priest_tier_3_spell_1_modifier_1).require(PALADINS));
     public static final Entry PRIEST_TIER_3_SPELL_1_MODIFIER_2 = add(modifierSpell(PriestSkills.priest_tier_3_spell_1_modifier_2).require(PALADINS));
-    public static final Entry PRIEST_TIER_4_SPELL_1_MODIFIER_1 = add(modifierSpell(PriestSkills.priest_tier_4_spell_1_modifier_1).require(PALADINS));
+    public static final Entry PRIEST_TIER_4_SPELL_1_MODIFIER_1 = add(passiveSpell(PriestSkills.priest_tier_4_spell_1_modifier_1)
+            .withIcon(Icon.spell(Identifier.of("paladins", "barrier")))
+            .require(PALADINS)
+    );
     public static final Entry PRIEST_TIER_4_SPELL_1_MODIFIER_2 = add(modifierSpell(PriestSkills.priest_tier_4_spell_1_modifier_2).require(PALADINS));
 
     public static final Entry PRIEST_TIER_1_PASSIVE_1 = add(passiveSpell(PriestSkills.priest_tier_1_passive_1).require(PALADINS));

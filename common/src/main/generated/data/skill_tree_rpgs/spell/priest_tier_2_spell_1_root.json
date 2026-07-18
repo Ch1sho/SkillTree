@@ -6,7 +6,7 @@
   "modifiers": [
     {
       "spell_pattern": "paladins:holy_beam",
-      "channel_ticks_add": 2
+      "cooldown_duration_deduct": 2.0
     }
   ]
 }

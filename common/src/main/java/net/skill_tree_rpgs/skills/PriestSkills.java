@@ -33,13 +33,13 @@ public class PriestSkills {
     private static Skills.Entry priest_tier_2_spell_1_modifier_1() {
         var id = Identifier.of(NAMESPACE, "priest_tier_2_spell_1_modifier_1");
         var title = "Graceful Channeling";
-        var description = "Reduces the cooldown of Holy Light by {cooldown_duration_deduct} sec.";
+        var description = "Channeling Holy Light releases {channel_ticks_add} additional times.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = "paladins:holy_beam";
-        modifier.cooldown_duration_deduct = 2;
+        modifier.channel_ticks_add = 2;
         spell.modifiers = List.of(modifier);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PRIEST));
@@ -148,16 +148,59 @@ public class PriestSkills {
     public static final Skills.Entry priest_tier_4_spell_1_modifier_1 = add(priest_tier_4_spell_1_modifier_1());
     private static Skills.Entry priest_tier_4_spell_1_modifier_1() {
         var id = Identifier.of(NAMESPACE, "priest_tier_4_spell_1_modifier_1");
-        var title = "Barrier Recovery";
-        var description = "Reduces the cooldown of Barrier by {cooldown_duration_deduct} sec.";
-        var spell = SpellBuilder.createSpellModifier();
+        var title = "Sacred Refuge";
+        var description = "While your Barrier stands, its interior heals allies for {heal} and cleanses a negative effect every 2 sec, for {cloud_duration} sec.";
+
+        var spell = SkillsCommon.createModifierAlikePassiveSpell();
         spell.school = SpellSchools.HEALING;
+        spell.range = 0;
 
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:barrier";
-        modifier.cooldown_duration_deduct = 10;
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
-        spell.modifiers = List.of(modifier);
+        var trigger = SpellBuilder.Triggers.specificSpellCast("paladins:barrier");
+        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
+        trigger.aoe_source_override = Spell.Trigger.TargetSelector.CASTER;
+        spell.passive.triggers = List.of(trigger);
+
+        // A gentle cloud matching the dome: same radius and the barrier's 10s lifetime.
+        spell.deliver.type = Spell.Delivery.Type.CLOUD;
+        var cloud = new Spell.Delivery.Cloud();
+        cloud.volume.radius = 4F;
+        cloud.impact_tick_interval = 40;
+        cloud.time_to_live_seconds = 10;
+        cloud.client_data.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.SPARK,
+                                SpellEngineParticles.MagicParticles.Motion.FLOAT).id().toString(),
+                        ParticleBatch.Shape.PILLAR, ParticleBatch.Origin.GROUND,
+                        2, 0.02F, 0.08F)
+                        .color(Color.from(0xccffff).toRGBA())
+        };
+        spell.deliver.clouds = List.of(cloud);
+
+        var heal = SpellBuilder.Impacts.heal(0.1F);
+        heal.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SkillsCommon.HEAL_DECELERATE.toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        6, 0.1F, 0.15F)
+                        .color(Color.from(0xccffff).toRGBA())
+        };
+        heal.sound = Sound.withVolume(SpellEngineSounds.GENERIC_HEALING_IMPACT_2.id(), 0.4F);
+
+        // Default cleanse carries a dispel chime; muted here so it doesn't ring on every cloud tick.
+        var cleanse = SpellBuilder.Impacts.effectCleanse();
+        cleanse.sound = Sound.of(SpellEngineSounds.GENERIC_DISPEL_1.id());
+        cleanse.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SkillsCommon.SPARK_DECELERATE.toString(),
+                        ParticleBatch.Shape.PILLAR, ParticleBatch.Origin.CENTER,
+                        25, 0.3F, 0.5F)
+                        .color(Color.from(0xccffff).toRGBA())
+        };
+
+        spell.impacts = List.of(heal, cleanse);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PRIEST));
     }
@@ -184,9 +227,9 @@ public class PriestSkills {
     // nodes). Patterns come from the shared palette in SkillsCommon, picked per spell.
     // ===================================================================================
 
-    public static final Skills.Entry priest_tier_2_spell_1_root = add(SkillsCommon.channelRoot(
+    public static final Skills.Entry priest_tier_2_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
-            "priest_tier_2_spell_1_root", "paladins:holy_beam", "Holy Beam", 2));
+            "priest_tier_2_spell_1_root", "paladins:holy_beam", "Holy Light", 2F));
     public static final Skills.Entry priest_tier_3_spell_1_root = add(SkillsCommon.powerRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
             "priest_tier_3_spell_1_root", "paladins:circle_of_healing", "Circle of Healing", 0.1F));
