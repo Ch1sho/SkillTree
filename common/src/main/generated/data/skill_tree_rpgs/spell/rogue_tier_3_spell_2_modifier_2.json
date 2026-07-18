@@ -5,7 +5,27 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "rogues:placeholder"
+      "spell_pattern": "rogues:bear_trap",
+      "additional_placements": [
+        {
+          "delay_ticks": 9,
+          "location_offset_by_look": 4.0,
+          "location_yaw_offset": 60.0,
+          "apply_yaw": true
+        },
+        {
+          "delay_ticks": 12,
+          "location_offset_by_look": 4.0,
+          "location_yaw_offset": 180.0,
+          "apply_yaw": true
+        },
+        {
+          "delay_ticks": 15,
+          "location_offset_by_look": 4.0,
+          "location_yaw_offset": 300.0,
+          "apply_yaw": true
+        }
+      ]
     }
   ]
 }

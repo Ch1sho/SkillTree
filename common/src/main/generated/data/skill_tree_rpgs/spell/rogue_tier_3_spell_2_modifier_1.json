@@ -5,7 +5,31 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "rogues:placeholder"
+      "spell_pattern": "rogues:bear_trap",
+      "mutate_impacts": "APPEND",
+      "impacts": [
+        {
+          "action": {
+            "type": "STATUS_EFFECT",
+            "status_effect": {
+              "effect_id": "spell_engine:bleed",
+              "duration": 6.0,
+              "amplifier": 1,
+              "amplifier_power_multiplier": 0.25
+            }
+          },
+          "particles": [
+            {
+              "particle_id": "spell_engine:dripping_blood",
+              "origin": "CENTER",
+              "shape": "SPHERE",
+              "count": 40.0,
+              "min_speed": 0.2,
+              "max_speed": 0.4
+            }
+          ]
+        }
+      ]
     }
   ]
 }

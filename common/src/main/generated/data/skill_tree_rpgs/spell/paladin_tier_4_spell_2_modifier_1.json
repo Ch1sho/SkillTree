@@ -5,7 +5,23 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "paladins:placeholder"
+      "spell_pattern": "paladins:immolation",
+      "mutate_impacts": "APPEND",
+      "impacts": [
+        {
+          "action": {
+            "type": "VELOCITY",
+            "velocity": {
+              "push": {
+                "x": 0.0,
+                "y": 0.3,
+                "z": -0.6
+              },
+              "reset_velocity": true
+            }
+          }
+        }
+      ]
     }
   ]
 }

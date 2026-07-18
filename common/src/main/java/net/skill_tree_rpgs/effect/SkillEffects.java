@@ -635,12 +635,35 @@ public class SkillEffects {
             )
     ));
 
-    public static Effects.Entry LEECHING_STRIKE = add(new Effects.Entry(Identifier.of(SkillTreeMod.NAMESPACE, "leeching_strike"),
-            "Leeching Strike",
-            "Next attack heals you.",
+    /** Rogue roll passive (Opportunist node): guaranteed critical strike for the next melee attack. */
+    public static Effects.Entry OPPORTUNIST = add(new Effects.Entry(Identifier.of(SkillTreeMod.NAMESPACE, "opportunist"),
+            "Opportunist",
+            "Guaranteed Critical Strike!",
             new CustomStatusEffect(StatusEffectCategory.BENEFICIAL, 0xffcc66),
             new EffectConfig(
-                    List.of()
+                    List.of(
+                            new AttributeModifier(
+                                    "critical_strike:chance",
+                                    1.0F,
+                                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                            )
+                    )
+            )
+    ));
+
+    /** Shock Powder (Smoke Screen node): evasion bonus while inside the smoke cloud. */
+    public static Effects.Entry SMOKE_SCREEN = add(new Effects.Entry(Identifier.of(SkillTreeMod.NAMESPACE, "smoke_screen"),
+            "Smoke Screen",
+            "Increased evasion chance.",
+            new CustomStatusEffect(StatusEffectCategory.BENEFICIAL, 0x999999),
+            new EffectConfig(
+                    List.of(
+                            new AttributeModifier(
+                                    SpellEngineAttributes.EVASION_CHANCE.id,
+                                    0.5F,
+                                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                            )
+                    )
             )
     ));
 

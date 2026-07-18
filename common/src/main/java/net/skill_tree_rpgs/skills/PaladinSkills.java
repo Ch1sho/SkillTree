@@ -15,6 +15,8 @@ import net.spell_engine.fx.SpellEngineParticles;
 import net.spell_engine.fx.SpellEngineSounds;
 import net.spell_power.api.SpellSchools;
 
+import org.joml.Vector3f;
+
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -242,9 +244,9 @@ public class PaladinSkills {
             "paladin_tier_4_spell_2_root", "paladins:immolation", "Immolation", 1F));
 
     // ===================================================================================
-    // PLACEHOLDER powerful mutex nodes for the second spell of tiers 2 and 4 (spell_2).
-    // Tier 3 spell_2 (Judgement) already has its two real powerful nodes above (reused
-    // leftovers). To be filled in with real modifiers (Blessed Strikes T2, Immolation T4).
+    // PLACEHOLDER powerful mutex nodes for tier 2 spell_2 (Blessed Strikes) — the last
+    // undesigned pair of this book. Tier 3 (Judgement) and tier 4 (Immolation) spell_2
+    // powerful nodes are real, below.
     // ===================================================================================
     private static Skills.Entry placeholder(String path) {
         var id = Identifier.of(NAMESPACE, path);
@@ -258,8 +260,95 @@ public class PaladinSkills {
 
     public static final Skills.Entry paladin_tier_2_spell_2_modifier_1 = add(placeholder("paladin_tier_2_spell_2_modifier_1"));
     public static final Skills.Entry paladin_tier_2_spell_2_modifier_2 = add(placeholder("paladin_tier_2_spell_2_modifier_2"));
-    public static final Skills.Entry paladin_tier_4_spell_2_modifier_1 = add(placeholder("paladin_tier_4_spell_2_modifier_1"));
-    public static final Skills.Entry paladin_tier_4_spell_2_modifier_2 = add(placeholder("paladin_tier_4_spell_2_modifier_2"));
+    public static final Skills.Entry paladin_tier_4_spell_2_modifier_1 = add(paladin_tier_4_spell_2_modifier_1());
+    private static Skills.Entry paladin_tier_4_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "paladin_tier_4_spell_2_modifier_1");
+        var title = "Condemn";
+        var description = "Immolation drags struck enemies towards you.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.HEALING;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "paladins:immolation";
+
+        // Radial pull: -Z in the ORIGIN frame points towards the blast centre (the caster),
+        // with a small upward pop so victims are lifted off their footing.
+        var pull = SpellBuilder.Impacts.velocity(
+                Spell.Impact.Action.Velocity.Frame.ORIGIN, new Vector3f(0, 0.3F, -0.6F));
+        pull.action.velocity.reset_velocity = true;
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(pull);
+
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PALADIN));
+    }
+
+    public static final Skills.Entry paladin_tier_4_spell_2_modifier_2 = add(paladin_tier_4_spell_2_modifier_2());
+    private static Skills.Entry paladin_tier_4_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "paladin_tier_4_spell_2_modifier_2");
+        var title = "Consecration";
+        var description = "Immolation consecrates the ground beneath you, dealing {damage} damage to enemies, for {cloud_duration} sec.";
+
+        var spell = SkillsCommon.createModifierAlikePassiveSpell();
+        spell.school = SpellSchools.HEALING;
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+
+        var trigger = SpellBuilder.Triggers.specificSpellCast("paladins:immolation");
+        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
+        trigger.aoe_source_override = Spell.Trigger.TargetSelector.CASTER;
+        spell.passive.triggers = List.of(trigger);
+
+        // The consecrated-ground cloud formerly attached to Circle of Healing, re-homed
+        // here at Immolation's own radius.
+        var radius = 5.0F;
+        spell.deliver.type = Spell.Delivery.Type.CLOUD;
+        var cloud = new Spell.Delivery.Cloud();
+        cloud.volume.radius = radius;
+        cloud.impact_tick_interval = 10;
+        cloud.time_to_live_seconds = 5;
+        cloud.client_data.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.SPARK,
+                                SpellEngineParticles.MagicParticles.Motion.FLOAT).id().toString(),
+                        ParticleBatch.Shape.PILLAR, ParticleBatch.Origin.GROUND,
+                        12, 0.05F, 0.1F)
+                        .color(SkillsCommon.HOLY_COLOR),
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.HOLY,
+                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
+                        ParticleBatch.Shape.PILLAR, ParticleBatch.Origin.GROUND,
+                        12, 0.05F, 0.15F)
+                        .color(SkillsCommon.HOLY_COLOR),
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.ARCANE,
+                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
+                        ParticleBatch.Shape.CIRCLE, ParticleBatch.Origin.GROUND,
+                        12, 0.05F, 0.15F)
+                        .color(SkillsCommon.HOLY_COLOR).extent(radius),
+        };
+        spell.deliver.clouds = List.of(cloud);
+
+        var impact = SpellBuilder.Impacts.damage(0.2F, 0.1F);
+        impact.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.HOLY,
+                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.FEET,
+                        10, 0.4F, 0.4F)
+                        .color(SkillsCommon.HOLY_COLOR),
+        };
+        impact.sound = new Sound(SkillSounds.priest_consecration_impact.id());
+        spell.impacts = List.of(impact);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PALADIN));
+    }
 
     public static final Skills.Entry paladin_tier_1_passive_1 = add(paladin_tier_1_passive_1());
     private static Skills.Entry paladin_tier_1_passive_1() {

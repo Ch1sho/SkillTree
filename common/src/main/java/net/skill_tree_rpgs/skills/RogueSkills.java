@@ -5,7 +5,7 @@ import net.minecraft.util.Identifier;
 import net.skill_tree_rpgs.SkillTreeMod;
 import net.skill_tree_rpgs.effect.SkillEffects;
 import net.spell_engine.api.datagen.SpellBuilder;
-import net.spell_engine.api.entity.SpellEntityPredicates;
+import net.spell_engine.api.effect.SpellEngineEffects;
 import net.spell_engine.api.spell.ExternalSpellSchools;
 import net.spell_engine.api.spell.Spell;
 import net.spell_engine.api.spell.fx.ParticleBatch;
@@ -77,7 +77,7 @@ public class RogueSkills {
     private static Skills.Entry rogue_tier_2_spell_2_modifier_1() {
         var id = Identifier.of(NAMESPACE, "rogue_tier_2_spell_2_modifier_1");
         var title = "Explosive Powder";
-        var description = "Shock Powder has {trigger_chance} chance to create secondary explosions, dealing {damage} damage.";
+        var description = "Shock Powder has {trigger_chance} chance to create secondary explosions dealing {damage} damage, and its stun lasts 1 sec longer.";
         var spell = SkillsCommon.createModifierAlikePassiveSpell();
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
         spell.range = 0;
@@ -94,37 +94,66 @@ public class RogueSkills {
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ROGUE));
     }
 
-    public static final Skills.Entry rogue_tier_2_spell_2_modifier_2 = add(rogue_tier_2_spell_2_modifier_2());
-    private static Skills.Entry rogue_tier_2_spell_2_modifier_2() {
-        var id = Identifier.of(NAMESPACE, "rogue_tier_2_spell_2_modifier_2");
-        var title = "Toxic Shock";
-        var description = "Shock Powder deals extra {damage} damage to poisoned targets.";
-
+    /// Hidden companion to Explosive Powder: the node grants this MODIFIER spell alongside the
+    /// passive above (a passive spell's `modifiers` are never collected — only MODIFIER-type
+    /// spells are — so the stun extension needs its own spell in a second container).
+    public static final Skills.Entry rogue_tier_2_spell_2_modifier_1_bonus = add(rogue_tier_2_spell_2_modifier_1_bonus());
+    private static Skills.Entry rogue_tier_2_spell_2_modifier_1_bonus() {
+        var id = Identifier.of(NAMESPACE, "rogue_tier_2_spell_2_modifier_1_bonus");
+        var title = "Explosive Powder";
+        var description = "Shock Powder's stun lasts {effect_duration_add} sec longer.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
 
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = "rogues:shock_powder";
-
-        var impact = SpellBuilder.Impacts.damage(0.6F, 0F);
-        SpellBuilder.configureImpactEnableCondition(impact,
-                SpellBuilder.TargetConditions.ofPredicate(SpellEntityPredicates.IS_POISONED));
-        impact.particles = new ParticleBatch[] {
-                new ParticleBatch(SpellEngineParticles.smoke_large.id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
-                        5, 0.01F, 0.05F)
-                        .color(Color.POISON_LIGHT.toRGBA()),
-                new ParticleBatch(SpellEngineParticles.smoke_large.id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
-                        5, 0.01F, 0.05F)
-                        .color(Color.POISON_MID.toRGBA()),
-        };
-        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
-        modifier.impacts = List.of(impact);
-
+        modifier.effect_duration_add = 1F;
         spell.modifiers = List.of(modifier);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ROGUE));
+    }
+
+    public static final Skills.Entry rogue_tier_2_spell_2_modifier_2 = add(rogue_tier_2_spell_2_modifier_2());
+    private static Skills.Entry rogue_tier_2_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "rogue_tier_2_spell_2_modifier_2");
+        var title = "Smoke Screen";
+        var effect = SkillEffects.SMOKE_SCREEN;
+        var description = "Shock Powder leaves a smoke screen behind for {cloud_duration} sec, increasing evasion chance of allies inside by {bonus}.";
+        SpellTooltip.DescriptionMutator mutator = (args) -> {
+            var bonus = SpellTooltip.percent(effect.config().firstModifier().value);
+            return args.description().replace("{bonus}", bonus);
+        };
+
+        var spell = SkillsCommon.createModifierAlikePassiveSpell();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+
+        var trigger = SpellBuilder.Triggers.specificSpellCast("rogues:shock_powder");
+        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
+        trigger.aoe_source_override = Spell.Trigger.TargetSelector.CASTER;
+        spell.passive.triggers = List.of(trigger);
+
+        // A lingering smoke cloud matching Shock Powder's 5 block radius, refreshing a short
+        // evasion buff on allies inside it every half second.
+        spell.deliver.type = Spell.Delivery.Type.CLOUD;
+        var cloud = new Spell.Delivery.Cloud();
+        cloud.volume.radius = 5F;
+        cloud.impact_tick_interval = 10;
+        cloud.time_to_live_seconds = 5;
+        cloud.client_data.particles = new ParticleBatch[]{
+                new ParticleBatch(SpellEngineParticles.smoke_large.id().toString(),
+                        ParticleBatch.Shape.PILLAR, ParticleBatch.Origin.GROUND,
+                        3, 0.01F, 0.05F)
+                        .color(Color.from(0x999999).toRGBA())
+        };
+        spell.deliver.clouds = List.of(cloud);
+
+        var evasion = SpellBuilder.Impacts.effectSet(effect.id.toString(), 1, 0);
+        spell.impacts = List.of(evasion);
+
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.ROGUE));
     }
 
     public static final Skills.Entry rogue_tier_3_spell_1_modifier_1 = add(rogue_tier_3_spell_1_modifier_1());
@@ -245,29 +274,115 @@ public class RogueSkills {
     public static final Skills.Entry rogue_tier_3_spell_2_root = add(SkillsCommon.critRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
             "rogue_tier_3_spell_2_root", "rogues:bear_trap", "Bear Trap", 0.05F));
-    public static final Skills.Entry rogue_tier_4_spell_2_root = add(SkillsCommon.meleeRoot(
+    public static final Skills.Entry rogue_tier_4_spell_2_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
-            "rogue_tier_4_spell_2_root", "rogues:mutilate", "Mutilate", 0.1F));
+            "rogue_tier_4_spell_2_root", "rogues:mutilate", "Mutilate", 2F));
 
     // ===================================================================================
-    // PLACEHOLDER powerful mutex nodes for the second spell of each tier (spell_2).
-    // These inert stubs complete the tree structure and are to be filled in with real
-    // modifiers (Shock Powder T2, Bear Trap T3, Mutilate T4).
+    // Powerful mutex nodes for the second spell of tiers 3 and 4 (spell_2):
+    // Bear Trap (T3), Mutilate (T4).
     // ===================================================================================
-    private static Skills.Entry placeholder(String path) {
-        var id = Identifier.of(NAMESPACE, path);
+
+    public static final Skills.Entry rogue_tier_3_spell_2_modifier_1 = add(rogue_tier_3_spell_2_modifier_1());
+    private static Skills.Entry rogue_tier_3_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "rogue_tier_3_spell_2_modifier_1");
+        var title = "Serrated Traps";
+        var description = "Sprung traps cause their victim to Bleed for {effect_duration} sec.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:placeholder";
+        modifier.spell_pattern = "rogues:bear_trap";
+
+        // The same Bleed Mortal Strike applies, amplifier scaled by power.
+        var bleed = SpellBuilder.Impacts.effectSet_ScaledAmplifier(
+                SpellEngineEffects.BLEED.id.toString(), 6, 1, 0.25F);
+        bleed.particles = new ParticleBatch[]{
+                new ParticleBatch(SpellEngineParticles.dripping_blood.id().toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        40, 0.2F, 0.4F)
+        };
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(bleed);
+
         spell.modifiers = List.of(modifier);
-        return new Skills.Entry(id, spell, "PLACEHOLDER", "PLACEHOLDER", null, EnumSet.of(Skills.Category.ROGUE));
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ROGUE));
     }
 
-    public static final Skills.Entry rogue_tier_3_spell_2_modifier_1 = add(placeholder("rogue_tier_3_spell_2_modifier_1"));
-    public static final Skills.Entry rogue_tier_3_spell_2_modifier_2 = add(placeholder("rogue_tier_3_spell_2_modifier_2"));
-    public static final Skills.Entry rogue_tier_4_spell_2_modifier_1 = add(placeholder("rogue_tier_4_spell_2_modifier_1"));
-    public static final Skills.Entry rogue_tier_4_spell_2_modifier_2 = add(placeholder("rogue_tier_4_spell_2_modifier_2"));
+    public static final Skills.Entry rogue_tier_3_spell_2_modifier_2 = add(rogue_tier_3_spell_2_modifier_2());
+    private static Skills.Entry rogue_tier_3_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "rogue_tier_3_spell_2_modifier_2");
+        var title = "Extensive Coverage";
+        var description = "Bear Trap places 3 additional traps at twice the distance, rotated between the inner ones.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "rogues:bear_trap";
+
+        // An outer ring at double the base radius, rotated so the traps fall between the
+        // built-in ones (the base ring sits at 0/120/240 — a symmetric 3-ring repeats every
+        // 120, so 60 is the rotated formation). Delays continue the base placement cascade.
+        var outer = SpellBuilder.Placements.ring(3, 4F, 60F, SpellBuilder.Placements.template());
+        for (int i = 0; i < outer.size(); i++) {
+            outer.get(i).delay_ticks = 9 + i * 3;
+        }
+        modifier.additional_placements = outer;
+
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ROGUE));
+    }
+
+    public static final Skills.Entry rogue_tier_4_spell_2_modifier_1 = add(rogue_tier_4_spell_2_modifier_1());
+    private static Skills.Entry rogue_tier_4_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "rogue_tier_4_spell_2_modifier_1");
+        var title = "Crimson Strikes";
+        var description = "Mutilate heals you for {heal} per enemy struck.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "rogues:mutilate";
+
+        // The self-heal Mutilate used to have as part of its base kit, now opt-in here.
+        var leech = SpellBuilder.Impacts.heal(0.1F);
+        leech.action.apply_to_caster = true;
+        leech.particles = SkillsCommon.leechImpactParticles();
+        leech.sound = Sound.of(SpellEngineSounds.LEECHING_IMPACT.id());
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(leech);
+
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ROGUE));
+    }
+
+    public static final Skills.Entry rogue_tier_4_spell_2_modifier_2 = add(rogue_tier_4_spell_2_modifier_2());
+    private static Skills.Entry rogue_tier_4_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "rogue_tier_4_spell_2_modifier_2");
+        var title = "Envenom";
+        var description = "Mutilate applies a stack of Poison lasting {effect_duration} sec, stacking up based on your attack damage.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "rogues:mutilate";
+
+        // Same additive poison convention as the Coated Blades passive (power-scaled stack
+        // cap), so the two build the same poison together.
+        var poison = SpellBuilder.Impacts.effectAdd(StatusEffects.POISON.getIdAsString(), 8, 1, 1);
+        poison.action.status_effect.amplifier_cap_power_multiplier = 0.5F;
+        poison.particles = SkillsCommon.poisonImpactParticles();
+        poison.sound = new Sound(SpellEngineSounds.GENERIC_POISON_IMPACT.id());
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(poison);
+
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ROGUE));
+    }
 
     public static final Skills.Entry rogue_tier_1_passive_1 = add(rogue_tier_1_passive_1());
     private static Skills.Entry rogue_tier_1_passive_1() {
@@ -341,16 +456,12 @@ public class RogueSkills {
         return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.ROGUE));
     }
 
-    public static final Skills.Entry rogue_tier_2_passive_2 = add(rogue_tier_2_passive_2()); // Leeching Strike (upon roll, next attack life steal)
+    public static final Skills.Entry rogue_tier_2_passive_2 = add(rogue_tier_2_passive_2()); // Opportunist (upon roll, next melee attack crits)
     private static Skills.Entry rogue_tier_2_passive_2() {
         var id = Identifier.of(NAMESPACE, "rogue_tier_2_passive_2");
-        var effect = SkillEffects.LEECHING_STRIKE;
+        var effect = SkillEffects.OPPORTUNIST;
         var title = effect.title;
-        var description = "Upon rolling, you have {trigger_chance_1} chance for your next melee attack to heal you by {heal}.";
-        SpellTooltip.DescriptionMutator mutator = (args) -> {
-            var bonus = SpellTooltip.percent(effect.config().firstModifier().value);
-            return args.description().replace("{bonus}", bonus);
-        };
+        var description = "Upon rolling, you have {trigger_chance_1} chance for your next melee attack within 5 sec to be a guaranteed critical strike.";
 
         var spell = SpellBuilder.createSpellPassive();
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
@@ -359,28 +470,29 @@ public class RogueSkills {
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
         var trigger = SpellBuilder.Triggers.roll();
-        trigger.chance = 0.25F;
+        trigger.chance = 0.5F;
         spell.passive.triggers = List.of(trigger);
 
         spell.release.particles = new ParticleBatch[]{
+                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_fist.id(), Color.from(0xffcc66)),
                 new ParticleBatch(
                         SpellEngineParticles.MagicParticles.get(
                                 SpellEngineParticles.MagicParticles.Shape.SPARK,
                                 SpellEngineParticles.MagicParticles.Motion.DECELERATE).id().toString(),
                         ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
                         15, 0.2F, 0.3F)
-                        .color(Color.BLOOD.toRGBA())
+                        .color(Color.from(0xffcc66).toRGBA())
         };
+        spell.release.sound = new Sound(SpellEngineSounds.SIGNAL_SPELL_CRIT.id());
 
         SpellBuilder.Deliver.stash(spell, effect.id.toString(), 5, SpellBuilder.Triggers.meleeAttackImpact());
+        spell.deliver.stash_effect.consumed_next_tick = true;
 
-        var impact = SpellBuilder.Impacts.heal(0.1F);
-        impact.action.apply_to_caster = true;
-        impact.particles = SkillsCommon.leechImpactParticles();
-        impact.sound = new Sound(SpellEngineSounds.LEECHING_IMPACT.id());
-        spell.impacts = List.of(impact);
+        spell.impacts = List.of();
 
-        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.ROGUE));
+        SpellBuilder.Cost.cooldown(spell, 10F);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ROGUE));
     }
 
     public static final Skills.Entry rogue_tier_2_passive_1 = add(rogue_tier_2_passive_1());
