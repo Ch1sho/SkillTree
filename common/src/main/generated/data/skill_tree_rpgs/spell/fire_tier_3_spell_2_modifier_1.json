@@ -6,9 +6,30 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:fire_storm",
-      "power_modifier": {
-        "power_multiplier": 0.25
-      }
+      "mutate_impacts": "APPEND",
+      "impacts": [
+        {
+          "action": {
+            "type": "STATUS_EFFECT",
+            "status_effect": {
+              "effect_id": "minecraft:slowness",
+              "duration": 1.0
+            }
+          }
+        },
+        {
+          "action": {
+            "type": "VELOCITY",
+            "velocity": {
+              "push": {
+                "x": 0.0,
+                "y": 0.1,
+                "z": -0.3
+              }
+            }
+          }
+        }
+      ]
     }
   ]
 }

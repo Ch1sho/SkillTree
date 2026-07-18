@@ -23,6 +23,13 @@ import java.util.List;
 
 public class WeaponSkillModifiers {
     public static final String NAMESPACE = SkillTreeMod.NAMESPACE;
+
+    // Weapon condition patterns for ranged passives, so bow nodes only proc on arrows actually fired
+    // from a bow and crossbow nodes from a crossbow (not each other, and not spell-fired arrows).
+    // The enchantable tags cover modded bows/crossbows too — RPG Series weapons join them via datagen.
+    private static final String BOW_WEAPONS = "#minecraft:enchantable/bow";
+    private static final String CROSSBOW_WEAPONS = "#minecraft:enchantable/crossbow";
+
     public static final List<Skills.Entry> ENTRIES = new ArrayList<>();
     private static Skills.Entry add(Skills.Entry entry) {
         ENTRIES.add(entry);
@@ -717,7 +724,7 @@ public class WeaponSkillModifiers {
     private static Skills.Entry weapon_bow_passive_1() {
         var id = Identifier.of(NAMESPACE, "weapon_bow_passive_1");
         var title = "Dazing Arrow";
-        var description = "Arrow hits have {trigger_chance} chance to slow the target for {effect_duration} sec.";
+        var description = "Bow arrow hits have {trigger_chance} chance to slow the target for {effect_duration} sec.";
         var spell = SpellBuilder.createSpellPassive();
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
         spell.range = 0;
@@ -725,6 +732,7 @@ public class WeaponSkillModifiers {
 
         var trigger = SpellBuilder.Triggers.arrowHit();
         trigger.chance = 0.25F;
+        trigger.weapon_condition = BOW_WEAPONS;
         spell.passive.triggers = List.of(trigger);
 
         var impact = SpellBuilder.Impacts.effectSet(StatusEffects.SLOWNESS.getIdAsString(), 3F, 1);
@@ -739,7 +747,7 @@ public class WeaponSkillModifiers {
     private static Skills.Entry weapon_bow_passive_2() {
         var id = Identifier.of(NAMESPACE, "weapon_bow_passive_2");
         var title = "Poison Arrow";
-        var description = "Arrow hits have {trigger_chance} chance to apply Poison for {effect_duration} sec.";
+        var description = "Bow arrow hits have {trigger_chance} chance to apply Poison for {effect_duration} sec.";
         var spell = SpellBuilder.createSpellPassive();
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
         spell.range = 0;
@@ -747,6 +755,7 @@ public class WeaponSkillModifiers {
 
         var trigger = SpellBuilder.Triggers.arrowHit();
         trigger.chance = 0.25F;
+        trigger.weapon_condition = BOW_WEAPONS;
         spell.passive.triggers = List.of(trigger);
 
         var impact = SpellBuilder.Impacts.effectAdd(StatusEffects.POISON.getIdAsString(), 4F, 0, 1);
@@ -778,6 +787,7 @@ public class WeaponSkillModifiers {
 
         var trigger = SpellBuilder.Triggers.arrowHit();
         trigger.chance = 0.25F;
+        trigger.weapon_condition = CROSSBOW_WEAPONS;
         spell.passive.triggers = List.of(trigger);
 
         var impact = SpellBuilder.Impacts.effectSet(StatusEffects.WEAKNESS.getIdAsString(), 4F, 0);
@@ -798,6 +808,7 @@ public class WeaponSkillModifiers {
 
         var trigger = SpellBuilder.Triggers.arrowHit();
         trigger.chance = 0.2F;
+        trigger.weapon_condition = CROSSBOW_WEAPONS;
         spell.passive.triggers = List.of(trigger);
 
         SkillsCommon.explosionImpact(spell, 0.6F);

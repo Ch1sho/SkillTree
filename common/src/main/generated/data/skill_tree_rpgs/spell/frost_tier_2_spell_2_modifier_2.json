@@ -6,18 +6,64 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:frost_spikes",
-      "mutate_impacts": "APPEND",
-      "impacts": [
+      "additional_placements": [
         {
-          "action": {
-            "type": "STATUS_EFFECT",
-            "status_effect": {
-              "effect_id": "wizards:frost_slowness",
-              "duration": 3.0,
-              "amplifier_cap": 1,
-              "apply_mode": "ADD"
-            }
-          }
+          "location_offset_by_look": 1.5,
+          "location_yaw_offset": -45.0,
+          "apply_yaw": true
+        },
+        {
+          "delay_ticks": 2,
+          "location_offset_by_look": 3.0,
+          "location_yaw_offset": -45.0,
+          "apply_yaw": true
+        },
+        {
+          "delay_ticks": 4,
+          "location_offset_by_look": 4.5,
+          "location_yaw_offset": -45.0,
+          "apply_yaw": true
+        },
+        {
+          "delay_ticks": 6,
+          "location_offset_by_look": 6.0,
+          "location_yaw_offset": -45.0,
+          "apply_yaw": true
+        },
+        {
+          "delay_ticks": 8,
+          "location_offset_by_look": 7.5,
+          "location_yaw_offset": -45.0,
+          "apply_yaw": true
+        },
+        {
+          "location_offset_by_look": 1.5,
+          "location_yaw_offset": 45.0,
+          "apply_yaw": true
+        },
+        {
+          "delay_ticks": 2,
+          "location_offset_by_look": 3.0,
+          "location_yaw_offset": 45.0,
+          "apply_yaw": true
+        },
+        {
+          "delay_ticks": 4,
+          "location_offset_by_look": 4.5,
+          "location_yaw_offset": 45.0,
+          "apply_yaw": true
+        },
+        {
+          "delay_ticks": 6,
+          "location_offset_by_look": 6.0,
+          "location_yaw_offset": 45.0,
+          "apply_yaw": true
+        },
+        {
+          "delay_ticks": 8,
+          "location_offset_by_look": 7.5,
+          "location_yaw_offset": 45.0,
+          "apply_yaw": true
         }
       ]
     }

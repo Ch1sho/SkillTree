@@ -199,8 +199,14 @@ public class NodeTypes {
     // Weak "root" nodes + second-spell (spell_2) mutex modifiers
     public static final Entry ARCANE_TIER_2_SPELL_1_ROOT = add(modifierSpell(ArcaneSkills.arcane_tier_2_spell_1_root).require(WIZARDS));
     public static final Entry ARCANE_TIER_2_SPELL_2_ROOT = add(modifierSpell(ArcaneSkills.arcane_tier_2_spell_2_root).require(WIZARDS));
-    public static final Entry ARCANE_TIER_2_SPELL_2_MODIFIER_1 = add(modifierSpell(ArcaneSkills.arcane_tier_2_spell_2_modifier_1).require(WIZARDS));
-    public static final Entry ARCANE_TIER_2_SPELL_2_MODIFIER_2 = add(modifierSpell(ArcaneSkills.arcane_tier_2_spell_2_modifier_2).require(WIZARDS));
+    public static final Entry ARCANE_TIER_2_SPELL_2_MODIFIER_1 = add(passiveSpell(ArcaneSkills.arcane_tier_2_spell_2_modifier_1)
+            .withIcon(Icon.spell(Identifier.of("wizards", "arcane_explosion")))
+            .require(WIZARDS)
+    );
+    public static final Entry ARCANE_TIER_2_SPELL_2_MODIFIER_2 = add(passiveSpell(ArcaneSkills.arcane_tier_2_spell_2_modifier_2)
+            .withIcon(Icon.spell(Identifier.of("wizards", "arcane_explosion")))
+            .require(WIZARDS)
+    );
     public static final Entry ARCANE_TIER_3_SPELL_1_ROOT = add(modifierSpell(ArcaneSkills.arcane_tier_3_spell_1_root).require(WIZARDS));
     public static final Entry ARCANE_TIER_3_SPELL_2_ROOT = add(modifierSpell(ArcaneSkills.arcane_tier_3_spell_2_root).require(WIZARDS));
     public static final Entry ARCANE_TIER_3_SPELL_2_MODIFIER_1 = add(modifierSpell(ArcaneSkills.arcane_tier_3_spell_2_modifier_1).require(WIZARDS));
@@ -246,7 +252,10 @@ public class NodeTypes {
     public static final Entry FIRE_TIER_2_SPELL_1_ROOT = add(modifierSpell(FireSkills.fire_tier_2_spell_1_root).require(WIZARDS));
     public static final Entry FIRE_TIER_2_SPELL_2_ROOT = add(modifierSpell(FireSkills.fire_tier_2_spell_2_root).require(WIZARDS));
     public static final Entry FIRE_TIER_2_SPELL_2_MODIFIER_1 = add(modifierSpell(FireSkills.fire_tier_2_spell_2_modifier_1).require(WIZARDS));
-    public static final Entry FIRE_TIER_2_SPELL_2_MODIFIER_2 = add(modifierSpell(FireSkills.fire_tier_2_spell_2_modifier_2).require(WIZARDS));
+    public static final Entry FIRE_TIER_2_SPELL_2_MODIFIER_2 = add(passiveSpell(FireSkills.fire_tier_2_spell_2_modifier_2)
+            .withIcon(Icon.spell(Identifier.of("wizards", "fire_slash")))
+            .require(WIZARDS)
+    );
     public static final Entry FIRE_TIER_3_SPELL_1_ROOT = add(modifierSpell(FireSkills.fire_tier_3_spell_1_root).require(WIZARDS));
     public static final Entry FIRE_TIER_3_SPELL_2_ROOT = add(modifierSpell(FireSkills.fire_tier_3_spell_2_root).require(WIZARDS));
     public static final Entry FIRE_TIER_3_SPELL_2_MODIFIER_1 = add(modifierSpell(FireSkills.fire_tier_3_spell_2_modifier_1).require(WIZARDS));

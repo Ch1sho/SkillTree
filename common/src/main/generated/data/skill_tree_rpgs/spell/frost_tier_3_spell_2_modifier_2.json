@@ -6,7 +6,36 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:frost_lance",
-      "effect_duration_add": 2.0
+      "replacing_area_impact": {
+        "triggering_action_type": "DAMAGE",
+        "radius": 2.5,
+        "area": {
+          "distance_dropoff": "SQUARED"
+        },
+        "particles": [
+          {
+            "particle_id": "spell_engine:magic_frost_burst",
+            "origin": "CENTER",
+            "shape": "SPHERE",
+            "count": 40.0,
+            "min_speed": 0.5,
+            "max_speed": 0.5,
+            "color_rgba": 1724710911
+          },
+          {
+            "particle_id": "spell_engine:aura_effect_649",
+            "origin": "CENTER",
+            "shape": "SPHERE",
+            "count": 1.0,
+            "max_speed": 0.0,
+            "color_rgba": 1724710911,
+            "scale": 2.0
+          }
+        ],
+        "sound": {
+          "id": "wizards:frost_nova_damage_impact"
+        }
+      }
     }
   ]
 }

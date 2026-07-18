@@ -6,9 +6,7 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:fire_slash",
-      "power_modifier": {
-        "power_multiplier": 0.25
-      }
+      "projectile_scale_multiply": 0.33
     }
   ]
 }

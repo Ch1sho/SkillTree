@@ -1,5 +1,6 @@
 package net.skill_tree_rpgs.skills;
 
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.Identifier;
 import net.skill_tree_rpgs.SkillTreeMod;
 import net.skill_tree_rpgs.effect.SkillEffects;
@@ -12,6 +13,8 @@ import net.spell_engine.client.util.Color;
 import net.spell_engine.fx.SpellEngineParticles;
 import net.spell_engine.fx.SpellEngineSounds;
 import net.spell_power.api.SpellSchools;
+
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -156,9 +159,9 @@ public class FireSkills {
     public static final Skills.Entry fire_tier_2_spell_1_root = add(SkillsCommon.critRoot(
             Skills.Category.FIRE, SpellSchools.FIRE,
             "fire_tier_2_spell_1_root", "wizards:fire_breath", "Fire Breath", 0.05F));
-    public static final Skills.Entry fire_tier_2_spell_2_root = add(SkillsCommon.heftRoot(
+    public static final Skills.Entry fire_tier_2_spell_2_root = add(SkillsCommon.reachRoot(
             Skills.Category.FIRE, SpellSchools.FIRE,
-            "fire_tier_2_spell_2_root", "wizards:fire_slash", "Flame Slash", 0.15F));
+            "fire_tier_2_spell_2_root", "wizards:fire_slash", "Flame Slash", 5F));
     public static final Skills.Entry fire_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.FIRE, SpellSchools.FIRE,
             "fire_tier_3_spell_1_root", "wizards:fire_meteor", "Meteor", 2F));
@@ -180,14 +183,14 @@ public class FireSkills {
     public static final Skills.Entry fire_tier_2_spell_2_modifier_1 = add(fire_tier_2_spell_2_modifier_1());
     private static Skills.Entry fire_tier_2_spell_2_modifier_1() {
         var id = Identifier.of(NAMESPACE, "fire_tier_2_spell_2_modifier_1");
-        var title = "Raging Slash";
-        var description = "Flame Slash damage increased by {power_multiplier}.";
+        var title = "Towering Slash";
+        var description = "Flame Slash is 33% larger.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FIRE;
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = "wizards:fire_slash";
-        modifier.power_modifier = new Spell.Impact.Modifier();
-        modifier.power_modifier.power_multiplier = 0.25F;
+        // Stacks on top of the base spell's charge growth (up to 2x at full charge -> up to 2.33x).
+        modifier.projectile_scale_multiply = 0.33F;
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
     }
@@ -195,30 +198,54 @@ public class FireSkills {
     public static final Skills.Entry fire_tier_2_spell_2_modifier_2 = add(fire_tier_2_spell_2_modifier_2());
     private static Skills.Entry fire_tier_2_spell_2_modifier_2() {
         var id = Identifier.of(NAMESPACE, "fire_tier_2_spell_2_modifier_2");
-        var title = "Lasting Flames";
-        var seconds = 4;
-        var description = "Flame Slash sets enemies ablaze for an additional " + seconds + " sec.";
-        var spell = SpellBuilder.createSpellModifier();
+        var title = "Rekindle";
+        var description = "Flame Slash hits have {trigger_chance} chance to reset its cooldown.";
+        var spell = SkillsCommon.createModifierAlikePassiveSpell();
         spell.school = SpellSchools.FIRE;
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:fire_slash";
-        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
-        modifier.impacts = List.of(SpellBuilder.Impacts.fire(seconds));
-        spell.modifiers = List.of(modifier);
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+
+        var trigger = SpellBuilder.Triggers.specificSpellHit("wizards:fire_slash");
+        trigger.chance = 0.33F;
+        trigger.cap_per_tick = 1;
+        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
+        spell.passive.triggers = List.of(trigger);
+
+        spell.release.particles = new ParticleBatch[]{
+                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_cast.id(), FIRE_MAGIC_COLOR)
+        };
+        spell.release.sound = new Sound(SpellEngineSounds.SIGNAL_SPELL_CRIT.id());
+
+        var reset = SpellBuilder.Impacts.resetCooldownActive("wizards:fire_slash");
+        reset.action.apply_to_caster = true;
+        spell.impacts = List.of(reset);
+
+        // Internal cooldown matching the base spell's, so one cast can grant at most one reset.
+        SpellBuilder.Cost.cooldown(spell, 8F);
+
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
     }
 
     public static final Skills.Entry fire_tier_3_spell_2_modifier_1 = add(fire_tier_3_spell_2_modifier_1());
     private static Skills.Entry fire_tier_3_spell_2_modifier_1() {
         var id = Identifier.of(NAMESPACE, "fire_tier_3_spell_2_modifier_1");
-        var title = "Raging Firestorm";
-        var description = "Firestorm damage increased by {power_multiplier}.";
+        var title = "Flame Whirlpool";
+        var description = "Firestorm drags enemies towards you, briefly slowing them.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FIRE;
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = "wizards:fire_storm";
-        modifier.power_modifier = new Spell.Impact.Modifier();
-        modifier.power_modifier.power_multiplier = 0.25F;
+
+        var slow = SpellBuilder.Impacts.effectSet(StatusEffects.SLOWNESS.getIdAsString(), 1, 0);
+
+        // Gentle radial pull: -Z in the ORIGIN frame points towards the storm's centre (the
+        // caster); reapplied on every channel burst, with a slight lift to beat ground friction.
+        var pull = SpellBuilder.Impacts.velocity(
+                Spell.Impact.Action.Velocity.Frame.ORIGIN, new Vector3f(0, 0.1F, -0.3F));
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(slow, pull);
+
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
     }
@@ -226,14 +253,14 @@ public class FireSkills {
     public static final Skills.Entry fire_tier_3_spell_2_modifier_2 = add(fire_tier_3_spell_2_modifier_2());
     private static Skills.Entry fire_tier_3_spell_2_modifier_2() {
         var id = Identifier.of(NAMESPACE, "fire_tier_3_spell_2_modifier_2");
-        var title = "Enduring Firestorm";
-        var extraPulses = 2;
-        var description = "Firestorm channels " + extraPulses + " additional times.";
+        var title = "Raging Firestorm";
+        var description = "Firestorm channels {channel_ticks_add} additional times, knocking enemies away with {knockback_multiply_base} increased force.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FIRE;
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = "wizards:fire_storm";
-        modifier.channel_ticks_add = extraPulses;
+        modifier.channel_ticks_add = 2;
+        modifier.knockback_multiply_base = 1F;
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
     }

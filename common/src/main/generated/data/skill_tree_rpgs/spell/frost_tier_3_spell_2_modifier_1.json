@@ -6,9 +6,7 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:frost_lance",
-      "power_modifier": {
-        "critical_damage_bonus": 0.5
-      }
+      "projectile_scale_multiply": 0.5
     }
   ]
 }

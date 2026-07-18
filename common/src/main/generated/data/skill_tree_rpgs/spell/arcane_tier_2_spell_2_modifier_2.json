@@ -2,11 +2,68 @@
   "school": "spell_power:arcane",
   "range": 0.0,
   "tier": 1,
-  "type": "MODIFIER",
-  "modifiers": [
+  "type": "PASSIVE",
+  "passive": {
+    "triggers": [
+      {
+        "type": "SPELL_IMPACT_SPECIFIC",
+        "spell": {
+          "id": "wizards:arcane_explosion"
+        },
+        "impact": {
+          "impact_type": "DAMAGE"
+        }
+      }
+    ]
+  },
+  "target": {
+    "type": "FROM_TRIGGER"
+  },
+  "deliver": {
+    "delay": 7
+  },
+  "impacts": [
     {
-      "spell_pattern": "wizards:arcane_explosion",
-      "range_add": 2.0
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 0.5,
+          "knockback": 0.2
+        }
+      }
     }
-  ]
+  ],
+  "area_impact": {
+    "force_indirect": true,
+    "radius": 3.0,
+    "area": {
+      "distance_dropoff": "SQUARED"
+    },
+    "particles": [
+      {
+        "particle_id": "spell_engine:magic_arcane_burst",
+        "origin": "FEET",
+        "shape": "CIRCLE",
+        "count": 30.0,
+        "min_speed": 0.4,
+        "max_speed": 0.4,
+        "color_rgba": 4284940287
+      },
+      {
+        "particle_id": "spell_engine:area_effect_293",
+        "origin": "GROUND",
+        "shape": "SPHERE",
+        "count": 1.0,
+        "max_speed": 0.0,
+        "color_rgba": 4284940287,
+        "scale": 2.5
+      }
+    ],
+    "sound": {
+      "id": "wizards:arcane_blast_impact"
+    }
+  },
+  "cost": {
+    "durability": 0
+  }
 }

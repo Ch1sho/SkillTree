@@ -247,29 +247,76 @@ public class ArcaneSkills {
     public static final Skills.Entry arcane_tier_2_spell_2_modifier_1 = add(arcane_tier_2_spell_2_modifier_1());
     private static Skills.Entry arcane_tier_2_spell_2_modifier_1() {
         var id = Identifier.of(NAMESPACE, "arcane_tier_2_spell_2_modifier_1");
-        var title = "Concussive Blast";
-        var description = "Arcane Explosion damage increased by {power_multiplier}.";
-        var spell = SpellBuilder.createSpellModifier();
+        var title = "Echoing Blast";
+        var description = "Arcane Explosion hits have {trigger_chance} chance to reset its cooldown.";
+        var spell = SkillsCommon.createModifierAlikePassiveSpell();
         spell.school = SpellSchools.ARCANE;
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:arcane_explosion";
-        modifier.power_modifier = new Spell.Impact.Modifier();
-        modifier.power_modifier.power_multiplier = 0.25F;
-        spell.modifiers = List.of(modifier);
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+
+        var trigger = SpellBuilder.Triggers.specificSpellHit("wizards:arcane_explosion");
+        trigger.chance = 0.25F;
+        trigger.cap_per_tick = 1;
+        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
+        spell.passive.triggers = List.of(trigger);
+
+        spell.release.particles = new ParticleBatch[]{
+                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_cast.id(), Color.ARCANE)
+        };
+        spell.release.sound = new Sound(SpellEngineSounds.SIGNAL_SPELL_CRIT.id());
+
+        var reset = SpellBuilder.Impacts.resetCooldownActive("wizards:arcane_explosion");
+        reset.action.apply_to_caster = true;
+        spell.impacts = List.of(reset);
+
+        // Internal cooldown matching the base spell's, so one cast can grant at most one reset.
+        SpellBuilder.Cost.cooldown(spell, 10F);
+
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
     }
 
     public static final Skills.Entry arcane_tier_2_spell_2_modifier_2 = add(arcane_tier_2_spell_2_modifier_2());
     private static Skills.Entry arcane_tier_2_spell_2_modifier_2() {
         var id = Identifier.of(NAMESPACE, "arcane_tier_2_spell_2_modifier_2");
-        var title = "Expanding Blast";
-        var description = "Increases the radius of Arcane Explosion by {range_add}.";
-        var spell = SpellBuilder.createSpellModifier();
+        var title = "Chain Detonation";
+        var description = "Arcane Explosion causes secondary explosions, dealing {damage} damage to nearby enemies.";
+        var spell = SpellBuilder.createSpellPassive();
         spell.school = SpellSchools.ARCANE;
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "wizards:arcane_explosion";
-        modifier.range_add = 2;
-        spell.modifiers = List.of(modifier);
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+        spell.deliver.delay = 7;
+
+        var trigger = SpellBuilder.Triggers.specificSpellHit("wizards:arcane_explosion");
+        spell.passive.triggers = List.of(trigger);
+
+        var radius = 3.0F;
+
+        var impact = SpellBuilder.Impacts.damage(0.5F, 0.2F);
+        var area_impact = new Spell.AreaImpact();
+        area_impact.force_indirect = true;
+        area_impact.radius = radius;
+        area_impact.area.distance_dropoff = Spell.Target.Area.DropoffCurve.SQUARED;
+        area_impact.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.ARCANE,
+                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
+                        ParticleBatch.Shape.CIRCLE, ParticleBatch.Origin.FEET,
+                        30, 0.4F, 0.4F)
+                        .color(Color.ARCANE.toRGBA()),
+                new ParticleBatch(
+                        SpellEngineParticles.area_effect_293.id().toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.GROUND,
+                        1, 0,0)
+                        .scale(radius - 0.5F)
+                        .color(Color.ARCANE.toRGBA())
+        };
+        area_impact.sound = new Sound("wizards:arcane_blast_impact");
+        spell.area_impact = area_impact;
+        spell.impacts = List.of(impact);
+
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
     }
 
@@ -290,14 +337,25 @@ public class ArcaneSkills {
     public static final Skills.Entry arcane_tier_3_spell_2_modifier_2 = add(arcane_tier_3_spell_2_modifier_2());
     private static Skills.Entry arcane_tier_3_spell_2_modifier_2() {
         var id = Identifier.of(NAMESPACE, "arcane_tier_3_spell_2_modifier_2");
-        var title = "Sustained Barrage";
-        var seconds = 5;
-        var description = "Arcane Emitters last " + seconds + " sec longer.";
+        var title = "Attuned Emitters";
+        var description = "Arcane Emitters fire faster, matching your spell haste.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.ARCANE;
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = "wizards:arcane_barrage";
-        modifier.summon_behaviour.lifespan.active_seconds_add = seconds;
+
+        // Mirror the owner's Haste onto the emitters, so their (haste-affected) firing cadence
+        // matches the caster's. Haste is a percent stat where 100 = neutral; the emitter seeds
+        // at 100, so add (owner - 100): base -100, coefficient 1.
+        var haste = new AttributeScaling.Entry();
+        haste.attribute_id = SpellPowerMechanics.HASTE.id.toString();
+        haste.modifiers = List.of(new AttributeScaling.Entry.OwnerModifier(
+                SpellPowerMechanics.HASTE.id.toString(),
+                EntityAttributeModifier.Operation.ADD_VALUE,
+                -SpellPowerMechanics.PERCENT_ATTRIBUTE_BASELINE, 1.0));
+        modifier.summon_attribute_scaling = new AttributeScaling();
+        modifier.summon_attribute_scaling.entries = List.of(haste);
+
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
     }

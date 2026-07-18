@@ -194,13 +194,21 @@ public class FrostSkills {
     public static final Skills.Entry frost_tier_2_spell_2_modifier_1 = add(frost_tier_2_spell_2_modifier_1());
     private static Skills.Entry frost_tier_2_spell_2_modifier_1() {
         var id = Identifier.of(NAMESPACE, "frost_tier_2_spell_2_modifier_1");
-        var title = "Deep Spikes";
-        var description = "Frost Spikes apply {effect_amplifier_add} more stack of Freeze effect.";
+        var title = "Glacial Ridge";
+        var description = "Frost Spikes raises 4 additional spikes, extending the row.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FROST;
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = "wizards:frost_spikes";
-        modifier.effect_amplifier_add = 1;
+
+        // Continues the base row: 5 spikes end at 1.5 + 4 * 1.5 = 7.5 blocks, erupting at delays
+        // 0/2/4/6/8 — the extension starts one spacing further and keeps the same cascade.
+        var extension = SpellBuilder.Placements.ray(4, 1.5F, 9F);
+        for (int i = 0; i < extension.size(); i++) {
+            extension.get(i).delay_ticks = 10 + i * 2;
+        }
+        modifier.additional_placements = extension;
+
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
     }
@@ -208,15 +216,23 @@ public class FrostSkills {
     public static final Skills.Entry frost_tier_2_spell_2_modifier_2 = add(frost_tier_2_spell_2_modifier_2());
     private static Skills.Entry frost_tier_2_spell_2_modifier_2() {
         var id = Identifier.of(NAMESPACE, "frost_tier_2_spell_2_modifier_2");
-        var title = "Glacial Path";
-        var description = "Frost Spikes also slow enemies for {effect_duration} sec.";
+        var title = "Frost Fan";
+        var description = "Frost Spikes raises 2 additional rows of spikes, fanning out to the sides.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FROST;
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = "wizards:frost_spikes";
-        var impact = SpellBuilder.Impacts.effectAdd("wizards:frost_slowness", 3, 0, 1);
-        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
-        modifier.impacts = List.of(impact);
+
+        // Two rows mirroring the base one at +/-45 degrees, sharing its 2-tick eruption cascade
+        // so all three rows march outward together.
+        var left = SpellBuilder.Placements.ray(5, 1.5F, 1.5F, -45F);
+        var right = SpellBuilder.Placements.ray(5, 1.5F, 1.5F, 45F);
+        SpellBuilder.Placements.delayCascade(left, 2);
+        SpellBuilder.Placements.delayCascade(right, 2);
+        var placements = new ArrayList<Spell.EntityPlacement>(left);
+        placements.addAll(right);
+        modifier.additional_placements = placements;
+
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
     }
@@ -224,31 +240,56 @@ public class FrostSkills {
     public static final Skills.Entry frost_tier_3_spell_2_modifier_1 = add(frost_tier_3_spell_2_modifier_1());
     private static Skills.Entry frost_tier_3_spell_2_modifier_1() {
         var id = Identifier.of(NAMESPACE, "frost_tier_3_spell_2_modifier_1");
-        var title = "Impaling Lance";
-        var critDamage = 0.5F;
-        var description = "Ice Lance deals {bonus} increased critical strike damage.";
-        SpellTooltip.DescriptionMutator mutator = (args) ->
-                args.description().replace("{bonus}", SpellTooltip.percent(critDamage));
+        var title = "Colossal Lance";
+        var bonus = 0.5F;
+        var description = "Ice Lance is " + SpellTooltip.percent(bonus) + " larger.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FROST;
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = "wizards:frost_lance";
-        modifier.power_modifier = new Spell.Impact.Modifier();
-        modifier.power_modifier.critical_damage_bonus = critDamage;
+        // Stacks on top of the base spell's charge growth (up to 2x at full charge -> up to 2.5x).
+        modifier.projectile_scale_multiply = bonus;
         spell.modifiers = List.of(modifier);
-        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.FROST));
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
     }
 
     public static final Skills.Entry frost_tier_3_spell_2_modifier_2 = add(frost_tier_3_spell_2_modifier_2());
     private static Skills.Entry frost_tier_3_spell_2_modifier_2() {
         var id = Identifier.of(NAMESPACE, "frost_tier_3_spell_2_modifier_2");
-        var title = "Lingering Frost";
-        var description = "Increases the Slowness duration of Ice Lance by {effect_duration_add} sec.";
+        var title = "Shattering Lance";
+        var description = "Ice Lance hits explode, damaging enemies within {impact_range} blocks.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FROST;
+        var radius = 2.5F;
+
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = "wizards:frost_lance";
-        modifier.effect_duration_add = 2;
+
+        // Same shape as the Holy Blast weapon-skill node: each damaging hit re-executes the
+        // spell's damage as a small burst around the struck enemy.
+        var area_impact = new Spell.AreaImpact();
+        area_impact.triggering_action_type = Spell.Impact.Action.Type.DAMAGE;
+        area_impact.radius = radius;
+        area_impact.area = new Spell.Target.Area();
+        area_impact.area.distance_dropoff = Spell.Target.Area.DropoffCurve.SQUARED;
+        area_impact.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.FROST,
+                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        40, 0.5F, 0.5F)
+                        .color(Color.FROST.toRGBA()),
+                new ParticleBatch(
+                        SpellEngineParticles.aura_effect_649.id().toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        1, 0, 0)
+                        .color(Color.FROST.toRGBA())
+                        .scale(radius - 0.5F),
+        };
+        area_impact.sound = new Sound("wizards:frost_nova_damage_impact");
+        modifier.replacing_area_impact = area_impact;
+
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
     }

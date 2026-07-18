@@ -11,6 +11,7 @@ Other changes:
 - Presence of Mind now makes your weapon glow while primed
 - Phase Shift now also grants immunity to harmful effects
 - Replaced "Justice Served" mace node with "Challenging Blow" (50% chance to taunt targets hit by Smash)
+- Fixed bow and crossbow passives triggering on arrows fired from any source; they now only trigger for arrows fired from the matching weapon type
 - Update rogue passive icon
 - Fix some issues with skill tree node descriptions
 

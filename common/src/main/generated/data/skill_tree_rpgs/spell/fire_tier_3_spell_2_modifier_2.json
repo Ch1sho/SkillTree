@@ -6,7 +6,8 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:fire_storm",
-      "channel_ticks_add": 2
+      "channel_ticks_add": 2,
+      "knockback_multiply_base": 1.0
     }
   ]
 }
