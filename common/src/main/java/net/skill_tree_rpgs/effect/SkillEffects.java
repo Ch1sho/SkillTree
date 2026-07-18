@@ -486,6 +486,64 @@ public class SkillEffects {
             )
     ));
 
+    /** Levitate (Serenity node): per-stack damage reduction while floating; 4 stacks = 80%. */
+    public static Effects.Entry SERENITY = add(new Effects.Entry(Identifier.of(SkillTreeMod.NAMESPACE, "serenity"),
+            "Serenity",
+            "Reduces damage taken.",
+            new CustomStatusEffect(StatusEffectCategory.BENEFICIAL, 0xffffcc),
+            new EffectConfig(
+                    List.of(
+                            new AttributeModifier(
+                                    SpellEngineAttributes.DAMAGE_TAKEN.id,
+                                    -0.2F,
+                                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                            )
+                    )
+            )
+    ));
+
+    /** Penance (Hysteria node): per-stack bonus to melee attack speed, ranged haste and spell haste. */
+    public static Effects.Entry HYSTERIA = add(new Effects.Entry(Identifier.of(SkillTreeMod.NAMESPACE, "hysteria"),
+            "Hysteria",
+            "Increased attack speed, ranged and spell haste.",
+            new CustomStatusEffect(StatusEffectCategory.BENEFICIAL, 0xffcc99),
+            new EffectConfig(
+                    List.of(
+                            new AttributeModifier(
+                                    EntityAttributes.GENERIC_ATTACK_SPEED.getIdAsString(),
+                                    0.08F,
+                                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                            ),
+                            new AttributeModifier(
+                                    EntityAttributes_RangedWeapon.HASTE.id,
+                                    0.08F,
+                                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                            ),
+                            new AttributeModifier(
+                                    SpellPowerMechanics.HASTE.id,
+                                    0.08F,
+                                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                            )
+                    )
+            )
+    ));
+
+    /** Penance (Chastise node): per-stack increased damage taken. */
+    public static Effects.Entry CHASTISE = add(new Effects.Entry(Identifier.of(SkillTreeMod.NAMESPACE, "chastise"),
+            "Chastise",
+            "Increased damage taken.",
+            new CustomStatusEffect(StatusEffectCategory.HARMFUL, 0xffcc66),
+            new EffectConfig(
+                    List.of(
+                            new AttributeModifier(
+                                    SpellEngineAttributes.DAMAGE_TAKEN.id,
+                                    0.1F,
+                                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                            )
+                    )
+            )
+    ));
+
     public static Effects.Entry CELESTIAL_ORB = add(new Effects.Entry(Identifier.of(SkillTreeMod.NAMESPACE, "celestial_orb"),
             "Celestial Orb",
             "Damages nearby enemies.",

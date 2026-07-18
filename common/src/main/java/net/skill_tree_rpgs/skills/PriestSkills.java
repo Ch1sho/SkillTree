@@ -1,10 +1,13 @@
 package net.skill_tree_rpgs.skills;
 
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.util.Identifier;
 import net.skill_tree_rpgs.SkillTreeMod;
 import net.skill_tree_rpgs.effect.SkillEffects;
 import net.spell_engine.api.datagen.SpellBuilder;
 import net.spell_engine.api.spell.Spell;
+import net.spell_engine.api.spell.summon.AttributeScaling;
+import net.spell_engine.api.spell.summon.SummonBehaviour;
 import net.spell_engine.api.spell.fx.ParticleBatch;
 import net.spell_engine.api.spell.fx.Sound;
 import net.spell_engine.client.gui.SpellTooltip;
@@ -115,70 +118,31 @@ public class PriestSkills {
     public static final Skills.Entry priest_tier_3_spell_1_modifier_2 = add(priest_tier_3_spell_1_modifier_2());
     private static Skills.Entry priest_tier_3_spell_1_modifier_2() {
         var id = Identifier.of(NAMESPACE, "priest_tier_3_spell_1_modifier_2");
-        var title = "Consecration";
-        var description = "Circle of Healing leaves a consecrated area behind, dealing {damage} damage to enemies, for {cloud_duration} sec.";
-
-        var spell = SkillsCommon.createModifierAlikePassiveSpell();
+        var title = "Sanctuary";
+        var description = "Circle of Healing also applies an absorption shield to affected allies, lasting {effect_duration} sec.";
+        var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.HEALING;
-        spell.range = 0;
 
-        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "paladins:circle_of_healing";
 
-        var trigger = SpellBuilder.Triggers.specificSpellCast("paladins:circle_of_healing");
-        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
-        trigger.aoe_source_override = Spell.Trigger.TargetSelector.CASTER;
-        spell.passive.triggers = List.of(trigger);
+        // The absorption shield Circle of Healing used to apply as part of its base kit,
+        // now opt-in via this node ("paladins:priest_absorption" scales with healing power).
+        var shield = SpellBuilder.Impacts.effectSet_ScaledAmplifier(
+                "paladins:priest_absorption", 6, 0, 0.25F);
+        shield.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SkillsCommon.SPARK_DECELERATE.toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        12, 0.2F, 0.25F)
+                        .color(SkillsCommon.HOLY_COLOR)
+        };
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(shield);
 
-        var radius = 6.0F;
-        consecration(spell, 0.2F, radius, 4);
+        spell.modifiers = List.of(modifier);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PRIEST));
-    }
-
-    private static void consecration(Spell spell, float coefficient, float radius, float particleMultiplier) {
-        spell.deliver.type = Spell.Delivery.Type.CLOUD;
-
-        var cloud = new Spell.Delivery.Cloud();
-        cloud.volume.radius = radius;
-        cloud.impact_tick_interval = 10;
-        cloud.time_to_live_seconds = 5;
-        cloud.client_data.particles = new ParticleBatch[]{
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.SPARK,
-                                SpellEngineParticles.MagicParticles.Motion.FLOAT).id().toString(),
-                        ParticleBatch.Shape.PILLAR, ParticleBatch.Origin.GROUND,
-                        3 * particleMultiplier, 0.05F, 0.1F)
-                        .color(SkillsCommon.HOLY_COLOR),
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.HOLY,
-                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
-                        ParticleBatch.Shape.PILLAR, ParticleBatch.Origin.GROUND,
-                        3 * particleMultiplier, 0.05F, 0.15F)
-                        .color(SkillsCommon.HOLY_COLOR),
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.ARCANE,
-                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
-                        ParticleBatch.Shape.CIRCLE, ParticleBatch.Origin.GROUND,
-                        3 * particleMultiplier, 0.05F, 0.15F)
-                        .color(SkillsCommon.HOLY_COLOR).extent(radius),
-        };
-        spell.deliver.clouds = List.of(cloud);
-
-        var impact = SpellBuilder.Impacts.damage(coefficient, 0.1F);
-        impact.particles = new ParticleBatch[]{
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.HOLY,
-                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.FEET,
-                        10, 0.4F, 0.4F)
-                        .color(SkillsCommon.HOLY_COLOR),
-        };
-        impact.sound = new Sound(SkillSounds.priest_consecration_impact.id());
-        spell.impacts = List.of(impact);
     }
 
     public static final Skills.Entry priest_tier_4_spell_1_modifier_1 = add(priest_tier_4_spell_1_modifier_1());
@@ -240,26 +204,217 @@ public class PriestSkills {
             "priest_tier_4_spell_2_root", "paladins:lightwell", "Lightwell", 4));
 
     // ===================================================================================
-    // PLACEHOLDER powerful mutex nodes for the second spell of each tier (spell_2).
-    // These inert stubs complete the tree structure and are to be filled in with real
-    // modifiers (Levitate T2, Penance T3, Lightwell T4).
+    // Powerful mutex nodes for the second spell of each tier (spell_2):
+    // Levitate (T2), Penance (T3), Lightwell (T4).
     // ===================================================================================
-    private static Skills.Entry placeholder(String path) {
-        var id = Identifier.of(NAMESPACE, path);
+
+    public static final Skills.Entry priest_tier_2_spell_2_modifier_1 = add(priest_tier_2_spell_2_modifier_1());
+    private static Skills.Entry priest_tier_2_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "priest_tier_2_spell_2_modifier_1");
+        var title = "Uplift";
+        var description = "Levitate also lifts allies within {impact_range} blocks of you.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.HEALING;
+
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "paladins:placeholder";
+        modifier.spell_pattern = "paladins:levitate";
+
+        // Splash the caster-targeted impacts (upward kick + Floating) onto nearby allies. The kick
+        // uses reset_velocity, so the caster receiving it twice (directly + via the splash's center
+        // target) still lands on the same lift.
+        var area = new Spell.AreaImpact();
+        area.radius = 2F;
+        modifier.replacing_area_impact = area;
+
         spell.modifiers = List.of(modifier);
-        return new Skills.Entry(id, spell, "PLACEHOLDER", "PLACEHOLDER", null, EnumSet.of(Skills.Category.PRIEST));
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PRIEST));
     }
 
-    public static final Skills.Entry priest_tier_2_spell_2_modifier_1 = add(placeholder("priest_tier_2_spell_2_modifier_1"));
-    public static final Skills.Entry priest_tier_2_spell_2_modifier_2 = add(placeholder("priest_tier_2_spell_2_modifier_2"));
-    public static final Skills.Entry priest_tier_3_spell_2_modifier_1 = add(placeholder("priest_tier_3_spell_2_modifier_1"));
-    public static final Skills.Entry priest_tier_3_spell_2_modifier_2 = add(placeholder("priest_tier_3_spell_2_modifier_2"));
-    public static final Skills.Entry priest_tier_4_spell_2_modifier_1 = add(placeholder("priest_tier_4_spell_2_modifier_1"));
-    public static final Skills.Entry priest_tier_4_spell_2_modifier_2 = add(placeholder("priest_tier_4_spell_2_modifier_2"));
+    public static final Skills.Entry priest_tier_2_spell_2_modifier_2 = add(priest_tier_2_spell_2_modifier_2());
+    private static Skills.Entry priest_tier_2_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "priest_tier_2_spell_2_modifier_2");
+        var title = "Serenity";
+        var effect = SkillEffects.SERENITY;
+        var description = "Channeling Levitate grants Serenity, reducing damage taken by {bonus} per stack, stacking up to {effect_amplifier_cap} times, lasting {effect_duration} sec.";
+        SpellTooltip.DescriptionMutator mutator = (args) -> {
+            var bonus = SpellTooltip.percent(Math.abs(effect.config().firstModifier().value));
+            return args.description().replace("{bonus}", bonus);
+        };
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.HEALING;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "paladins:levitate";
+
+        // One stack per channel release (Levitate releases 4 times): a full channel reaches
+        // 4 x 20% = 80% damage reduction, lingering as long as the Floating effect does.
+        var serenity = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 6, 1, 3);
+        serenity.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SkillsCommon.HOLY_DECELERATE.toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        8, 0.15F, 0.2F)
+                        .color(SkillsCommon.HOLY_COLOR)
+        };
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(serenity);
+
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PRIEST));
+    }
+
+    public static final Skills.Entry priest_tier_3_spell_2_modifier_1 = add(priest_tier_3_spell_2_modifier_1());
+    private static Skills.Entry priest_tier_3_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "priest_tier_3_spell_2_modifier_1");
+        var title = "Hysteria";
+        var effect = SkillEffects.HYSTERIA;
+        var description = "Penance bolts grant allies Hysteria, increasing attack speed, ranged and spell haste by {bonus}, stacking up to {effect_amplifier_cap} times, lasting {effect_duration} sec.";
+        SpellTooltip.DescriptionMutator mutator = (args) -> {
+            var bonus = SpellTooltip.percent(effect.config().firstModifier().value);
+            return args.description().replace("{bonus}", bonus);
+        };
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.HEALING;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "paladins:penance";
+
+        // Beneficial, so Penance's Atonement splash carries it to allies near the struck
+        // enemy (alongside the absorption shield) — one stack per bolt, 3 bolts per volley.
+        var hysteria = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 5, 1, 2);
+        hysteria.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SkillsCommon.SPARK_DECELERATE.toString(),
+                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.CENTER,
+                        10, 0.15F, 0.3F)
+                        .color(SkillsCommon.HOLY_COLOR)
+        };
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(hysteria);
+
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PRIEST));
+    }
+
+    public static final Skills.Entry priest_tier_3_spell_2_modifier_2 = add(priest_tier_3_spell_2_modifier_2());
+    private static Skills.Entry priest_tier_3_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "priest_tier_3_spell_2_modifier_2");
+        var title = "Chastise";
+        var effect = SkillEffects.CHASTISE;
+        var description = "Penance bolts apply Chastise, increasing damage taken by {bonus}, stacking up to {effect_amplifier_cap} times, lasting {effect_duration} sec.";
+        SpellTooltip.DescriptionMutator mutator = (args) -> {
+            var bonus = SpellTooltip.percent(effect.config().firstModifier().value);
+            return args.description().replace("{bonus}", bonus);
+        };
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.HEALING;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "paladins:penance";
+
+        var chastise = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 5, 1, 2);
+        chastise.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SkillsCommon.SPARK_DECELERATE.toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        10, 0.2F, 0.25F)
+                        .color(Color.from(0xffcc66).toRGBA())
+        };
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(chastise);
+
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PRIEST));
+    }
+
+    /// Helper spell cast by the Lightwell when the Cleansing Light node is taken. Not bound to any
+    /// node or book; it exists so `actions_add` below has a spell for the well to cast (player spell
+    /// modifiers never apply to summon-cast spells, so the orb spell itself cannot be modified).
+    public static final Skills.Entry lightwell_cleanse = add(lightwell_cleanse());
+    private static Skills.Entry lightwell_cleanse() {
+        var id = Identifier.of(NAMESPACE, "lightwell_cleanse");
+        var title = "Cleansing Light";
+        var description = "Removes a negative effect.";
+        var spell = SpellBuilder.createSpellActive();
+        spell.school = SpellSchools.HEALING;
+        spell.range = 12;
+        spell.learn = null; // summon-cast helper, never learnable
+
+        spell.target.type = Spell.Target.Type.AIM;
+        spell.target.aim = new Spell.Target.Aim();
+        spell.target.aim.required = true;
+
+        var cleanse = SpellBuilder.Impacts.effectCleanse();
+        cleanse.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.SPARK,
+                                SpellEngineParticles.MagicParticles.Motion.ASCEND).id().toString(),
+                        ParticleBatch.Shape.PIPE, ParticleBatch.Origin.CENTER,
+                        10, 0.2F, 0.4F)
+                        .color(Color.WHITE.toRGBA())
+        };
+        cleanse.sound = new Sound(SpellEngineSounds.GENERIC_DISPEL_1.id());
+        spell.impacts = List.of(cleanse);
+
+        SpellBuilder.Cost.cooldown(spell, 8);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PRIEST));
+    }
+
+    public static final Skills.Entry priest_tier_4_spell_2_modifier_1 = add(priest_tier_4_spell_2_modifier_1());
+    private static Skills.Entry priest_tier_4_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "priest_tier_4_spell_2_modifier_1");
+        var title = "Cleansing Light";
+        var description = "The Lightwell also cleanses negative effects from the allies it tends.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.HEALING;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "paladins:lightwell";
+
+        // Give the well a second spell-cast action; its cadence comes from the cleanse
+        // spell's own cooldown, and it fires at the same acquired friendly target.
+        var cast = new SummonBehaviour.Action.SpellCast(
+                lightwell_cleanse.id().toString(), 30);
+        cast.aiming.accept_target = true;
+        cast.aiming.fallback = SummonBehaviour.Action.SpellCast.Aiming.Fallback.NONE;
+        modifier.summon_behaviour.actions_add = List.of(SummonBehaviour.Action.spell(cast));
+
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PRIEST));
+    }
+
+    public static final Skills.Entry priest_tier_4_spell_2_modifier_2 = add(priest_tier_4_spell_2_modifier_2());
+    private static Skills.Entry priest_tier_4_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "priest_tier_4_spell_2_modifier_2");
+        var title = "Radiance";
+        var description = "Increases the Lightwell's healing power by 50%.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.HEALING;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "paladins:lightwell";
+
+        // The well's base scaling copies 0.5x of the owner's healing power; merging in another
+        // 0.25x raises that to 0.75x — i.e. +50% of the well's own healing power.
+        var healingPower = new AttributeScaling.Entry();
+        healingPower.attribute_id = SpellSchools.HEALING.id.toString();
+        healingPower.modifiers = List.of(new AttributeScaling.Entry.OwnerModifier(
+                SpellSchools.HEALING.id.toString(),
+                EntityAttributeModifier.Operation.ADD_VALUE, 0.0, 0.25));
+        modifier.summon_attribute_scaling = new AttributeScaling();
+        modifier.summon_attribute_scaling.entries = List.of(healingPower);
+
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PRIEST));
+    }
 
     public static final Skills.Entry priest_tier_1_passive_1 = add(priest_tier_1_passive_1());
     private static Skills.Entry priest_tier_1_passive_1() {

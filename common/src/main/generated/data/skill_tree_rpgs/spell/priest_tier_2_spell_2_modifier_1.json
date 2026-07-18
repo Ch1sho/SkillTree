@@ -5,7 +5,10 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "paladins:placeholder"
+      "spell_pattern": "paladins:levitate",
+      "replacing_area_impact": {
+        "radius": 2.0
+      }
     }
   ]
 }

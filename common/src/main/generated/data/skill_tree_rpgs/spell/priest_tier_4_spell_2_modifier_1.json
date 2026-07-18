@@ -5,7 +5,18 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "paladins:placeholder"
+      "spell_pattern": "paladins:lightwell",
+      "summon_behaviour": {
+        "actions_add": [
+          {
+            "type": "SPELL_CAST",
+            "spell_cast": {
+              "spell_id": "skill_tree_rpgs:lightwell_cleanse",
+              "cooldown": 30
+            }
+          }
+        ]
+      }
     }
   ]
 }

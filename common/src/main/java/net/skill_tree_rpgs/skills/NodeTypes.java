@@ -331,10 +331,7 @@ public class NodeTypes {
     public static final Entry PRIEST_TIER_2_SPELL_1_MODIFIER_1 = add(modifierSpell(PriestSkills.priest_tier_2_spell_1_modifier_1).require(PALADINS));
     public static final Entry PRIEST_TIER_2_SPELL_1_MODIFIER_2 = add(modifierSpell(PriestSkills.priest_tier_2_spell_1_modifier_2).require(PALADINS));
     public static final Entry PRIEST_TIER_3_SPELL_1_MODIFIER_1 = add(modifierSpell(PriestSkills.priest_tier_3_spell_1_modifier_1).require(PALADINS));
-    public static final Entry PRIEST_TIER_3_SPELL_1_MODIFIER_2 = add(passiveSpell(PriestSkills.priest_tier_3_spell_1_modifier_2)
-            .withIcon(Icon.spell(Identifier.of("paladins", "circle_of_healing")))
-            .require(PALADINS)
-    );
+    public static final Entry PRIEST_TIER_3_SPELL_1_MODIFIER_2 = add(modifierSpell(PriestSkills.priest_tier_3_spell_1_modifier_2).require(PALADINS));
     public static final Entry PRIEST_TIER_4_SPELL_1_MODIFIER_1 = add(modifierSpell(PriestSkills.priest_tier_4_spell_1_modifier_1).require(PALADINS));
     public static final Entry PRIEST_TIER_4_SPELL_1_MODIFIER_2 = add(modifierSpell(PriestSkills.priest_tier_4_spell_1_modifier_2).require(PALADINS));
 
@@ -736,14 +733,14 @@ public class NodeTypes {
     public static final Entry PRIEST_TIER_3_SPELL_1_ROOT = add(modifierSpell(PriestSkills.priest_tier_3_spell_1_root).require(PALADINS));
     public static final Entry PRIEST_TIER_4_SPELL_1_ROOT = add(modifierSpell(PriestSkills.priest_tier_4_spell_1_root).require(PALADINS));
     public static final Entry PRIEST_TIER_2_SPELL_2_ROOT = add(modifierSpell(PriestSkills.priest_tier_2_spell_2_root).require(PALADINS));
-    public static final Entry PRIEST_TIER_2_SPELL_2_MODIFIER_1 = add(placeholderNode("priest_tier_2_spell_2_modifier_1", PALADINS));
-    public static final Entry PRIEST_TIER_2_SPELL_2_MODIFIER_2 = add(placeholderNode("priest_tier_2_spell_2_modifier_2", PALADINS));
+    public static final Entry PRIEST_TIER_2_SPELL_2_MODIFIER_1 = add(modifierSpell(PriestSkills.priest_tier_2_spell_2_modifier_1).require(PALADINS));
+    public static final Entry PRIEST_TIER_2_SPELL_2_MODIFIER_2 = add(modifierSpell(PriestSkills.priest_tier_2_spell_2_modifier_2).require(PALADINS));
     public static final Entry PRIEST_TIER_3_SPELL_2_ROOT = add(modifierSpell(PriestSkills.priest_tier_3_spell_2_root).require(PALADINS));
-    public static final Entry PRIEST_TIER_3_SPELL_2_MODIFIER_1 = add(placeholderNode("priest_tier_3_spell_2_modifier_1", PALADINS));
-    public static final Entry PRIEST_TIER_3_SPELL_2_MODIFIER_2 = add(placeholderNode("priest_tier_3_spell_2_modifier_2", PALADINS));
+    public static final Entry PRIEST_TIER_3_SPELL_2_MODIFIER_1 = add(modifierSpell(PriestSkills.priest_tier_3_spell_2_modifier_1).require(PALADINS));
+    public static final Entry PRIEST_TIER_3_SPELL_2_MODIFIER_2 = add(modifierSpell(PriestSkills.priest_tier_3_spell_2_modifier_2).require(PALADINS));
     public static final Entry PRIEST_TIER_4_SPELL_2_ROOT = add(modifierSpell(PriestSkills.priest_tier_4_spell_2_root).require(PALADINS));
-    public static final Entry PRIEST_TIER_4_SPELL_2_MODIFIER_1 = add(placeholderNode("priest_tier_4_spell_2_modifier_1", PALADINS));
-    public static final Entry PRIEST_TIER_4_SPELL_2_MODIFIER_2 = add(placeholderNode("priest_tier_4_spell_2_modifier_2", PALADINS));
+    public static final Entry PRIEST_TIER_4_SPELL_2_MODIFIER_1 = add(modifierSpell(PriestSkills.priest_tier_4_spell_2_modifier_1).require(PALADINS));
+    public static final Entry PRIEST_TIER_4_SPELL_2_MODIFIER_2 = add(modifierSpell(PriestSkills.priest_tier_4_spell_2_modifier_2).require(PALADINS));
     // Paladin (tier 3 spell_2 powerful nodes are reused real leftovers)
     public static final Entry PALADIN_TIER_2_SPELL_1_ROOT = add(modifierSpell(PaladinSkills.paladin_tier_2_spell_1_root).require(PALADINS));
     public static final Entry PALADIN_TIER_3_SPELL_1_ROOT = add(modifierSpell(PaladinSkills.paladin_tier_3_spell_1_root).require(PALADINS));
