@@ -224,9 +224,33 @@ public class RogueSkills {
     }
 
     // ===================================================================================
-    // PLACEHOLDER weak-root + spell_2 nodes. The underlying second-per-tier Rogue spells
-    // are not implemented yet; these inert stubs complete the tree structure and can be
-    // filled in with real modifiers once the spells ship.
+    // Weak "root" spell-improvement nodes (structural parents of the two powerful mutex
+    // nodes). Patterns come from the shared palette in SkillsCommon, picked per spell.
+    // ===================================================================================
+
+    public static final Skills.Entry rogue_tier_2_spell_1_root = add(SkillsCommon.cooldownRoot(
+            Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
+            "rogue_tier_2_spell_1_root", "rogues:slice_and_dice", "Slice and Dice", 2F));
+    public static final Skills.Entry rogue_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
+            Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
+            "rogue_tier_3_spell_1_root", "rogues:shadow_step", "Shadow Step", 2F));
+    public static final Skills.Entry rogue_tier_4_spell_1_root = add(SkillsCommon.lingerRoot(
+            Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
+            "rogue_tier_4_spell_1_root", "rogues:vanish", "Vanish", 2F));
+    public static final Skills.Entry rogue_tier_2_spell_2_root = add(SkillsCommon.lingerRoot(
+            Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
+            "rogue_tier_2_spell_2_root", "rogues:shock_powder", "Shock Powder", 1F));
+    public static final Skills.Entry rogue_tier_3_spell_2_root = add(SkillsCommon.critRoot(
+            Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
+            "rogue_tier_3_spell_2_root", "rogues:bear_trap", "Bear Trap", 0.05F));
+    public static final Skills.Entry rogue_tier_4_spell_2_root = add(SkillsCommon.meleeRoot(
+            Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
+            "rogue_tier_4_spell_2_root", "rogues:mutilate", "Mutilate", 0.1F));
+
+    // ===================================================================================
+    // PLACEHOLDER powerful mutex nodes for the second spell of each tier (spell_2).
+    // These inert stubs complete the tree structure and are to be filled in with real
+    // modifiers (Shock Powder T2, Bear Trap T3, Mutilate T4).
     // ===================================================================================
     private static Skills.Entry placeholder(String path) {
         var id = Identifier.of(NAMESPACE, path);
@@ -238,16 +262,10 @@ public class RogueSkills {
         return new Skills.Entry(id, spell, "PLACEHOLDER", "PLACEHOLDER", null, EnumSet.of(Skills.Category.ROGUE));
     }
 
-    public static final Skills.Entry rogue_tier_2_spell_1_root = add(placeholder("rogue_tier_2_spell_1_root"));
-    public static final Skills.Entry rogue_tier_3_spell_1_root = add(placeholder("rogue_tier_3_spell_1_root"));
-    public static final Skills.Entry rogue_tier_4_spell_1_root = add(placeholder("rogue_tier_4_spell_1_root"));
-    public static final Skills.Entry rogue_tier_2_spell_2_root = add(placeholder("rogue_tier_2_spell_2_root"));
     public static final Skills.Entry rogue_tier_2_spell_2_modifier_1 = add(placeholder("rogue_tier_2_spell_2_modifier_1"));
     public static final Skills.Entry rogue_tier_2_spell_2_modifier_2 = add(placeholder("rogue_tier_2_spell_2_modifier_2"));
-    public static final Skills.Entry rogue_tier_3_spell_2_root = add(placeholder("rogue_tier_3_spell_2_root"));
     public static final Skills.Entry rogue_tier_3_spell_2_modifier_1 = add(placeholder("rogue_tier_3_spell_2_modifier_1"));
     public static final Skills.Entry rogue_tier_3_spell_2_modifier_2 = add(placeholder("rogue_tier_3_spell_2_modifier_2"));
-    public static final Skills.Entry rogue_tier_4_spell_2_root = add(placeholder("rogue_tier_4_spell_2_root"));
     public static final Skills.Entry rogue_tier_4_spell_2_modifier_1 = add(placeholder("rogue_tier_4_spell_2_modifier_1"));
     public static final Skills.Entry rogue_tier_4_spell_2_modifier_2 = add(placeholder("rogue_tier_4_spell_2_modifier_2"));
 

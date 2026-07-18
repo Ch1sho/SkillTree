@@ -202,51 +202,27 @@ public class ArcaneSkills {
 
     // ===================================================================================
     // Weak "root" spell-improvement nodes (structural parents of the two powerful mutex
-    // nodes). Damaging spells get flat critical strike chance; buff/summon/utility spells
-    // (Barrage, Blink, Evocation) get a flat cooldown reduction.
+    // nodes). Patterns come from the shared palette in SkillsCommon, picked per spell.
     // ===================================================================================
 
-    /** Weak root for a damaging arcane spell: a small flat critical strike chance bonus. */
-    private static Skills.Entry arcaneCritRoot(String path, String title, String spellPattern, String spellName, float critChance) {
-        var id = Identifier.of(NAMESPACE, path);
-        var description = spellName + " has {bonus} increased critical strike chance.";
-        SpellTooltip.DescriptionMutator mutator = (args) ->
-                args.description().replace("{bonus}", SpellTooltip.percent(critChance));
-        var spell = SpellBuilder.createSpellModifier();
-        spell.school = SpellSchools.ARCANE;
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = spellPattern;
-        modifier.power_modifier = new Spell.Impact.Modifier();
-        modifier.power_modifier.critical_chance_bonus = critChance;
-        spell.modifiers = List.of(modifier);
-        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.ARCANE));
-    }
-
-    /** Weak root for a buff/summon/utility arcane spell: a flat cooldown reduction. */
-    private static Skills.Entry arcaneCooldownRoot(String path, String title, String spellPattern, String spellName, float seconds) {
-        var id = Identifier.of(NAMESPACE, path);
-        var description = "Reduces the cooldown of " + spellName + " by " + (int) seconds + " sec.";
-        var spell = SpellBuilder.createSpellModifier();
-        spell.school = SpellSchools.ARCANE;
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = spellPattern;
-        modifier.cooldown_duration_deduct = seconds;
-        spell.modifiers = List.of(modifier);
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
-    }
-
-    public static final Skills.Entry arcane_tier_2_spell_1_root = add(arcaneCritRoot(
-            "arcane_tier_2_spell_1_root", "Improved Arcane Missiles", "wizards:arcane_missile", "Arcane Missiles", 0.05F));
-    public static final Skills.Entry arcane_tier_2_spell_2_root = add(arcaneCritRoot(
-            "arcane_tier_2_spell_2_root", "Improved Arcane Explosion", "wizards:arcane_explosion", "Arcane Explosion", 0.05F));
-    public static final Skills.Entry arcane_tier_3_spell_1_root = add(arcaneCritRoot(
-            "arcane_tier_3_spell_1_root", "Improved Arcane Beam", "wizards:arcane_beam", "Arcane Beam", 0.05F));
-    public static final Skills.Entry arcane_tier_3_spell_2_root = add(arcaneCooldownRoot(
-            "arcane_tier_3_spell_2_root", "Improved Arcane Barrage", "wizards:arcane_barrage", "Arcane Barrage", 5F));
-    public static final Skills.Entry arcane_tier_4_spell_1_root = add(arcaneCooldownRoot(
-            "arcane_tier_4_spell_1_root", "Improved Blink", "wizards:arcane_blink", "Blink", 3F));
-    public static final Skills.Entry arcane_tier_4_spell_2_root = add(arcaneCooldownRoot(
-            "arcane_tier_4_spell_2_root", "Improved Evocation", "wizards:arcane_evocation", "Evocation", 5F));
+    public static final Skills.Entry arcane_tier_2_spell_1_root = add(SkillsCommon.channelRoot(
+            Skills.Category.ARCANE, SpellSchools.ARCANE,
+            "arcane_tier_2_spell_1_root", "wizards:arcane_missile", "Arcane Missiles", 2));
+    public static final Skills.Entry arcane_tier_2_spell_2_root = add(SkillsCommon.radiusRoot(
+            Skills.Category.ARCANE, SpellSchools.ARCANE,
+            "arcane_tier_2_spell_2_root", "wizards:arcane_explosion", "Arcane Explosion", 1F));
+    public static final Skills.Entry arcane_tier_3_spell_1_root = add(SkillsCommon.critRoot(
+            Skills.Category.ARCANE, SpellSchools.ARCANE,
+            "arcane_tier_3_spell_1_root", "wizards:arcane_beam", "Arcane Beam", 0.05F));
+    public static final Skills.Entry arcane_tier_3_spell_2_root = add(SkillsCommon.companionRoot(
+            Skills.Category.ARCANE, SpellSchools.ARCANE,
+            "arcane_tier_3_spell_2_root", "wizards:arcane_barrage", "Arcane Barrage", 5));
+    public static final Skills.Entry arcane_tier_4_spell_1_root = add(SkillsCommon.cooldownRoot(
+            Skills.Category.ARCANE, SpellSchools.ARCANE,
+            "arcane_tier_4_spell_1_root", "wizards:arcane_blink", "Blink", 3F));
+    public static final Skills.Entry arcane_tier_4_spell_2_root = add(SkillsCommon.cooldownRoot(
+            Skills.Category.ARCANE, SpellSchools.ARCANE,
+            "arcane_tier_4_spell_2_root", "wizards:arcane_evocation", "Evocation", 5F));
 
     // ===================================================================================
     // Powerful mutex modifiers for the second spell of each tier (spell_2).

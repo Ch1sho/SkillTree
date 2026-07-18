@@ -164,51 +164,27 @@ public class FrostSkills {
     // ===================================================================================
     // Weak "root" spell-improvement nodes.
     // Each acts as the structural parent gating the two powerful mutex nodes of a spell.
-    // Convention: damaging spells get a flat critical strike chance bonus; buff/summon
-    // spells (which cannot crit) get a flat cooldown reduction (always meaningful).
+    // Patterns come from the shared palette in SkillsCommon, picked per spell.
     // ===================================================================================
 
-    /** Weak root for a damaging frost spell: a small flat critical strike chance bonus. */
-    private static Skills.Entry frostCritRoot(String path, String title, String spellPattern, String spellName, float critChance) {
-        var id = Identifier.of(NAMESPACE, path);
-        var description = spellName + " has {bonus} increased critical strike chance.";
-        SpellTooltip.DescriptionMutator mutator = (args) ->
-                args.description().replace("{bonus}", SpellTooltip.percent(critChance));
-        var spell = SpellBuilder.createSpellModifier();
-        spell.school = SpellSchools.FROST;
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = spellPattern;
-        modifier.power_modifier = new Spell.Impact.Modifier();
-        modifier.power_modifier.critical_chance_bonus = critChance;
-        spell.modifiers = List.of(modifier);
-        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.FROST));
-    }
-
-    /** Weak root for a buff/summon frost spell: a flat cooldown reduction. */
-    private static Skills.Entry frostCooldownRoot(String path, String title, String spellPattern, String spellName, float seconds) {
-        var id = Identifier.of(NAMESPACE, path);
-        var description = "Reduces the cooldown of " + spellName + " by " + (int) seconds + " sec.";
-        var spell = SpellBuilder.createSpellModifier();
-        spell.school = SpellSchools.FROST;
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = spellPattern;
-        modifier.cooldown_duration_deduct = seconds;
-        spell.modifiers = List.of(modifier);
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
-    }
-
-    public static final Skills.Entry frost_tier_2_spell_1_root = add(frostCritRoot(
-            "frost_tier_2_spell_1_root", "Improved Frost Nova", "wizards:frost_nova", "Frost Nova", 0.05F));
-    public static final Skills.Entry frost_tier_2_spell_2_root = add(frostCritRoot(
-            "frost_tier_2_spell_2_root", "Improved Frost Spikes", "wizards:frost_spikes", "Frost Spikes", 0.05F));
-    public static final Skills.Entry frost_tier_3_spell_1_root = add(frostCooldownRoot(
-            "frost_tier_3_spell_1_root", "Improved Frost Shield", "wizards:frost_shield", "Frost Shield", 3F));
-    public static final Skills.Entry frost_tier_3_spell_2_root = add(frostCritRoot(
-            "frost_tier_3_spell_2_root", "Improved Ice Lance", "wizards:frost_lance", "Ice Lance", 0.05F));
-    public static final Skills.Entry frost_tier_4_spell_1_root = add(frostCritRoot(
-            "frost_tier_4_spell_1_root", "Improved Blizzard", "wizards:frost_blizzard", "Blizzard", 0.05F));
-    public static final Skills.Entry frost_tier_4_spell_2_root = add(frostCooldownRoot(
-            "frost_tier_4_spell_2_root", "Improved Frost Elemental", "wizards:frost_elemental", "Frost Elemental", 5F));
+    public static final Skills.Entry frost_tier_2_spell_1_root = add(SkillsCommon.radiusRoot(
+            Skills.Category.FROST, SpellSchools.FROST,
+            "frost_tier_2_spell_1_root", "wizards:frost_nova", "Frost Nova", 1F));
+    public static final Skills.Entry frost_tier_2_spell_2_root = add(SkillsCommon.lingerRoot(
+            Skills.Category.FROST, SpellSchools.FROST,
+            "frost_tier_2_spell_2_root", "wizards:frost_spikes", "Frost Spikes", 2F));
+    public static final Skills.Entry frost_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
+            Skills.Category.FROST, SpellSchools.FROST,
+            "frost_tier_3_spell_1_root", "wizards:frost_shield", "Frost Shield", 3F));
+    public static final Skills.Entry frost_tier_3_spell_2_root = add(SkillsCommon.critRoot(
+            Skills.Category.FROST, SpellSchools.FROST,
+            "frost_tier_3_spell_2_root", "wizards:frost_lance", "Ice Lance", 0.05F));
+    public static final Skills.Entry frost_tier_4_spell_1_root = add(SkillsCommon.critRoot(
+            Skills.Category.FROST, SpellSchools.FROST,
+            "frost_tier_4_spell_1_root", "wizards:frost_blizzard", "Blizzard", 0.05F));
+    public static final Skills.Entry frost_tier_4_spell_2_root = add(SkillsCommon.companionRoot(
+            Skills.Category.FROST, SpellSchools.FROST,
+            "frost_tier_4_spell_2_root", "wizards:frost_elemental", "Frost Elemental", 5));
 
     // ===================================================================================
     // Powerful mutex modifiers for the second spell of each tier (spell_2).

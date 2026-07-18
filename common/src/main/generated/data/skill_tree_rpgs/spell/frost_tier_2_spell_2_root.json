@@ -6,9 +6,7 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:frost_spikes",
-      "power_modifier": {
-        "critical_chance_bonus": 0.05
-      }
+      "effect_duration_add": 2.0
     }
   ]
 }

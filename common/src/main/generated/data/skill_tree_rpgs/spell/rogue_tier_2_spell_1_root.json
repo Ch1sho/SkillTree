@@ -5,7 +5,8 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "rogues:placeholder"
+      "spell_pattern": "rogues:slice_and_dice",
+      "cooldown_duration_deduct": 2.0
     }
   ]
 }

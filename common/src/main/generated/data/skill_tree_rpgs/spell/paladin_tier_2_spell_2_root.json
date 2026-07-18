@@ -5,7 +5,10 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "paladins:placeholder"
+      "spell_pattern": "paladins:blessed_strikes",
+      "power_modifier": {
+        "power_multiplier": 0.1
+      }
     }
   ]
 }

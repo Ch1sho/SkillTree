@@ -5,7 +5,8 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "rogues:placeholder"
+      "spell_pattern": "rogues:shout",
+      "effect_duration_add": 2.0
     }
   ]
 }

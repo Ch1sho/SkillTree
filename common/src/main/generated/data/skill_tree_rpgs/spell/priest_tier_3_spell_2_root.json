@@ -5,7 +5,8 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "paladins:placeholder"
+      "spell_pattern": "paladins:penance",
+      "effect_duration_add": 2.0
     }
   ]
 }

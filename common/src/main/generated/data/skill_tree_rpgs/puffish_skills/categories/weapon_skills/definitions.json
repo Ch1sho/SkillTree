@@ -4100,9 +4100,9 @@
       "skill_definition_id": "paladin_tier_2_spell_1_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "paladins:textures/spell/flash_heal.png"
       }
     },
     "required_mods": [
@@ -4211,9 +4211,9 @@
       "skill_definition_id": "paladin_tier_2_spell_2_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "paladins:textures/spell/blessed_strikes.png"
       }
     },
     "required_mods": [
@@ -4396,9 +4396,9 @@
       "skill_definition_id": "paladin_tier_3_spell_1_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "paladins:textures/spell/divine_protection.png"
       }
     },
     "required_mods": [
@@ -4507,9 +4507,9 @@
       "skill_definition_id": "paladin_tier_3_spell_2_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "paladins:textures/spell/judgement.png"
       }
     },
     "required_mods": [
@@ -4618,9 +4618,9 @@
       "skill_definition_id": "paladin_tier_4_spell_1_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "paladins:textures/spell/battle_banner.png"
       }
     },
     "required_mods": [
@@ -4729,9 +4729,9 @@
       "skill_definition_id": "paladin_tier_4_spell_2_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "paladins:textures/spell/immolation.png"
       }
     },
     "required_mods": [
@@ -5045,9 +5045,9 @@
       "skill_definition_id": "priest_tier_2_spell_1_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "paladins:textures/spell/holy_beam.png"
       }
     },
     "required_mods": [
@@ -5156,9 +5156,9 @@
       "skill_definition_id": "priest_tier_2_spell_2_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "paladins:textures/spell/levitate.png"
       }
     },
     "required_mods": [
@@ -5341,9 +5341,9 @@
       "skill_definition_id": "priest_tier_3_spell_1_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "paladins:textures/spell/circle_of_healing.png"
       }
     },
     "required_mods": [
@@ -5452,9 +5452,9 @@
       "skill_definition_id": "priest_tier_3_spell_2_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "paladins:textures/spell/penance.png"
       }
     },
     "required_mods": [
@@ -5563,9 +5563,9 @@
       "skill_definition_id": "priest_tier_4_spell_1_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "paladins:textures/spell/barrier.png"
       }
     },
     "required_mods": [
@@ -5674,9 +5674,9 @@
       "skill_definition_id": "priest_tier_4_spell_2_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "paladins:textures/spell/lightwell.png"
       }
     },
     "required_mods": [
@@ -5990,9 +5990,9 @@
       "skill_definition_id": "rogue_tier_2_spell_1_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/slice_and_dice.png"
       }
     },
     "required_mods": [
@@ -6101,9 +6101,9 @@
       "skill_definition_id": "rogue_tier_2_spell_2_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/shock_powder.png"
       }
     },
     "required_mods": [
@@ -6286,9 +6286,9 @@
       "skill_definition_id": "rogue_tier_3_spell_1_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/shadow_step.png"
       }
     },
     "required_mods": [
@@ -6397,9 +6397,9 @@
       "skill_definition_id": "rogue_tier_3_spell_2_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/bear_trap.png"
       }
     },
     "required_mods": [
@@ -6508,9 +6508,9 @@
       "skill_definition_id": "rogue_tier_4_spell_1_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/vanish.png"
       }
     },
     "required_mods": [
@@ -6619,9 +6619,9 @@
       "skill_definition_id": "rogue_tier_4_spell_2_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/mutilate.png"
       }
     },
     "required_mods": [
@@ -6935,9 +6935,9 @@
       "skill_definition_id": "warrior_tier_2_spell_1_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/throw.png"
       }
     },
     "required_mods": [
@@ -7046,9 +7046,9 @@
       "skill_definition_id": "warrior_tier_2_spell_2_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/throw_net.png"
       }
     },
     "required_mods": [
@@ -7231,9 +7231,9 @@
       "skill_definition_id": "warrior_tier_3_spell_1_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/charge.png"
       }
     },
     "required_mods": [
@@ -7342,9 +7342,9 @@
       "skill_definition_id": "warrior_tier_3_spell_2_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/shout.png"
       }
     },
     "required_mods": [
@@ -7453,9 +7453,9 @@
       "skill_definition_id": "warrior_tier_4_spell_1_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/mortal_strike.png"
       }
     },
     "required_mods": [
@@ -7564,9 +7564,9 @@
       "skill_definition_id": "warrior_tier_4_spell_2_root"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/last_stand.png"
       }
     },
     "required_mods": [

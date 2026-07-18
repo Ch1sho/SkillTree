@@ -216,9 +216,33 @@ public class PriestSkills {
     }
 
     // ===================================================================================
-    // PLACEHOLDER weak-root + spell_2 nodes. The underlying second-per-tier Priest spells
-    // are not implemented yet; these inert stubs complete the tree structure and can be
-    // filled in with real modifiers once the spells ship.
+    // Weak "root" spell-improvement nodes (structural parents of the two powerful mutex
+    // nodes). Patterns come from the shared palette in SkillsCommon, picked per spell.
+    // ===================================================================================
+
+    public static final Skills.Entry priest_tier_2_spell_1_root = add(SkillsCommon.channelRoot(
+            Skills.Category.PRIEST, SpellSchools.HEALING,
+            "priest_tier_2_spell_1_root", "paladins:holy_beam", "Holy Beam", 4));
+    public static final Skills.Entry priest_tier_3_spell_1_root = add(SkillsCommon.powerRoot(
+            Skills.Category.PRIEST, SpellSchools.HEALING,
+            "priest_tier_3_spell_1_root", "paladins:circle_of_healing", "Circle of Healing", 0.1F));
+    public static final Skills.Entry priest_tier_4_spell_1_root = add(SkillsCommon.cooldownRoot(
+            Skills.Category.PRIEST, SpellSchools.HEALING,
+            "priest_tier_4_spell_1_root", "paladins:barrier", "Barrier", 5F));
+    public static final Skills.Entry priest_tier_2_spell_2_root = add(SkillsCommon.lingerRoot(
+            Skills.Category.PRIEST, SpellSchools.HEALING,
+            "priest_tier_2_spell_2_root", "paladins:levitate", "Levitate", 2F));
+    public static final Skills.Entry priest_tier_3_spell_2_root = add(SkillsCommon.lingerRoot(
+            Skills.Category.PRIEST, SpellSchools.HEALING,
+            "priest_tier_3_spell_2_root", "paladins:penance", "Penance", 2F));
+    public static final Skills.Entry priest_tier_4_spell_2_root = add(SkillsCommon.companionRoot(
+            Skills.Category.PRIEST, SpellSchools.HEALING,
+            "priest_tier_4_spell_2_root", "paladins:lightwell", "Lightwell", 4));
+
+    // ===================================================================================
+    // PLACEHOLDER powerful mutex nodes for the second spell of each tier (spell_2).
+    // These inert stubs complete the tree structure and are to be filled in with real
+    // modifiers (Levitate T2, Penance T3, Lightwell T4).
     // ===================================================================================
     private static Skills.Entry placeholder(String path) {
         var id = Identifier.of(NAMESPACE, path);
@@ -230,16 +254,10 @@ public class PriestSkills {
         return new Skills.Entry(id, spell, "PLACEHOLDER", "PLACEHOLDER", null, EnumSet.of(Skills.Category.PRIEST));
     }
 
-    public static final Skills.Entry priest_tier_2_spell_1_root = add(placeholder("priest_tier_2_spell_1_root"));
-    public static final Skills.Entry priest_tier_3_spell_1_root = add(placeholder("priest_tier_3_spell_1_root"));
-    public static final Skills.Entry priest_tier_4_spell_1_root = add(placeholder("priest_tier_4_spell_1_root"));
-    public static final Skills.Entry priest_tier_2_spell_2_root = add(placeholder("priest_tier_2_spell_2_root"));
     public static final Skills.Entry priest_tier_2_spell_2_modifier_1 = add(placeholder("priest_tier_2_spell_2_modifier_1"));
     public static final Skills.Entry priest_tier_2_spell_2_modifier_2 = add(placeholder("priest_tier_2_spell_2_modifier_2"));
-    public static final Skills.Entry priest_tier_3_spell_2_root = add(placeholder("priest_tier_3_spell_2_root"));
     public static final Skills.Entry priest_tier_3_spell_2_modifier_1 = add(placeholder("priest_tier_3_spell_2_modifier_1"));
     public static final Skills.Entry priest_tier_3_spell_2_modifier_2 = add(placeholder("priest_tier_3_spell_2_modifier_2"));
-    public static final Skills.Entry priest_tier_4_spell_2_root = add(placeholder("priest_tier_4_spell_2_root"));
     public static final Skills.Entry priest_tier_4_spell_2_modifier_1 = add(placeholder("priest_tier_4_spell_2_modifier_1"));
     public static final Skills.Entry priest_tier_4_spell_2_modifier_2 = add(placeholder("priest_tier_4_spell_2_modifier_2"));
 

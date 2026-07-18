@@ -6,9 +6,7 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:arcane_missile",
-      "power_modifier": {
-        "critical_chance_bonus": 0.05
-      }
+      "channel_ticks_add": 2
     }
   ]
 }

@@ -6,9 +6,7 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:fire_slash",
-      "power_modifier": {
-        "critical_chance_bonus": 0.05
-      }
+      "projectile_scale_multiply": 0.15
     }
   ]
 }

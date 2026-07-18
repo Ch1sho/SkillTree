@@ -150,51 +150,27 @@ public class FireSkills {
 
     // ===================================================================================
     // Weak "root" spell-improvement nodes (structural parents of the two powerful mutex
-    // nodes). Damaging spells get flat critical strike chance; the Fire Hydra summon gets
-    // a flat cooldown reduction (crit is meaningless on a summon).
+    // nodes). Patterns come from the shared palette in SkillsCommon, picked per spell.
     // ===================================================================================
 
-    /** Weak root for a damaging fire spell: a small flat critical strike chance bonus. */
-    private static Skills.Entry fireCritRoot(String path, String title, String spellPattern, String spellName, float critChance) {
-        var id = Identifier.of(NAMESPACE, path);
-        var description = spellName + " has {bonus} increased critical strike chance.";
-        SpellTooltip.DescriptionMutator mutator = (args) ->
-                args.description().replace("{bonus}", SpellTooltip.percent(critChance));
-        var spell = SpellBuilder.createSpellModifier();
-        spell.school = SpellSchools.FIRE;
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = spellPattern;
-        modifier.power_modifier = new Spell.Impact.Modifier();
-        modifier.power_modifier.critical_chance_bonus = critChance;
-        spell.modifiers = List.of(modifier);
-        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.FIRE));
-    }
-
-    /** Weak root for a summon fire spell: a flat cooldown reduction. */
-    private static Skills.Entry fireCooldownRoot(String path, String title, String spellPattern, String spellName, float seconds) {
-        var id = Identifier.of(NAMESPACE, path);
-        var description = "Reduces the cooldown of " + spellName + " by " + (int) seconds + " sec.";
-        var spell = SpellBuilder.createSpellModifier();
-        spell.school = SpellSchools.FIRE;
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = spellPattern;
-        modifier.cooldown_duration_deduct = seconds;
-        spell.modifiers = List.of(modifier);
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
-    }
-
-    public static final Skills.Entry fire_tier_2_spell_1_root = add(fireCritRoot(
-            "fire_tier_2_spell_1_root", "Improved Fire Breath", "wizards:fire_breath", "Fire Breath", 0.05F));
-    public static final Skills.Entry fire_tier_2_spell_2_root = add(fireCritRoot(
-            "fire_tier_2_spell_2_root", "Improved Flame Slash", "wizards:fire_slash", "Flame Slash", 0.05F));
-    public static final Skills.Entry fire_tier_3_spell_1_root = add(fireCritRoot(
-            "fire_tier_3_spell_1_root", "Improved Meteor", "wizards:fire_meteor", "Meteor", 0.05F));
-    public static final Skills.Entry fire_tier_3_spell_2_root = add(fireCritRoot(
-            "fire_tier_3_spell_2_root", "Improved Firestorm", "wizards:fire_storm", "Firestorm", 0.05F));
-    public static final Skills.Entry fire_tier_4_spell_1_root = add(fireCritRoot(
-            "fire_tier_4_spell_1_root", "Improved Wall of Flames", "wizards:fire_wall", "Wall of Flames", 0.05F));
-    public static final Skills.Entry fire_tier_4_spell_2_root = add(fireCooldownRoot(
-            "fire_tier_4_spell_2_root", "Improved Fire Hydra", "wizards:fire_hydra", "Fire Hydra", 5F));
+    public static final Skills.Entry fire_tier_2_spell_1_root = add(SkillsCommon.channelRoot(
+            Skills.Category.FIRE, SpellSchools.FIRE,
+            "fire_tier_2_spell_1_root", "wizards:fire_breath", "Fire Breath", 4));
+    public static final Skills.Entry fire_tier_2_spell_2_root = add(SkillsCommon.heftRoot(
+            Skills.Category.FIRE, SpellSchools.FIRE,
+            "fire_tier_2_spell_2_root", "wizards:fire_slash", "Flame Slash", 0.15F));
+    public static final Skills.Entry fire_tier_3_spell_1_root = add(SkillsCommon.critRoot(
+            Skills.Category.FIRE, SpellSchools.FIRE,
+            "fire_tier_3_spell_1_root", "wizards:fire_meteor", "Meteor", 0.05F));
+    public static final Skills.Entry fire_tier_3_spell_2_root = add(SkillsCommon.powerRoot(
+            Skills.Category.FIRE, SpellSchools.FIRE,
+            "fire_tier_3_spell_2_root", "wizards:fire_storm", "Firestorm", 0.1F));
+    public static final Skills.Entry fire_tier_4_spell_1_root = add(SkillsCommon.fieldRoot(
+            Skills.Category.FIRE, SpellSchools.FIRE,
+            "fire_tier_4_spell_1_root", "wizards:fire_wall", "Wall of Flames", 2F));
+    public static final Skills.Entry fire_tier_4_spell_2_root = add(SkillsCommon.companionRoot(
+            Skills.Category.FIRE, SpellSchools.FIRE,
+            "fire_tier_4_spell_2_root", "wizards:fire_hydra", "Fire Hydra", 5));
 
     // ===================================================================================
     // Powerful mutex modifiers for the second spell of each tier (spell_2).

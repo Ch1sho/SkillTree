@@ -6,7 +6,11 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:arcane_barrage",
-      "cooldown_duration_deduct": 5.0
+      "summon_behaviour": {
+        "lifespan": {
+          "active_seconds_add": 5
+        }
+      }
     }
   ]
 }

@@ -5,7 +5,8 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "rogues:placeholder"
+      "spell_pattern": "rogues:shock_powder",
+      "effect_duration_add": 1.0
     }
   ]
 }

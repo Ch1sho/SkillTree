@@ -218,10 +218,33 @@ public class PaladinSkills {
     }
 
     // ===================================================================================
-    // PLACEHOLDER weak-root + spell_2 nodes. The underlying second-per-tier Paladin spells
-    // are not implemented yet; these inert stubs complete the tree structure. Tier 3
-    // spell_2 already has its two powerful nodes (real leftovers), so only its weak root is
-    // a placeholder here.
+    // Weak "root" spell-improvement nodes (structural parents of the two powerful mutex
+    // nodes). Patterns come from the shared palette in SkillsCommon, picked per spell.
+    // ===================================================================================
+
+    public static final Skills.Entry paladin_tier_2_spell_1_root = add(SkillsCommon.powerRoot(
+            Skills.Category.PALADIN, SpellSchools.HEALING,
+            "paladin_tier_2_spell_1_root", "paladins:flash_heal", "Flash Heal", 0.1F));
+    public static final Skills.Entry paladin_tier_3_spell_1_root = add(SkillsCommon.lingerRoot(
+            Skills.Category.PALADIN, SpellSchools.HEALING,
+            "paladin_tier_3_spell_1_root", "paladins:divine_protection", "Divine Protection", 2F));
+    public static final Skills.Entry paladin_tier_4_spell_1_root = add(SkillsCommon.fieldRoot(
+            Skills.Category.PALADIN, SpellSchools.HEALING,
+            "paladin_tier_4_spell_1_root", "paladins:battle_banner", "Battle Banner", 2F));
+    public static final Skills.Entry paladin_tier_2_spell_2_root = add(SkillsCommon.powerRoot(
+            Skills.Category.PALADIN, SpellSchools.HEALING,
+            "paladin_tier_2_spell_2_root", "paladins:blessed_strikes", "Blessed Strikes", 0.1F));
+    public static final Skills.Entry paladin_tier_3_spell_2_root = add(SkillsCommon.critRoot(
+            Skills.Category.PALADIN, SpellSchools.HEALING,
+            "paladin_tier_3_spell_2_root", "paladins:judgement", "Judgement", 0.05F));
+    public static final Skills.Entry paladin_tier_4_spell_2_root = add(SkillsCommon.radiusRoot(
+            Skills.Category.PALADIN, SpellSchools.HEALING,
+            "paladin_tier_4_spell_2_root", "paladins:immolation", "Immolation", 1F));
+
+    // ===================================================================================
+    // PLACEHOLDER powerful mutex nodes for the second spell of tiers 2 and 4 (spell_2).
+    // Tier 3 spell_2 (Judgement) already has its two real powerful nodes above (reused
+    // leftovers). To be filled in with real modifiers (Blessed Strikes T2, Immolation T4).
     // ===================================================================================
     private static Skills.Entry placeholder(String path) {
         var id = Identifier.of(NAMESPACE, path);
@@ -233,15 +256,8 @@ public class PaladinSkills {
         return new Skills.Entry(id, spell, "PLACEHOLDER", "PLACEHOLDER", null, EnumSet.of(Skills.Category.PALADIN));
     }
 
-    public static final Skills.Entry paladin_tier_2_spell_1_root = add(placeholder("paladin_tier_2_spell_1_root"));
-    public static final Skills.Entry paladin_tier_3_spell_1_root = add(placeholder("paladin_tier_3_spell_1_root"));
-    public static final Skills.Entry paladin_tier_4_spell_1_root = add(placeholder("paladin_tier_4_spell_1_root"));
-    public static final Skills.Entry paladin_tier_2_spell_2_root = add(placeholder("paladin_tier_2_spell_2_root"));
     public static final Skills.Entry paladin_tier_2_spell_2_modifier_1 = add(placeholder("paladin_tier_2_spell_2_modifier_1"));
     public static final Skills.Entry paladin_tier_2_spell_2_modifier_2 = add(placeholder("paladin_tier_2_spell_2_modifier_2"));
-    public static final Skills.Entry paladin_tier_3_spell_2_root = add(placeholder("paladin_tier_3_spell_2_root"));
-    // paladin_tier_3_spell_2_modifier_1 / _2 already exist above (reused leftovers)
-    public static final Skills.Entry paladin_tier_4_spell_2_root = add(placeholder("paladin_tier_4_spell_2_root"));
     public static final Skills.Entry paladin_tier_4_spell_2_modifier_1 = add(placeholder("paladin_tier_4_spell_2_modifier_1"));
     public static final Skills.Entry paladin_tier_4_spell_2_modifier_2 = add(placeholder("paladin_tier_4_spell_2_modifier_2"));
 

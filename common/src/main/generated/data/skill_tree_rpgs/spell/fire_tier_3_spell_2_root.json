@@ -7,7 +7,7 @@
     {
       "spell_pattern": "wizards:fire_storm",
       "power_modifier": {
-        "critical_chance_bonus": 0.05
+        "power_multiplier": 0.1
       }
     }
   ]

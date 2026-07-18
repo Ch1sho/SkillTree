@@ -6,9 +6,7 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:fire_wall",
-      "power_modifier": {
-        "critical_chance_bonus": 0.05
-      }
+      "spawn_duration_add": 2.0
     }
   ]
 }

@@ -5,7 +5,10 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "paladins:placeholder"
+      "spell_pattern": "paladins:circle_of_healing",
+      "power_modifier": {
+        "power_multiplier": 0.1
+      }
     }
   ]
 }

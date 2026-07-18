@@ -202,9 +202,33 @@ public class WarriorSkills {
     }
 
     // ===================================================================================
-    // PLACEHOLDER weak-root + spell_2 nodes. The underlying second-per-tier Warrior spells
-    // are not implemented yet; these inert stubs complete the tree structure and can be
-    // filled in with real modifiers once the spells ship.
+    // Weak "root" spell-improvement nodes (structural parents of the two powerful mutex
+    // nodes). Patterns come from the shared palette in SkillsCommon, picked per spell.
+    // ===================================================================================
+
+    public static final Skills.Entry warrior_tier_2_spell_1_root = add(SkillsCommon.heftRoot(
+            Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
+            "warrior_tier_2_spell_1_root", "rogues:throw", "Throw", 0.15F));
+    public static final Skills.Entry warrior_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
+            Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
+            "warrior_tier_3_spell_1_root", "rogues:charge", "Charge", 2F));
+    public static final Skills.Entry warrior_tier_4_spell_1_root = add(SkillsCommon.meleeRoot(
+            Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
+            "warrior_tier_4_spell_1_root", "rogues:mortal_strike", "Mortal Strike", 0.1F));
+    public static final Skills.Entry warrior_tier_2_spell_2_root = add(SkillsCommon.lingerRoot(
+            Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
+            "warrior_tier_2_spell_2_root", "rogues:throw_net", "Throw Net", 1F));
+    public static final Skills.Entry warrior_tier_3_spell_2_root = add(SkillsCommon.lingerRoot(
+            Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
+            "warrior_tier_3_spell_2_root", "rogues:shout", "Shout", 2F));
+    public static final Skills.Entry warrior_tier_4_spell_2_root = add(SkillsCommon.cooldownRoot(
+            Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
+            "warrior_tier_4_spell_2_root", "rogues:last_stand", "Last Stand", 5F));
+
+    // ===================================================================================
+    // PLACEHOLDER powerful mutex nodes for the second spell of tiers 2 and 4 (spell_2).
+    // Tier 3 spell_2 (Shout) already has its two real powerful nodes above. To be filled
+    // in with real modifiers (Throw Net T2, Last Stand T4).
     // ===================================================================================
     private static Skills.Entry placeholder(String path) {
         var id = Identifier.of(NAMESPACE, path);
@@ -216,14 +240,8 @@ public class WarriorSkills {
         return new Skills.Entry(id, spell, "PLACEHOLDER", "PLACEHOLDER", null, EnumSet.of(Skills.Category.WARRIOR));
     }
 
-    public static final Skills.Entry warrior_tier_2_spell_1_root = add(placeholder("warrior_tier_2_spell_1_root"));
-    public static final Skills.Entry warrior_tier_3_spell_1_root = add(placeholder("warrior_tier_3_spell_1_root"));
-    public static final Skills.Entry warrior_tier_4_spell_1_root = add(placeholder("warrior_tier_4_spell_1_root"));
-    public static final Skills.Entry warrior_tier_2_spell_2_root = add(placeholder("warrior_tier_2_spell_2_root"));
     public static final Skills.Entry warrior_tier_2_spell_2_modifier_1 = add(placeholder("warrior_tier_2_spell_2_modifier_1"));
     public static final Skills.Entry warrior_tier_2_spell_2_modifier_2 = add(placeholder("warrior_tier_2_spell_2_modifier_2"));
-    public static final Skills.Entry warrior_tier_3_spell_2_root = add(placeholder("warrior_tier_3_spell_2_root"));
-    public static final Skills.Entry warrior_tier_4_spell_2_root = add(placeholder("warrior_tier_4_spell_2_root"));
     public static final Skills.Entry warrior_tier_4_spell_2_modifier_1 = add(placeholder("warrior_tier_4_spell_2_modifier_1"));
     public static final Skills.Entry warrior_tier_4_spell_2_modifier_2 = add(placeholder("warrior_tier_4_spell_2_modifier_2"));
 

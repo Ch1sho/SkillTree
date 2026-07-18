@@ -731,54 +731,56 @@ public class NodeTypes {
     public static final Entry WEAPON_CROSSBOW_PASSIVE_2 = add(passiveSpell(WeaponSkillModifiers.weapon_crossbow_passive_2)
             .withIcon(Icon.item("minecraft:crossbow")));
 
-    // ===== PLACEHOLDER weak-root + spell_2 nodes for the not-yet-built class spells =====
+    // ===== Weak-root + spell_2 nodes for the newer class books =====
+    // Roots are real (shared palette in SkillsCommon); remaining PLACEHOLDER entries are
+    // the not-yet-designed powerful mutex nodes.
     // Priest
-    public static final Entry PRIEST_TIER_2_SPELL_1_ROOT = add(placeholderNode("priest_tier_2_spell_1_root", PALADINS));
-    public static final Entry PRIEST_TIER_3_SPELL_1_ROOT = add(placeholderNode("priest_tier_3_spell_1_root", PALADINS));
-    public static final Entry PRIEST_TIER_4_SPELL_1_ROOT = add(placeholderNode("priest_tier_4_spell_1_root", PALADINS));
-    public static final Entry PRIEST_TIER_2_SPELL_2_ROOT = add(placeholderNode("priest_tier_2_spell_2_root", PALADINS));
+    public static final Entry PRIEST_TIER_2_SPELL_1_ROOT = add(modifierSpell(PriestSkills.priest_tier_2_spell_1_root).require(PALADINS));
+    public static final Entry PRIEST_TIER_3_SPELL_1_ROOT = add(modifierSpell(PriestSkills.priest_tier_3_spell_1_root).require(PALADINS));
+    public static final Entry PRIEST_TIER_4_SPELL_1_ROOT = add(modifierSpell(PriestSkills.priest_tier_4_spell_1_root).require(PALADINS));
+    public static final Entry PRIEST_TIER_2_SPELL_2_ROOT = add(modifierSpell(PriestSkills.priest_tier_2_spell_2_root).require(PALADINS));
     public static final Entry PRIEST_TIER_2_SPELL_2_MODIFIER_1 = add(placeholderNode("priest_tier_2_spell_2_modifier_1", PALADINS));
     public static final Entry PRIEST_TIER_2_SPELL_2_MODIFIER_2 = add(placeholderNode("priest_tier_2_spell_2_modifier_2", PALADINS));
-    public static final Entry PRIEST_TIER_3_SPELL_2_ROOT = add(placeholderNode("priest_tier_3_spell_2_root", PALADINS));
+    public static final Entry PRIEST_TIER_3_SPELL_2_ROOT = add(modifierSpell(PriestSkills.priest_tier_3_spell_2_root).require(PALADINS));
     public static final Entry PRIEST_TIER_3_SPELL_2_MODIFIER_1 = add(placeholderNode("priest_tier_3_spell_2_modifier_1", PALADINS));
     public static final Entry PRIEST_TIER_3_SPELL_2_MODIFIER_2 = add(placeholderNode("priest_tier_3_spell_2_modifier_2", PALADINS));
-    public static final Entry PRIEST_TIER_4_SPELL_2_ROOT = add(placeholderNode("priest_tier_4_spell_2_root", PALADINS));
+    public static final Entry PRIEST_TIER_4_SPELL_2_ROOT = add(modifierSpell(PriestSkills.priest_tier_4_spell_2_root).require(PALADINS));
     public static final Entry PRIEST_TIER_4_SPELL_2_MODIFIER_1 = add(placeholderNode("priest_tier_4_spell_2_modifier_1", PALADINS));
     public static final Entry PRIEST_TIER_4_SPELL_2_MODIFIER_2 = add(placeholderNode("priest_tier_4_spell_2_modifier_2", PALADINS));
     // Paladin (tier 3 spell_2 powerful nodes are reused real leftovers)
-    public static final Entry PALADIN_TIER_2_SPELL_1_ROOT = add(placeholderNode("paladin_tier_2_spell_1_root", PALADINS));
-    public static final Entry PALADIN_TIER_3_SPELL_1_ROOT = add(placeholderNode("paladin_tier_3_spell_1_root", PALADINS));
-    public static final Entry PALADIN_TIER_4_SPELL_1_ROOT = add(placeholderNode("paladin_tier_4_spell_1_root", PALADINS));
-    public static final Entry PALADIN_TIER_2_SPELL_2_ROOT = add(placeholderNode("paladin_tier_2_spell_2_root", PALADINS));
+    public static final Entry PALADIN_TIER_2_SPELL_1_ROOT = add(modifierSpell(PaladinSkills.paladin_tier_2_spell_1_root).require(PALADINS));
+    public static final Entry PALADIN_TIER_3_SPELL_1_ROOT = add(modifierSpell(PaladinSkills.paladin_tier_3_spell_1_root).require(PALADINS));
+    public static final Entry PALADIN_TIER_4_SPELL_1_ROOT = add(modifierSpell(PaladinSkills.paladin_tier_4_spell_1_root).require(PALADINS));
+    public static final Entry PALADIN_TIER_2_SPELL_2_ROOT = add(modifierSpell(PaladinSkills.paladin_tier_2_spell_2_root).require(PALADINS));
     public static final Entry PALADIN_TIER_2_SPELL_2_MODIFIER_1 = add(placeholderNode("paladin_tier_2_spell_2_modifier_1", PALADINS));
     public static final Entry PALADIN_TIER_2_SPELL_2_MODIFIER_2 = add(placeholderNode("paladin_tier_2_spell_2_modifier_2", PALADINS));
-    public static final Entry PALADIN_TIER_3_SPELL_2_ROOT = add(placeholderNode("paladin_tier_3_spell_2_root", PALADINS));
+    public static final Entry PALADIN_TIER_3_SPELL_2_ROOT = add(modifierSpell(PaladinSkills.paladin_tier_3_spell_2_root).require(PALADINS));
     public static final Entry PALADIN_TIER_3_SPELL_2_MODIFIER_1 = add(modifierSpell(PaladinSkills.paladin_tier_3_spell_2_modifier_1).require(PALADINS));
     public static final Entry PALADIN_TIER_3_SPELL_2_MODIFIER_2 = add(modifierSpell(PaladinSkills.paladin_tier_3_spell_2_modifier_2).require(PALADINS));
-    public static final Entry PALADIN_TIER_4_SPELL_2_ROOT = add(placeholderNode("paladin_tier_4_spell_2_root", PALADINS));
+    public static final Entry PALADIN_TIER_4_SPELL_2_ROOT = add(modifierSpell(PaladinSkills.paladin_tier_4_spell_2_root).require(PALADINS));
     public static final Entry PALADIN_TIER_4_SPELL_2_MODIFIER_1 = add(placeholderNode("paladin_tier_4_spell_2_modifier_1", PALADINS));
     public static final Entry PALADIN_TIER_4_SPELL_2_MODIFIER_2 = add(placeholderNode("paladin_tier_4_spell_2_modifier_2", PALADINS));
     // Rogue
-    public static final Entry ROGUE_TIER_2_SPELL_1_ROOT = add(placeholderNode("rogue_tier_2_spell_1_root", ROGUES));
-    public static final Entry ROGUE_TIER_3_SPELL_1_ROOT = add(placeholderNode("rogue_tier_3_spell_1_root", ROGUES));
-    public static final Entry ROGUE_TIER_4_SPELL_1_ROOT = add(placeholderNode("rogue_tier_4_spell_1_root", ROGUES));
-    public static final Entry ROGUE_TIER_2_SPELL_2_ROOT = add(placeholderNode("rogue_tier_2_spell_2_root", ROGUES));
+    public static final Entry ROGUE_TIER_2_SPELL_1_ROOT = add(modifierSpell(RogueSkills.rogue_tier_2_spell_1_root).require(ROGUES));
+    public static final Entry ROGUE_TIER_3_SPELL_1_ROOT = add(modifierSpell(RogueSkills.rogue_tier_3_spell_1_root).require(ROGUES));
+    public static final Entry ROGUE_TIER_4_SPELL_1_ROOT = add(modifierSpell(RogueSkills.rogue_tier_4_spell_1_root).require(ROGUES));
+    public static final Entry ROGUE_TIER_2_SPELL_2_ROOT = add(modifierSpell(RogueSkills.rogue_tier_2_spell_2_root).require(ROGUES));
     public static final Entry ROGUE_TIER_2_SPELL_2_MODIFIER_1 = add(placeholderNode("rogue_tier_2_spell_2_modifier_1", ROGUES));
     public static final Entry ROGUE_TIER_2_SPELL_2_MODIFIER_2 = add(placeholderNode("rogue_tier_2_spell_2_modifier_2", ROGUES));
-    public static final Entry ROGUE_TIER_3_SPELL_2_ROOT = add(placeholderNode("rogue_tier_3_spell_2_root", ROGUES));
+    public static final Entry ROGUE_TIER_3_SPELL_2_ROOT = add(modifierSpell(RogueSkills.rogue_tier_3_spell_2_root).require(ROGUES));
     public static final Entry ROGUE_TIER_3_SPELL_2_MODIFIER_1 = add(placeholderNode("rogue_tier_3_spell_2_modifier_1", ROGUES));
     public static final Entry ROGUE_TIER_3_SPELL_2_MODIFIER_2 = add(placeholderNode("rogue_tier_3_spell_2_modifier_2", ROGUES));
-    public static final Entry ROGUE_TIER_4_SPELL_2_ROOT = add(placeholderNode("rogue_tier_4_spell_2_root", ROGUES));
+    public static final Entry ROGUE_TIER_4_SPELL_2_ROOT = add(modifierSpell(RogueSkills.rogue_tier_4_spell_2_root).require(ROGUES));
     public static final Entry ROGUE_TIER_4_SPELL_2_MODIFIER_1 = add(placeholderNode("rogue_tier_4_spell_2_modifier_1", ROGUES));
     public static final Entry ROGUE_TIER_4_SPELL_2_MODIFIER_2 = add(placeholderNode("rogue_tier_4_spell_2_modifier_2", ROGUES));
     // Warrior
-    public static final Entry WARRIOR_TIER_2_SPELL_1_ROOT = add(placeholderNode("warrior_tier_2_spell_1_root", ROGUES));
-    public static final Entry WARRIOR_TIER_3_SPELL_1_ROOT = add(placeholderNode("warrior_tier_3_spell_1_root", ROGUES));
-    public static final Entry WARRIOR_TIER_4_SPELL_1_ROOT = add(placeholderNode("warrior_tier_4_spell_1_root", ROGUES));
-    public static final Entry WARRIOR_TIER_2_SPELL_2_ROOT = add(placeholderNode("warrior_tier_2_spell_2_root", ROGUES));
+    public static final Entry WARRIOR_TIER_2_SPELL_1_ROOT = add(modifierSpell(WarriorSkills.warrior_tier_2_spell_1_root).require(ROGUES));
+    public static final Entry WARRIOR_TIER_3_SPELL_1_ROOT = add(modifierSpell(WarriorSkills.warrior_tier_3_spell_1_root).require(ROGUES));
+    public static final Entry WARRIOR_TIER_4_SPELL_1_ROOT = add(modifierSpell(WarriorSkills.warrior_tier_4_spell_1_root).require(ROGUES));
+    public static final Entry WARRIOR_TIER_2_SPELL_2_ROOT = add(modifierSpell(WarriorSkills.warrior_tier_2_spell_2_root).require(ROGUES));
     public static final Entry WARRIOR_TIER_2_SPELL_2_MODIFIER_1 = add(placeholderNode("warrior_tier_2_spell_2_modifier_1", ROGUES));
     public static final Entry WARRIOR_TIER_2_SPELL_2_MODIFIER_2 = add(placeholderNode("warrior_tier_2_spell_2_modifier_2", ROGUES));
-    public static final Entry WARRIOR_TIER_3_SPELL_2_ROOT = add(placeholderNode("warrior_tier_3_spell_2_root", ROGUES));
+    public static final Entry WARRIOR_TIER_3_SPELL_2_ROOT = add(modifierSpell(WarriorSkills.warrior_tier_3_spell_2_root).require(ROGUES));
     public static final Entry WARRIOR_TIER_3_SPELL_2_MODIFIER_1 = add(passiveSpell(WarriorSkills.warrior_tier_3_spell_2_modifier_1)
             .withIcon(Icon.spell(Identifier.of("rogues", "shout")))
             .require(ROGUES)
@@ -786,7 +788,7 @@ public class NodeTypes {
     public static final Entry WARRIOR_TIER_3_SPELL_2_MODIFIER_2 = add(modifierSpell(WarriorSkills.warrior_tier_3_spell_2_modifier_2)
             .require(ROGUES)
     );
-    public static final Entry WARRIOR_TIER_4_SPELL_2_ROOT = add(placeholderNode("warrior_tier_4_spell_2_root", ROGUES));
+    public static final Entry WARRIOR_TIER_4_SPELL_2_ROOT = add(modifierSpell(WarriorSkills.warrior_tier_4_spell_2_root).require(ROGUES));
     public static final Entry WARRIOR_TIER_4_SPELL_2_MODIFIER_1 = add(placeholderNode("warrior_tier_4_spell_2_modifier_1", ROGUES));
     public static final Entry WARRIOR_TIER_4_SPELL_2_MODIFIER_2 = add(placeholderNode("warrior_tier_4_spell_2_modifier_2", ROGUES));
 
