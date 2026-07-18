@@ -4137,9 +4137,9 @@
       "skill_definition_id": "paladin_tier_2_spell_2_modifier_1"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "paladins:textures/spell/blessed_strikes.png"
       }
     },
     "required_mods": [
@@ -4174,9 +4174,9 @@
       "skill_definition_id": "paladin_tier_2_spell_2_modifier_2"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "paladins:textures/spell/blessed_strikes.png"
       }
     },
     "required_mods": [

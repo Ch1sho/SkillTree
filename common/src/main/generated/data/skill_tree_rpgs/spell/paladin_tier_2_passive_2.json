@@ -7,7 +7,7 @@
     "triggers": [
       {
         "type": "ROLL",
-        "chance": 0.25
+        "chance": 0.5
       }
     ]
   },
@@ -20,7 +20,7 @@
         "type": "COOLDOWN",
         "cooldown": {
           "actives": {
-            "id": "paladins:divine_protection",
+            "id": "paladins:blessed_strikes",
             "duration_multiplier": 0.0
           }
         }
@@ -50,12 +50,20 @@
       "sound": {
         "id": "spell_engine:spell_cooldown_impact"
       }
+    },
+    {
+      "action": {
+        "type": "COOLDOWN",
+        "cooldown": {
+          "actives": {
+            "id": "paladins:flash_heal",
+            "duration_multiplier": 0.0
+          }
+        }
+      }
     }
   ],
   "cost": {
-    "durability": 0,
-    "cooldown": {
-      "duration": 10.0
-    }
+    "durability": 0
   }
 }

@@ -6,9 +6,7 @@
   "modifiers": [
     {
       "spell_pattern": "paladins:blessed_strikes",
-      "power_modifier": {
-        "power_multiplier": 0.1
-      }
+      "channel_ticks_add": 1
     }
   ]
 }

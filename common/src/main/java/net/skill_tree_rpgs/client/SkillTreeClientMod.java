@@ -259,7 +259,7 @@ public class SkillTreeClientMod {
 
         CustomModelStatusEffect.register(SkillEffects.CELESTIAL_ORB.effect, new HolyChargeEffectRenderer());
 
-        final var sealOfCrusaderParticles = new ParticleBatch(
+        final var zealParticles = new ParticleBatch(
                 SpellEngineParticles.MagicParticles.get(
                         SpellEngineParticles.MagicParticles.Shape.SPARK,
                         SpellEngineParticles.MagicParticles.Motion.DECELERATE).id().toString(),
@@ -267,8 +267,8 @@ public class SkillTreeClientMod {
                 1F, 0.05F, 0.1F)
                 .color(Color.HOLY.toRGBA());
         CustomParticleStatusEffect.register(
-                SkillEffects.SEAL_OF_CRUSADER.effect,
-                new BuffParticleSpawner(new ParticleBatch[]{ sealOfCrusaderParticles })
+                SkillEffects.ZEAL.effect,
+                new BuffParticleSpawner(new ParticleBatch[]{ zealParticles })
         );
 
         final var enrageParticles = new ParticleBatch(

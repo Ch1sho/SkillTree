@@ -1,11 +1,41 @@
 {
-  "school": "spell_power:healing",
+  "school": "spell_power:physical_melee",
   "range": 0.0,
   "tier": 1,
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "paladins:placeholder"
+      "spell_pattern": "paladins:blessed_strikes",
+      "mutate_impacts": "APPEND",
+      "impacts": [
+        {
+          "power_blend": [
+            {
+              "school": "spell_power:healing",
+              "power": true,
+              "weight": 3.0
+            }
+          ],
+          "action": {
+            "type": "HEAL",
+            "apply_to_caster": true,
+            "heal": {
+              "spell_power_coefficient": 0.25
+            }
+          },
+          "particles": [
+            {
+              "particle_id": "spell_engine:magic_heal_decelerate",
+              "origin": "CENTER",
+              "shape": "SPHERE",
+              "count": 8.0,
+              "min_speed": 0.15,
+              "max_speed": 0.25,
+              "color_rgba": 4294954239
+            }
+          ]
+        }
+      ]
     }
   ]
 }

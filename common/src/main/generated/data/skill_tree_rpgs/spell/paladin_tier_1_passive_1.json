@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:healing",
+  "school": "spell_power:physical_melee",
   "range": 0.0,
   "tier": 1,
   "type": "PASSIVE",
@@ -7,14 +7,18 @@
     "triggers": [
       {
         "type": "MELEE_IMPACT",
-        "chance": 0.5
+        "melee": {
+          "critical": true
+        }
       },
       {
         "type": "SPELL_IMPACT_SPECIFIC",
-        "chance": 0.5,
         "spell": {
           "archetype": "MELEE",
           "type": "ACTIVE"
+        },
+        "impact": {
+          "critical": true
         }
       }
     ]
@@ -25,34 +29,39 @@
   "impacts": [
     {
       "action": {
-        "type": "DAMAGE",
-        "damage": {
-          "spell_power_coefficient": 0.5,
-          "knockback": 0.0
+        "type": "STATUS_EFFECT",
+        "apply_to_caster": true,
+        "status_effect": {
+          "effect_id": "skill_tree_rpgs:vengeance",
+          "amplifier": 1,
+          "amplifier_cap": 2,
+          "apply_mode": "ADD"
         }
       },
       "particles": [
         {
-          "particle_id": "spell_engine:magic_arcane_burst",
-          "origin": "CENTER",
-          "shape": "SPHERE",
+          "particle_id": "spell_engine:magic_stripe_float",
+          "origin": "FEET",
+          "shape": "WIDE_PIPE",
           "count": 15.0,
-          "min_speed": 0.5,
-          "max_speed": 0.8,
-          "color_rgba": 4294954239
+          "min_speed": 0.2,
+          "max_speed": 0.3,
+          "color_rgba": 3439329279
         },
         {
-          "particle_id": "spell_engine:magic_spell_burst",
+          "particle_id": "spell_engine:sign_fist",
           "origin": "CENTER",
-          "shape": "SPHERE",
-          "count": 15.0,
-          "min_speed": 0.5,
+          "shape": "LINE_VERTICAL",
+          "count": 1.0,
+          "min_speed": 0.8,
           "max_speed": 0.8,
-          "color_rgba": 4294954239
+          "color_rgba": 3439329279,
+          "scale": 0.8,
+          "follow_entity": true
         }
       ],
       "sound": {
-        "id": "skill_tree_rpgs:paladin_seal_impact"
+        "id": "skill_tree_rpgs:paladin_crusader_activate"
       }
     }
   ],

@@ -36,7 +36,6 @@ public class PaladinSkills {
     public static final String BATTLE_BANNER = "paladins:battle_banner";
     public static final String BLESSED_STRIKES = "paladins:blessed_strikes";
     public static final String IMMOLATION = "paladins:immolation";
-    public static final String PLACEHOLDER_SPELL = "paladins:placeholder";
 
     public static final Skills.Entry paladin_tier_2_spell_1_modifier_1 = add(paladin_tier_2_spell_1_modifier_1());
     private static Skills.Entry paladin_tier_2_spell_1_modifier_1() {
@@ -241,9 +240,9 @@ public class PaladinSkills {
     public static final Skills.Entry paladin_tier_4_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.PALADIN, SpellSchools.HEALING,
             "paladin_tier_4_spell_1_root", BATTLE_BANNER, "Battle Banner", 5F));
-    public static final Skills.Entry paladin_tier_2_spell_2_root = add(SkillsCommon.powerRoot(
+    public static final Skills.Entry paladin_tier_2_spell_2_root = add(SkillsCommon.channelRoot(
             Skills.Category.PALADIN, SpellSchools.HEALING,
-            "paladin_tier_2_spell_2_root", BLESSED_STRIKES, "Blessed Strikes", 0.1F));
+            "paladin_tier_2_spell_2_root", BLESSED_STRIKES, "Blessed Strikes", 1));
     public static final Skills.Entry paladin_tier_3_spell_2_root = add(SkillsCommon.critRoot(
             Skills.Category.PALADIN, SpellSchools.HEALING,
             "paladin_tier_3_spell_2_root", JUDGEMENT, "Judgement", 0.05F));
@@ -251,23 +250,68 @@ public class PaladinSkills {
             Skills.Category.PALADIN, SpellSchools.HEALING,
             "paladin_tier_4_spell_2_root", IMMOLATION, "Immolation", 1F));
 
-    // ===================================================================================
-    // PLACEHOLDER powerful mutex nodes for tier 2 spell_2 (Blessed Strikes) — the last
-    // undesigned pair of this book. Tier 3 (Judgement) and tier 4 (Immolation) spell_2
-    // powerful nodes are real, below.
-    // ===================================================================================
-    private static Skills.Entry placeholder(String path) {
-        var id = Identifier.of(NAMESPACE, path);
+    public static final Skills.Entry paladin_tier_2_spell_2_modifier_1 = add(paladin_tier_2_spell_2_modifier_1()); // Zeal
+    private static Skills.Entry paladin_tier_2_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "paladin_tier_2_spell_2_modifier_1");
+        var effect = SkillEffects.ZEAL;
+        var title = "Zeal";
+        var description = "Empowered strikes of Blessed Strikes fill you with " + effect.title
+                + ", increasing your Healing Power by {bonus}, stacking up to {effect_amplifier_cap} times, for {effect_duration} sec.";
+        SpellTooltip.DescriptionMutator mutator = (args) -> {
+            var bonus = SpellTooltip.percent(effect.config().firstModifier().value);
+            return args.description().replace("{bonus}", bonus);
+        };
+
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.HEALING;
+
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = PLACEHOLDER_SPELL;
+        modifier.spell_pattern = BLESSED_STRIKES;
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+
+        // Joins the stashed payload: runs on each seal-spending melee strike. The strike's damage
+        // establishes harmful intent on the victim, so the buff rides on `apply_to_caster` — one
+        // Zeal stack per empowered strike, feeding the paladin's Healing Power based spells.
+        var impact = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 15, 1, 4);
+        impact.action.apply_to_caster = true;
         spell.modifiers = List.of(modifier);
-        return new Skills.Entry(id, spell, "PLACEHOLDER", "PLACEHOLDER", null, EnumSet.of(Skills.Category.PALADIN));
+        modifier.impacts = List.of(impact);
+
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PALADIN));
     }
 
-    public static final Skills.Entry paladin_tier_2_spell_2_modifier_1 = add(placeholder("paladin_tier_2_spell_2_modifier_1"));
-    public static final Skills.Entry paladin_tier_2_spell_2_modifier_2 = add(placeholder("paladin_tier_2_spell_2_modifier_2"));
+    public static final Skills.Entry paladin_tier_2_spell_2_modifier_2 = add(paladin_tier_2_spell_2_modifier_2()); // Seal of Light
+    private static Skills.Entry paladin_tier_2_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "paladin_tier_2_spell_2_modifier_2");
+        var title = "Seal of Light";
+        var description = "Empowered strikes of Blessed Strikes also heal you for {heal}.";
+
+        // PHYSICAL_MELEE school so the tooltip's {heal} estimation resolves against the same base
+        // school the impact uses at runtime (Blessed Strikes' own school).
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = BLESSED_STRIKES;
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+
+        // Joins the stashed payload: heals the paladin on each seal-spending strike. Same hybrid
+        // power split as the base spell's damage (25% melee / 75% healing).
+        var heal = SpellBuilder.Impacts.heal(0.25F);
+        heal.action.apply_to_caster = true;
+        heal.power_blend = List.of(SpellBuilder.Impacts.powerBlend(SpellSchools.HEALING, 3F));
+        heal.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SkillsCommon.HEAL_DECELERATE.toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        8, 0.15F, 0.25F)
+                        .color(SkillsCommon.HOLY_COLOR)
+        };
+        modifier.impacts = List.of(heal);
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PALADIN));
+    }
     public static final Skills.Entry paladin_tier_4_spell_2_modifier_1 = add(paladin_tier_4_spell_2_modifier_1());
     private static Skills.Entry paladin_tier_4_spell_2_modifier_1() {
         var id = Identifier.of(NAMESPACE, "paladin_tier_4_spell_2_modifier_1");
@@ -358,45 +402,50 @@ public class PaladinSkills {
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PALADIN));
     }
 
-    public static final Skills.Entry paladin_tier_1_passive_1 = add(paladin_tier_1_passive_1());
+    public static final Skills.Entry paladin_tier_1_passive_1 = add(paladin_tier_1_passive_1()); // Vengeance
     private static Skills.Entry paladin_tier_1_passive_1() {
         var id = Identifier.of(NAMESPACE, "paladin_tier_1_passive_1");
-        var title = "Seal of Righteousness";
-        var description = "Melee attacks have {trigger_chance_1} chance, to deal additional {damage} damage based on Healing Power.";
+        var effect = SkillEffects.VENGEANCE;
+        var title = "Vengeance";
+        var description = "Critical strikes grant " + effect.title
+                + ", increasing Attack Damage by {bonus}, stacking up to {effect_amplifier_cap} times, for {effect_duration} sec.";
+        SpellTooltip.DescriptionMutator mutator = (args) -> {
+            var bonus = SpellTooltip.percent(effect.config().firstModifier().value);
+            return args.description().replace("{bonus}", bonus);
+        };
 
         var spell = SpellBuilder.createSpellPassive();
-        spell.school = SpellSchools.HEALING;
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
         spell.range = 0;
 
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
-        var triggers = SpellBuilder.Triggers.meleeImpact();
-        for (var trigger : triggers) {
-            trigger.chance = 0.5F;
-        }
-        spell.passive.triggers = triggers;
+        // Critical melee hits only — regular attacks and melee weapon skills alike.
+        // No internal cooldown: every crit stacks and refreshes Vengeance.
+        var attackTrigger = SpellBuilder.Triggers.meleeAttackImpact();
+        attackTrigger.melee = new Spell.Trigger.MeleeCondition();
+        attackTrigger.melee.critical = true;
+        var skillTrigger = SpellBuilder.Triggers.meleeSkillImpact();
+        skillTrigger.impact = new Spell.Trigger.ImpactCondition();
+        skillTrigger.impact.critical = true;
+        spell.passive.triggers = List.of(attackTrigger, skillTrigger);
 
-        var impact = SpellBuilder.Impacts.damage(0.5F, 0F);
-        impact.particles = new ParticleBatch[]{
+        var buff = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 10, 1, 2);
+        buff.action.apply_to_caster = true;
+        buff.particles = new ParticleBatch[]{
                 new ParticleBatch(
                         SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.ARCANE,
-                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
-                        15, 0.5F, 0.8F)
-                        .color(SkillsCommon.HOLY_COLOR),
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.SPELL,
-                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
-                        15, 0.5F, 0.8F)
-                        .color(SkillsCommon.HOLY_COLOR)
+                                SpellEngineParticles.MagicParticles.Shape.STRIPE,
+                                SpellEngineParticles.MagicParticles.Motion.FLOAT).id().toString(),
+                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
+                        15, 0.2F, 0.3F)
+                        .color(SkillsCommon.MIGHT_COLOR.toRGBA()),
+                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_fist.id(), SkillsCommon.MIGHT_COLOR)
         };
-        impact.sound = new Sound(SkillSounds.paladin_seal_impact.id());
-        spell.impacts = List.of(impact);
+        buff.sound = new Sound(SkillSounds.paladin_crusader_activate.id());
+        spell.impacts = List.of(buff);
 
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PALADIN));
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PALADIN));
     }
 
     public static final Skills.Entry paladin_tier_1_passive_2 = add(paladin_tier_1_passive_2());
@@ -439,64 +488,46 @@ public class PaladinSkills {
         return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PALADIN));
     }
 
-    public static final Skills.Entry paladin_tier_2_passive_1 = add(paladin_tier_2_passive_1()); // Crusader Strike
+    public static final Skills.Entry paladin_tier_2_passive_1 = add(paladin_tier_2_passive_1()); // Blessing of Freedom
     private static Skills.Entry paladin_tier_2_passive_1() {
         var id = Identifier.of(NAMESPACE, "paladin_tier_2_passive_1");
-        var title = "Crusader Strike";
-        var debuffEffect = SkillEffects.CRUSADERS_MARK;
-        var description = "Upon rolling, you have {trigger_chance_1} chance for your next melee attack to apply " + debuffEffect.title + ", increasing damage taken by {bonus}, for {effect_duration} sec.";
-        SpellTooltip.DescriptionMutator mutator = (args) -> {
-            var bonus = SpellTooltip.percent(Math.abs(debuffEffect.config().firstModifier().value));
-            return args.description().replace("{bonus}", bonus);
-        };
+        var title = "Blessing of Freedom";
+        var description = "Rolling breaks you free, removing all movement impairing effects.";
 
         var spell = SpellBuilder.createSpellPassive();
         spell.school = SpellSchools.HEALING;
         spell.range = 0;
 
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
-        spell.release.sound = new Sound(SkillSounds.paladin_crusader_activate.id());
-
-        // Roll to stash
 
         var trigger = SpellBuilder.Triggers.roll();
-        trigger.chance = 0.5F;
         spell.passive.triggers = List.of(trigger);
-        spell.release.particles = new ParticleBatch[]{
+
+        // ALL-selector dispel: strips every harmful movement-impairing effect at once
+        // (classification-based, so modded slows/snares are covered too)
+        var impact = SpellBuilder.Impacts.effectRemoveMovementImpairing();
+        impact.action.apply_to_caster = true;
+        impact.particles = new ParticleBatch[]{
                 new ParticleBatch(
                         SpellEngineParticles.MagicParticles.get(
                                 SpellEngineParticles.MagicParticles.Shape.STRIPE,
                                 SpellEngineParticles.MagicParticles.Motion.FLOAT).id().toString(),
                         ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
                         15, 0.2F, 0.3F)
-                        .color(SkillsCommon.HOLY_COLOR),
-        };
-
-        var stashEffect = SkillEffects.SEAL_OF_CRUSADER;
-        var strashTrigger = SpellBuilder.Triggers.meleeAttackImpact();
-        SpellBuilder.Deliver.stash(spell, stashEffect.id.toString(), 5, strashTrigger);
-
-        var debuff = SpellBuilder.Impacts.effectAdd(debuffEffect.id.toString(), 15, 1, 2);
-        debuff.particles = new ParticleBatch[]{
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.SPARK,
-                                SpellEngineParticles.MagicParticles.Motion.DECELERATE).id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
-                        25, 0.7F, 0.8F)
                         .color(SkillsCommon.HOLY_COLOR)
         };
-        debuff.sound = new Sound(SkillSounds.paladin_crusader_impact.id());
-        spell.impacts = List.of(debuff);
+        spell.impacts = List.of(impact);
 
-        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PALADIN));
+        SpellBuilder.Cost.cooldown(spell, 10F);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PALADIN));
     }
 
     public static final Skills.Entry paladin_tier_2_passive_2 = add(paladin_tier_2_passive_2()); // Conviction
     private static Skills.Entry paladin_tier_2_passive_2() {
         var id = Identifier.of(NAMESPACE, "paladin_tier_2_passive_2");
         var title = "Conviction";
-        var description = "Upon rolling, you have {trigger_chance} chance to reset the cooldown of Divine Protection.";
+        var description = "Upon rolling, you have {trigger_chance} chance to reset the cooldown of Blessed Strikes and Flash Heal.";
 
         var spell = SpellBuilder.createSpellPassive();
         spell.school = SpellSchools.HEALING;
@@ -505,11 +536,11 @@ public class PaladinSkills {
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
         var trigger = SpellBuilder.Triggers.roll();
-        trigger.chance = 0.25F;
+        trigger.chance = 0.5F;
         spell.passive.triggers = List.of(trigger);
 
-        //var impact = SpellBuilder.Impacts.resetCooldownActive(FLASH_HEAL); // Used to be in place with 50% chance
-        var impact = SpellBuilder.Impacts.resetCooldownActive(DIVINE_PROTECTION);
+        // Resets both tier 2 book spells — the retribution and the protection pick alike
+        var impact = SpellBuilder.Impacts.resetCooldownActive(BLESSED_STRIKES);
 
         impact.particles = new ParticleBatch[]{
                 SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_hourglass.id(), Color.HOLY),
@@ -522,11 +553,8 @@ public class PaladinSkills {
                         .color(SkillsCommon.HOLY_COLOR)
         };
         impact.sound = new Sound(SpellEngineSounds.SPELL_COOLDOWN_IMPACT.id());
-        spell.impacts = List.of(impact);
-
-        // Cooldown applied due to resetting a strong defensive cooldown
-        // Flash Heal wouldn't need this
-        SpellBuilder.Cost.cooldown(spell, 10F);
+        var flashHealReset = SpellBuilder.Impacts.resetCooldownActive(FLASH_HEAL);
+        spell.impacts = List.of(impact, flashHealReset);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PALADIN));
     }
@@ -567,7 +595,10 @@ public class PaladinSkills {
         spell.deliver.projectile.projectile.client_data.composite_model = SpellBuilder.ProjectileModels.composite(model);
 
 
+        // Same hybrid power split as Judgement: 75% melee / 25% healing
+        // (base PHYSICAL_MELEE weighs 1, healing weighs 1/3).
         var impact = SpellBuilder.Impacts.damage(0.5F, 0F);
+        impact.power_blend = List.of(SpellBuilder.Impacts.powerBlend(SpellSchools.HEALING, 1F / 3F));
         impact.particles = new ParticleBatch[]{
                 new ParticleBatch(
                         SpellEngineParticles.MagicParticles.get(
