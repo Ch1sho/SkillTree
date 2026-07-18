@@ -2,55 +2,25 @@
   "school": "spell_power:physical_melee",
   "range": 0.0,
   "tier": 1,
-  "tooltip": {
-    "show_activation": false
-  },
-  "type": "PASSIVE",
-  "passive": {
-    "triggers": [
-      {
-        "type": "SPELL_IMPACT_SPECIFIC",
-        "chance": 0.5,
-        "spell": {
-          "id": "rogues:shock_powder"
-        },
-        "impact": {}
-      }
-    ]
-  },
-  "target": {
-    "type": "FROM_TRIGGER"
-  },
-  "impacts": [
+  "type": "MODIFIER",
+  "modifiers": [
     {
-      "action": {
-        "type": "DAMAGE",
-        "damage": {
-          "spell_power_coefficient": 0.6,
-          "knockback": 0.2
+      "spell_pattern": "rogues:slice_and_dice",
+      "mutate_impacts": "APPEND",
+      "impacts": [
+        {
+          "action": {
+            "type": "STATUS_EFFECT",
+            "status_effect": {
+              "effect_id": "skill_tree_rpgs:fleet_footed",
+              "duration": 4.0,
+              "amplifier": 1,
+              "amplifier_cap": 4,
+              "apply_mode": "ADD"
+            }
+          }
         }
-      }
+      ]
     }
-  ],
-  "area_impact": {
-    "radius": 2.5,
-    "area": {
-      "distance_dropoff": "SQUARED"
-    },
-    "particles": [
-      {
-        "particle_id": "spell_engine:fire_explosion",
-        "origin": "CENTER",
-        "shape": "SPHERE",
-        "count": 1.0,
-        "max_speed": 0.0
-      }
-    ],
-    "sound": {
-      "id": "spell_engine:generic_fire_impact_1"
-    }
-  },
-  "cost": {
-    "durability": 0
-  }
+  ]
 }

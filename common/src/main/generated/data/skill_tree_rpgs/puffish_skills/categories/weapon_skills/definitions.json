@@ -5955,7 +5955,7 @@
     "icon": {
       "type": "texture",
       "data": {
-        "texture": "rogues:textures/spell/shock_powder.png"
+        "texture": "rogues:textures/spell/slice_and_dice.png"
       }
     },
     "required_mods": [
@@ -6027,9 +6027,9 @@
       "skill_definition_id": "rogue_tier_2_spell_2_modifier_1"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/shock_powder.png"
       }
     },
     "required_mods": [
@@ -6064,9 +6064,9 @@
       "skill_definition_id": "rogue_tier_2_spell_2_modifier_2"
     },
     "icon": {
-      "type": "item",
+      "type": "texture",
       "data": {
-        "item": "minecraft:barrier"
+        "texture": "rogues:textures/spell/shock_powder.png"
       }
     },
     "required_mods": [

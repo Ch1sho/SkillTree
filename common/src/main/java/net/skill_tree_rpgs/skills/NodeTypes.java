@@ -442,10 +442,7 @@ public class NodeTypes {
                     ROGUE_ROOT.attributeReward()).require(ROGUES)
     );
     public static final Entry ROGUE_TIER_2_SPELL_1_MODIFIER_1 = add(modifierSpell(RogueSkills.rogue_tier_2_spell_1_modifier_1).require(ROGUES));
-    public static final Entry ROGUE_TIER_2_SPELL_1_MODIFIER_2 = add(passiveSpell(RogueSkills.rogue_tier_2_spell_1_modifier_2)
-            .withIcon(Icon.spell(Identifier.of("rogues:shock_powder")))
-            .require(ROGUES)
-    );
+    public static final Entry ROGUE_TIER_2_SPELL_1_MODIFIER_2 = add(modifierSpell(RogueSkills.rogue_tier_2_spell_1_modifier_2).require(ROGUES));
     public static final Entry ROGUE_TIER_3_SPELL_1_MODIFIER_1 = add(modifierSpell(RogueSkills.rogue_tier_3_spell_1_modifier_1).require(ROGUES));
     public static final Entry ROGUE_TIER_3_SPELL_1_MODIFIER_2 = add(modifierSpell(RogueSkills.rogue_tier_3_spell_1_modifier_2).require(ROGUES));
     public static final Entry ROGUE_TIER_4_SPELL_1_MODIFIER_1 = add(modifierSpell(RogueSkills.rogue_tier_4_spell_1_modifier_1).require(ROGUES));
@@ -765,8 +762,10 @@ public class NodeTypes {
     public static final Entry ROGUE_TIER_3_SPELL_1_ROOT = add(modifierSpell(RogueSkills.rogue_tier_3_spell_1_root).require(ROGUES));
     public static final Entry ROGUE_TIER_4_SPELL_1_ROOT = add(modifierSpell(RogueSkills.rogue_tier_4_spell_1_root).require(ROGUES));
     public static final Entry ROGUE_TIER_2_SPELL_2_ROOT = add(modifierSpell(RogueSkills.rogue_tier_2_spell_2_root).require(ROGUES));
-    public static final Entry ROGUE_TIER_2_SPELL_2_MODIFIER_1 = add(placeholderNode("rogue_tier_2_spell_2_modifier_1", ROGUES));
-    public static final Entry ROGUE_TIER_2_SPELL_2_MODIFIER_2 = add(placeholderNode("rogue_tier_2_spell_2_modifier_2", ROGUES));
+    public static final Entry ROGUE_TIER_2_SPELL_2_MODIFIER_1 = add(passiveSpell(RogueSkills.rogue_tier_2_spell_2_modifier_1)
+            .withIcon(Icon.spell(Identifier.of("rogues:shock_powder")))
+            .require(ROGUES));
+    public static final Entry ROGUE_TIER_2_SPELL_2_MODIFIER_2 = add(modifierSpell(RogueSkills.rogue_tier_2_spell_2_modifier_2).require(ROGUES));
     public static final Entry ROGUE_TIER_3_SPELL_2_ROOT = add(modifierSpell(RogueSkills.rogue_tier_3_spell_2_root).require(ROGUES));
     public static final Entry ROGUE_TIER_3_SPELL_2_MODIFIER_1 = add(placeholderNode("rogue_tier_3_spell_2_modifier_1", ROGUES));
     public static final Entry ROGUE_TIER_3_SPELL_2_MODIFIER_2 = add(placeholderNode("rogue_tier_3_spell_2_modifier_2", ROGUES));
