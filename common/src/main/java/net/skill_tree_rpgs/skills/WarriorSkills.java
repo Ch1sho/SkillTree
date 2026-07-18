@@ -215,11 +215,9 @@ public class WarriorSkills {
     public static final Skills.Entry warrior_tier_4_spell_1_root = add(SkillsCommon.meleeRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
             "warrior_tier_4_spell_1_root", "rogues:mortal_strike", "Mortal Strike", 0.1F));
-    public static final Skills.Entry warrior_tier_2_spell_2_root = add(SkillsCommon.spellRoot(
+    public static final Skills.Entry warrior_tier_2_spell_2_root = add(SkillsCommon.reachRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
-            "warrior_tier_2_spell_2_root", "rogues:throw_net", "Throw Net",
-            "Net Trap lasts {effect_duration_add} sec longer.",
-            modifier -> modifier.effect_duration_add = 1F));
+            "warrior_tier_2_spell_2_root", "rogues:throw_net", "Throw Net", 5F));
     public static final Skills.Entry warrior_tier_3_spell_2_root = add(SkillsCommon.radiusRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
             "warrior_tier_3_spell_2_root", "rogues:shout", "Shout", 2F));
@@ -228,24 +226,116 @@ public class WarriorSkills {
             "warrior_tier_4_spell_2_root", "rogues:last_stand", "Last Stand", 5F));
 
     // ===================================================================================
-    // PLACEHOLDER powerful mutex nodes for the second spell of tiers 2 and 4 (spell_2).
-    // Tier 3 spell_2 (Shout) already has its two real powerful nodes above. To be filled
-    // in with real modifiers (Throw Net T2, Last Stand T4).
+    // Powerful mutex nodes for the second spell of tiers 2 and 4 (spell_2):
+    // Throw Net (T2), Last Stand (T4). Tier 3 spell_2 (Shout) has its nodes above.
     // ===================================================================================
-    private static Skills.Entry placeholder(String path) {
-        var id = Identifier.of(NAMESPACE, path);
+
+    public static final Skills.Entry warrior_tier_2_spell_2_modifier_1 = add(warrior_tier_2_spell_2_modifier_1());
+    private static Skills.Entry warrior_tier_2_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "warrior_tier_2_spell_2_modifier_1");
+        var title = "Ricocheting Net";
+        var description = "Throw Net ricochets to {ricochet} additional targets.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "rogues:placeholder";
+        modifier.spell_pattern = "rogues:throw_net";
+        modifier.projectile_perks = new Spell.ProjectileData.Perks();
+        modifier.projectile_perks.ricochet = 2;
         spell.modifiers = List.of(modifier);
-        return new Skills.Entry(id, spell, "PLACEHOLDER", "PLACEHOLDER", null, EnumSet.of(Skills.Category.WARRIOR));
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WARRIOR));
     }
 
-    public static final Skills.Entry warrior_tier_2_spell_2_modifier_1 = add(placeholder("warrior_tier_2_spell_2_modifier_1"));
-    public static final Skills.Entry warrior_tier_2_spell_2_modifier_2 = add(placeholder("warrior_tier_2_spell_2_modifier_2"));
-    public static final Skills.Entry warrior_tier_4_spell_2_modifier_1 = add(placeholder("warrior_tier_4_spell_2_modifier_1"));
-    public static final Skills.Entry warrior_tier_4_spell_2_modifier_2 = add(placeholder("warrior_tier_4_spell_2_modifier_2"));
+    public static final Skills.Entry warrior_tier_2_spell_2_modifier_2 = add(warrior_tier_2_spell_2_modifier_2());
+    private static Skills.Entry warrior_tier_2_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "warrior_tier_2_spell_2_modifier_2");
+        var title = "Reinforced Nets";
+        var description = "Net Trap holds its victims {effect_duration_add} sec longer.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "rogues:throw_net";
+        modifier.effect_duration_add = 2F;
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WARRIOR));
+    }
+
+    public static final Skills.Entry warrior_tier_4_spell_2_modifier_1 = add(warrior_tier_4_spell_2_modifier_1());
+    private static Skills.Entry warrior_tier_4_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "warrior_tier_4_spell_2_modifier_1");
+        var title = "Juggernaut";
+        var effect = SkillEffects.JUGGERNAUT;
+        var description = "Each stack of Last Stand also grows you in size by {bonus}.";
+        SpellTooltip.DescriptionMutator mutator = (args) -> {
+            var bonus = SpellTooltip.percent(effect.config().firstModifier().value);
+            return args.description().replace("{bonus}", bonus);
+        };
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = "rogues:last_stand";
+
+        // Mirrors the base buff's stacking: one Juggernaut stack per channel release, same
+        // 10s duration, so size tracks the Last Stand stack count.
+        var growth = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 10, 1, 4);
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(growth);
+
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.WARRIOR));
+    }
+
+    public static final Skills.Entry warrior_tier_4_spell_2_modifier_2 = add(warrior_tier_4_spell_2_modifier_2());
+    private static Skills.Entry warrior_tier_4_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "warrior_tier_4_spell_2_modifier_2");
+        var title = "Revenge";
+        var effect = SkillEffects.REVENGE;
+        var description = "Blocking, or taking damage mitigatable by armor during Last Stand, increases your attack speed by {bonus}, stacking up to {effect_amplifier_cap} times, lasting {effect_duration} sec.";
+        SpellTooltip.DescriptionMutator mutator = (args) -> {
+            var bonus = SpellTooltip.percent(effect.config().firstModifier().value);
+            return args.description().replace("{bonus}", bonus);
+        };
+
+        var spell = SkillsCommon.createModifierAlikePassiveSpell();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+
+        var lastStandActive = SpellBuilder.TargetConditions.hasEffect(Identifier.of("rogues", "last_stand"));
+
+        var damageTrigger = SpellBuilder.Triggers.damageTaken();
+        damageTrigger.target_override = Spell.Trigger.TargetSelector.CASTER;
+        damageTrigger.caster_conditions = List.of(lastStandActive);
+        damageTrigger.damage = new Spell.Trigger.DamageCondition();
+        damageTrigger.damage.damage_type = "!#minecraft:bypasses_armor";
+
+        var blockTrigger = SpellBuilder.Triggers.shieldBlock();
+        blockTrigger.target_override = Spell.Trigger.TargetSelector.CASTER;
+        blockTrigger.caster_conditions = List.of(lastStandActive);
+
+        spell.passive.triggers = List.of(damageTrigger, blockTrigger);
+
+        var haste = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 3, 1, 2);
+        haste.action.apply_to_caster = true;
+        haste.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.SPARK,
+                                SpellEngineParticles.MagicParticles.Motion.DECELERATE).id().toString(),
+                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
+                        10, 0.15F, 0.3F)
+                        .color(Color.from(0xff6633).toRGBA())
+        };
+        spell.impacts = List.of(haste);
+
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.WARRIOR));
+    }
 
     public static final Skills.Entry warrior_tier_1_passive_1 = add(warrior_tier_1_passive_1());
     private static Skills.Entry warrior_tier_1_passive_1() {

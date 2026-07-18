@@ -1,6 +1,16 @@
 # 1.4.5
 
+Spell Expansion - introducing:
+
+- 48 new major (flavor) skill modifiers - targeting newly added spells
+- 48 new minor skill modifiers - targeting existing and new spells
+
+Other changes:
+
 - Small tweaks to some arcane nodes
+- Presence of Mind now makes your weapon glow while primed
+- Phase Shift now also grants immunity to harmful effects
+- Replaced "Justice Served" mace node with "Challenging Blow" (50% chance to taunt targets hit by Smash)
 - Update rogue passive icon
 - Fix some issues with skill tree node descriptions
 

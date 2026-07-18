@@ -6,9 +6,12 @@
   "modifiers": [
     {
       "spell_pattern": "archers:rain_of_arrows",
-      "power_modifier": {
-        "power_multiplier": 0.25
-      }
+      "projectile_launch": {
+        "velocity": 0.0,
+        "extra_launch_count": 10,
+        "extra_launch_delay": 0
+      },
+      "meteor_launch_radius_add": 1.5
     }
   ]
 }

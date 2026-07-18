@@ -370,26 +370,20 @@ public class WeaponSkillModifiers {
     public static final Skills.Entry weapon_smash_modifier_1 = add(weapon_smash_modifier_1());
     private static Skills.Entry weapon_smash_modifier_1() {
         var id = Identifier.of(NAMESPACE, "weapon_smash_modifier_1");
-        var title = "Justice Served";
-        var description = "Smash hits have {trigger_chance} chance to reset its own cooldown.";
-        var spell = SpellBuilder.createSpellPassive();
+        var title = "Challenging Blow";
+        var description = "Smash has {impact_chance} chance to taunt the targets hit.";
+        var spell = SpellBuilder.createSpellModifier();
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
-        spell.range = 0;
-        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
-        var trigger = SpellBuilder.Triggers.meleeAttackImpact();
-        trigger.chance = 0.4F;
-        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
-        trigger.spell = new Spell.Trigger.SpellCondition();
-        trigger.spell.id = WeaponSkills.SMASH.id().toString();
-        spell.passive.triggers = List.of(trigger);
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = WeaponSkills.SMASH.id().toString();
+        var taunt = SpellBuilder.Impacts.taunt();
+        taunt.chance = 0.5F;
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(taunt);
+        spell.modifiers = List.of(modifier);
 
-        var impact = SpellBuilder.Impacts.resetCooldownActive(WeaponSkills.SMASH.id().toString());
-        impact.action.apply_to_caster = true;
-        impact.sound = new Sound(SpellEngineSounds.SPELL_COOLDOWN_IMPACT.id());
-        spell.impacts = List.of(impact);
-
-        return new Skills.Entry(id, spell, title, description, null, Skills.Category.WEAPON);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WEAPON));
     }
 
     public static final Skills.Entry weapon_smash_modifier_2 = add(weapon_smash_modifier_2());

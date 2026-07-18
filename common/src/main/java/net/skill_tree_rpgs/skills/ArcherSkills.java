@@ -242,7 +242,7 @@ public class ArcherSkills {
     public static final Skills.Entry archer_tier_3_spell_2_modifier_1 = add(archer_tier_3_spell_2_modifier_1());
     private static Skills.Entry archer_tier_3_spell_2_modifier_1() {
         var id = Identifier.of(NAMESPACE, "archer_tier_3_spell_2_modifier_1");
-        var title = "Pack Leader";
+        var title = "Leader of the Pack";
         var description = "Summons an additional Spirit Wolf.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
@@ -272,13 +272,14 @@ public class ArcherSkills {
     private static Skills.Entry archer_tier_4_spell_2_modifier_1() {
         var id = Identifier.of(NAMESPACE, "archer_tier_4_spell_2_modifier_1");
         var title = "Torrential Arrows";
-        var description = "Rain of Arrows damage increased by {power_multiplier}.";
+        var description = "Rain of Arrows rains {extra_launch} additional arrows, scattered over a {meteor_launch_radius_add} blocks wider area.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = "archers:rain_of_arrows";
-        modifier.power_modifier = new Spell.Impact.Modifier();
-        modifier.power_modifier.power_multiplier = 0.25F;
+        modifier.projectile_launch = Spell.LaunchProperties.EMPTY();
+        modifier.projectile_launch.extra_launch_count = 10;
+        modifier.meteor_launch_radius_add = 1.5F;
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCHER));
     }
@@ -287,14 +288,32 @@ public class ArcherSkills {
     private static Skills.Entry archer_tier_4_spell_2_modifier_2() {
         var id = Identifier.of(NAMESPACE, "archer_tier_4_spell_2_modifier_2");
         var title = "Endless Volley";
-        var description = "Rain of Arrows rains down {extra_launch} additional arrows.";
-        var spell = SpellBuilder.createSpellModifier();
+        var description = "Rain of Arrows hits have {trigger_chance} chance to reset its cooldown.";
+
+        var spell = SkillsCommon.createModifierAlikePassiveSpell();
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = "archers:rain_of_arrows";
-        modifier.projectile_launch = Spell.LaunchProperties.EMPTY();
-        modifier.projectile_launch.extra_launch_count = 10;
-        spell.modifiers = List.of(modifier);
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+
+        var trigger = SpellBuilder.Triggers.specificSpellHit("archers:rain_of_arrows");
+        trigger.chance = 0.1F;
+        trigger.cap_per_tick = 1;
+        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
+        spell.passive.triggers = List.of(trigger);
+
+        spell.release.particles = new ParticleBatch[]{
+                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_arrow.id(), Color.WHITE)
+        };
+        spell.release.sound = new Sound(SpellEngineSounds.SIGNAL_SPELL_CRIT.id());
+
+        var reset = SpellBuilder.Impacts.resetCooldownActive("archers:rain_of_arrows");
+        reset.action.apply_to_caster = true;
+        spell.impacts = List.of(reset);
+
+        // Internal cooldown matching the base spell's, so one cast can grant at most one reset.
+        SpellBuilder.Cost.cooldown(spell, 15F);
+
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCHER));
     }
 

@@ -375,7 +375,7 @@ public class SkillEffects {
     public static Effects.Entry PHASE_SHIFT = add(new Effects.Entry(Identifier.of(SkillTreeMod.NAMESPACE, "phase_shift"),
             "Phase Shift",
             "Reduces damage taken.",
-            new CustomStatusEffect(StatusEffectCategory.BENEFICIAL, 0x9999ff),
+            new PhaseShiftStatusEffect(StatusEffectCategory.BENEFICIAL, 0x9999ff),
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
@@ -728,6 +728,38 @@ public class SkillEffects {
             )
     ));
 
+    /** Last Stand (Juggernaut node): per-stack size growth mirroring the Last Stand stacks. */
+    public static Effects.Entry JUGGERNAUT = add(new Effects.Entry(Identifier.of(SkillTreeMod.NAMESPACE, "juggernaut"),
+            "Juggernaut",
+            "Increased size.",
+            new CustomStatusEffect(StatusEffectCategory.BENEFICIAL, 0xcc6600),
+            new EffectConfig(
+                    List.of(
+                            new AttributeModifier(
+                                    EntityAttributes.GENERIC_SCALE.getIdAsString(),
+                                    0.08F,
+                                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                            )
+                    )
+            )
+    ));
+
+    /** Last Stand (Revenge node): stacking attack speed from blocking / soaking hits. */
+    public static Effects.Entry REVENGE = add(new Effects.Entry(Identifier.of(SkillTreeMod.NAMESPACE, "revenge"),
+            "Revenge",
+            "Increased attack speed.",
+            new CustomStatusEffect(StatusEffectCategory.BENEFICIAL, 0xff6633),
+            new EffectConfig(
+                    List.of(
+                            new AttributeModifier(
+                                    EntityAttributes.GENERIC_ATTACK_SPEED.getIdAsString(),
+                                    0.2F,
+                                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                            )
+                    )
+            )
+    ));
+
     public static Effects.Entry DEFLECTION = add(new Effects.Entry(Identifier.of(SkillTreeMod.NAMESPACE, "deflection"),
             "Deflection",
             "Protects you from physical attacks.",
@@ -809,6 +841,9 @@ public class SkillEffects {
         });
         InstantCast.register(PRESENCE_OF_MIND.entry,
                 TagKey.of(SpellRegistry.KEY, Identifier.of("wizards:arcane")));
+        // Light the wielded weapon in arcane light while primed — a visible tell that the next arcane
+        // cast will fire instantly. Single application (1 stack), so full opacity for a bold glow.
+        GlowingItemStatusEffect.register(PRESENCE_OF_MIND.effect, Color.ARCANE, 1F);
         InstantCast.register(ARCTIC_REFLEX.entry,
                 TagKey.of(SpellRegistry.KEY, Identifier.of("wizards:frost")));
     }

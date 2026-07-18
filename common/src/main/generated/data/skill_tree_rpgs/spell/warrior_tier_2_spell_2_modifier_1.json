@@ -5,7 +5,10 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "rogues:placeholder"
+      "spell_pattern": "rogues:throw_net",
+      "projectile_perks": {
+        "ricochet": 2
+      }
     }
   ]
 }
