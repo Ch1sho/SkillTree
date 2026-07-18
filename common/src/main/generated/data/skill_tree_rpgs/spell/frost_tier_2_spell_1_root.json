@@ -6,7 +6,7 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:frost_nova",
-      "range_add": 1.0
+      "effect_duration_add": 1.0
     }
   ]
 }

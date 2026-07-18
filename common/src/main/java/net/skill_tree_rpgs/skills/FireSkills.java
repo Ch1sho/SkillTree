@@ -153,15 +153,15 @@ public class FireSkills {
     // nodes). Patterns come from the shared palette in SkillsCommon, picked per spell.
     // ===================================================================================
 
-    public static final Skills.Entry fire_tier_2_spell_1_root = add(SkillsCommon.channelRoot(
+    public static final Skills.Entry fire_tier_2_spell_1_root = add(SkillsCommon.critRoot(
             Skills.Category.FIRE, SpellSchools.FIRE,
-            "fire_tier_2_spell_1_root", "wizards:fire_breath", "Fire Breath", 4));
+            "fire_tier_2_spell_1_root", "wizards:fire_breath", "Fire Breath", 0.05F));
     public static final Skills.Entry fire_tier_2_spell_2_root = add(SkillsCommon.heftRoot(
             Skills.Category.FIRE, SpellSchools.FIRE,
             "fire_tier_2_spell_2_root", "wizards:fire_slash", "Flame Slash", 0.15F));
-    public static final Skills.Entry fire_tier_3_spell_1_root = add(SkillsCommon.critRoot(
+    public static final Skills.Entry fire_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.FIRE, SpellSchools.FIRE,
-            "fire_tier_3_spell_1_root", "wizards:fire_meteor", "Meteor", 0.05F));
+            "fire_tier_3_spell_1_root", "wizards:fire_meteor", "Meteor", 2F));
     public static final Skills.Entry fire_tier_3_spell_2_root = add(SkillsCommon.powerRoot(
             Skills.Category.FIRE, SpellSchools.FIRE,
             "fire_tier_3_spell_2_root", "wizards:fire_storm", "Firestorm", 0.1F));

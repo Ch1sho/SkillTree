@@ -6,7 +6,9 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:fire_breath",
-      "channel_ticks_add": 4
+      "power_modifier": {
+        "critical_chance_bonus": 0.05
+      }
     }
   ]
 }

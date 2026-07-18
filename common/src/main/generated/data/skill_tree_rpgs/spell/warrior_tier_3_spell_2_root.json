@@ -6,7 +6,7 @@
   "modifiers": [
     {
       "spell_pattern": "rogues:shout",
-      "effect_duration_add": 2.0
+      "range_add": 2.0
     }
   ]
 }

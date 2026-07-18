@@ -167,21 +167,21 @@ public class FrostSkills {
     // Patterns come from the shared palette in SkillsCommon, picked per spell.
     // ===================================================================================
 
-    public static final Skills.Entry frost_tier_2_spell_1_root = add(SkillsCommon.radiusRoot(
+    public static final Skills.Entry frost_tier_2_spell_1_root = add(SkillsCommon.lingerRoot(
             Skills.Category.FROST, SpellSchools.FROST,
             "frost_tier_2_spell_1_root", "wizards:frost_nova", "Frost Nova", 1F));
-    public static final Skills.Entry frost_tier_2_spell_2_root = add(SkillsCommon.lingerRoot(
+    public static final Skills.Entry frost_tier_2_spell_2_root = add(SkillsCommon.powerRoot(
             Skills.Category.FROST, SpellSchools.FROST,
-            "frost_tier_2_spell_2_root", "wizards:frost_spikes", "Frost Spikes", 2F));
+            "frost_tier_2_spell_2_root", "wizards:frost_spikes", "Frost Spikes", 0.1F));
     public static final Skills.Entry frost_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.FROST, SpellSchools.FROST,
             "frost_tier_3_spell_1_root", "wizards:frost_shield", "Frost Shield", 3F));
-    public static final Skills.Entry frost_tier_3_spell_2_root = add(SkillsCommon.critRoot(
+    public static final Skills.Entry frost_tier_3_spell_2_root = add(SkillsCommon.powerRoot(
             Skills.Category.FROST, SpellSchools.FROST,
-            "frost_tier_3_spell_2_root", "wizards:frost_lance", "Ice Lance", 0.05F));
-    public static final Skills.Entry frost_tier_4_spell_1_root = add(SkillsCommon.critRoot(
+            "frost_tier_3_spell_2_root", "wizards:frost_lance", "Ice Lance", 0.1F));
+    public static final Skills.Entry frost_tier_4_spell_1_root = add(SkillsCommon.channelRoot(
             Skills.Category.FROST, SpellSchools.FROST,
-            "frost_tier_4_spell_1_root", "wizards:frost_blizzard", "Blizzard", 0.05F));
+            "frost_tier_4_spell_1_root", "wizards:frost_blizzard", "Blizzard", 3));
     public static final Skills.Entry frost_tier_4_spell_2_root = add(SkillsCommon.companionRoot(
             Skills.Category.FROST, SpellSchools.FROST,
             "frost_tier_4_spell_2_root", "wizards:frost_elemental", "Frost Elemental", 5));

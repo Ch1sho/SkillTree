@@ -213,15 +213,15 @@ public class ArcherSkills {
     // nodes). Patterns come from the shared palette in SkillsCommon, picked per spell.
     // ===================================================================================
 
-    public static final Skills.Entry archer_tier_2_spell_1_root = add(SkillsCommon.critDamageRoot(
+    public static final Skills.Entry archer_tier_2_spell_1_root = add(SkillsCommon.lingerRoot(
             Skills.Category.ARCHER, ExternalSpellSchools.PHYSICAL_RANGED,
-            "archer_tier_2_spell_1_root", "archers:power_shot", "Power Shot", 0.15F));
-    public static final Skills.Entry archer_tier_2_spell_2_root = add(SkillsCommon.fieldRoot(
+            "archer_tier_2_spell_1_root", "archers:power_shot", "Power Shot", 2F));
+    public static final Skills.Entry archer_tier_2_spell_2_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.ARCHER, ExternalSpellSchools.PHYSICAL_RANGED,
-            "archer_tier_2_spell_2_root", "archers:entangling_roots", "Entangling Roots", 2F));
-    public static final Skills.Entry archer_tier_3_spell_1_root = add(SkillsCommon.critRoot(
+            "archer_tier_2_spell_2_root", "archers:entangling_roots", "Entangling Roots", 3F));
+    public static final Skills.Entry archer_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.ARCHER, ExternalSpellSchools.PHYSICAL_RANGED,
-            "archer_tier_3_spell_1_root", "archers:barrage", "Barrage", 0.05F));
+            "archer_tier_3_spell_1_root", "archers:barrage", "Barrage", 1F));
     public static final Skills.Entry archer_tier_3_spell_2_root = add(SkillsCommon.companionRoot(
             Skills.Category.ARCHER, ExternalSpellSchools.PHYSICAL_RANGED,
             "archer_tier_3_spell_2_root", "archers:spirit_wolf", "Spirit Wolf", 5));

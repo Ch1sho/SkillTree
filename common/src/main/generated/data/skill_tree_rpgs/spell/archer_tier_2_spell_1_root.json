@@ -6,9 +6,7 @@
   "modifiers": [
     {
       "spell_pattern": "archers:power_shot",
-      "power_modifier": {
-        "critical_damage_bonus": 0.15
-      }
+      "effect_duration_add": 2.0
     }
   ]
 }

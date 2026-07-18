@@ -1,5 +1,6 @@
 package net.skill_tree_rpgs.skills;
 
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.util.Identifier;
 import net.skill_tree_rpgs.SkillTreeMod;
 import net.skill_tree_rpgs.effect.SkillEffects;
@@ -7,10 +8,12 @@ import net.spell_engine.api.datagen.SpellBuilder;
 import net.spell_engine.api.spell.Spell;
 import net.spell_engine.api.spell.fx.ParticleBatch;
 import net.spell_engine.api.spell.fx.Sound;
+import net.spell_engine.api.spell.summon.AttributeScaling;
 import net.spell_engine.client.gui.SpellTooltip;
 import net.spell_engine.client.util.Color;
 import net.spell_engine.fx.SpellEngineParticles;
 import net.spell_engine.fx.SpellEngineSounds;
+import net.spell_power.api.SpellPowerMechanics;
 import net.spell_power.api.SpellSchools;
 
 import java.util.ArrayList;
@@ -205,18 +208,30 @@ public class ArcaneSkills {
     // nodes). Patterns come from the shared palette in SkillsCommon, picked per spell.
     // ===================================================================================
 
-    public static final Skills.Entry arcane_tier_2_spell_1_root = add(SkillsCommon.channelRoot(
+    public static final Skills.Entry arcane_tier_2_spell_1_root = add(SkillsCommon.powerRoot(
             Skills.Category.ARCANE, SpellSchools.ARCANE,
-            "arcane_tier_2_spell_1_root", "wizards:arcane_missile", "Arcane Missiles", 2));
+            "arcane_tier_2_spell_1_root", "wizards:arcane_missile", "Arcane Missiles", 0.1F));
     public static final Skills.Entry arcane_tier_2_spell_2_root = add(SkillsCommon.radiusRoot(
             Skills.Category.ARCANE, SpellSchools.ARCANE,
             "arcane_tier_2_spell_2_root", "wizards:arcane_explosion", "Arcane Explosion", 1F));
     public static final Skills.Entry arcane_tier_3_spell_1_root = add(SkillsCommon.critRoot(
             Skills.Category.ARCANE, SpellSchools.ARCANE,
             "arcane_tier_3_spell_1_root", "wizards:arcane_beam", "Arcane Beam", 0.05F));
-    public static final Skills.Entry arcane_tier_3_spell_2_root = add(SkillsCommon.companionRoot(
+    // Flat +10% critical strike chance on the summoned emitters (crit chance attribute is
+    // baseline-100, so a flat +10 with no owner scaling reads as +10%).
+    public static final Skills.Entry arcane_tier_3_spell_2_root = add(SkillsCommon.spellRoot(
             Skills.Category.ARCANE, SpellSchools.ARCANE,
-            "arcane_tier_3_spell_2_root", "wizards:arcane_barrage", "Arcane Barrage", 5));
+            "arcane_tier_3_spell_2_root", "wizards:arcane_barrage", "Arcane Barrage",
+            "Arcane Barrage emitters gain 10% increased critical strike chance.",
+            modifier -> {
+                var critChance = new AttributeScaling.Entry();
+                critChance.attribute_id = SpellPowerMechanics.CRITICAL_CHANCE.id.toString();
+                critChance.modifiers = List.of(new AttributeScaling.Entry.OwnerModifier(
+                        SpellPowerMechanics.CRITICAL_CHANCE.id.toString(),
+                        EntityAttributeModifier.Operation.ADD_VALUE, 10.0, 0.0));
+                modifier.summon_attribute_scaling = new AttributeScaling();
+                modifier.summon_attribute_scaling.entries = List.of(critChance);
+            }));
     public static final Skills.Entry arcane_tier_4_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.ARCANE, SpellSchools.ARCANE,
             "arcane_tier_4_spell_1_root", "wizards:arcane_blink", "Blink", 3F));

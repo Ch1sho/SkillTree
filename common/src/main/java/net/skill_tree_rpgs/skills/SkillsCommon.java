@@ -100,9 +100,10 @@ public class SkillsCommon {
     // matching what the spell already does (see each helper's fit note). Descriptions rely
     // on SpellTooltip auto-tokens resolved from the modifier at runtime, unless noted.
 
-    private static Skills.Entry spellRoot(Skills.Category category, SpellSchool school,
-                                          String path, String spellPattern, String spellName,
-                                          String description, Consumer<Spell.Modifier> configure) {
+    /** Generic root builder for one-off patterns; prefer the named helpers below. */
+    public static Skills.Entry spellRoot(Skills.Category category, SpellSchool school,
+                                         String path, String spellPattern, String spellName,
+                                         String description, Consumer<Spell.Modifier> configure) {
         var id = Identifier.of(Skills.NAMESPACE, path);
         var spell = SpellBuilder.createSpellModifier();
         spell.school = school;

@@ -231,9 +231,9 @@ public class RogueSkills {
     public static final Skills.Entry rogue_tier_2_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
             "rogue_tier_2_spell_1_root", "rogues:slice_and_dice", "Slice and Dice", 2F));
-    public static final Skills.Entry rogue_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
+    public static final Skills.Entry rogue_tier_3_spell_1_root = add(SkillsCommon.reachRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
-            "rogue_tier_3_spell_1_root", "rogues:shadow_step", "Shadow Step", 2F));
+            "rogue_tier_3_spell_1_root", "rogues:shadow_step", "Shadow Step", 3F));
     public static final Skills.Entry rogue_tier_4_spell_1_root = add(SkillsCommon.lingerRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
             "rogue_tier_4_spell_1_root", "rogues:vanish", "Vanish", 2F));

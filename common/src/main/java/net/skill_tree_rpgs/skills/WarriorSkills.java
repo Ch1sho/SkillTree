@@ -206,19 +206,21 @@ public class WarriorSkills {
     // nodes). Patterns come from the shared palette in SkillsCommon, picked per spell.
     // ===================================================================================
 
-    public static final Skills.Entry warrior_tier_2_spell_1_root = add(SkillsCommon.heftRoot(
+    public static final Skills.Entry warrior_tier_2_spell_1_root = add(SkillsCommon.powerRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
-            "warrior_tier_2_spell_1_root", "rogues:throw", "Throw", 0.15F));
+            "warrior_tier_2_spell_1_root", "rogues:throw", "Shattering Throw", 0.1F));
     public static final Skills.Entry warrior_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
             "warrior_tier_3_spell_1_root", "rogues:charge", "Charge", 2F));
     public static final Skills.Entry warrior_tier_4_spell_1_root = add(SkillsCommon.meleeRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
             "warrior_tier_4_spell_1_root", "rogues:mortal_strike", "Mortal Strike", 0.1F));
-    public static final Skills.Entry warrior_tier_2_spell_2_root = add(SkillsCommon.lingerRoot(
+    public static final Skills.Entry warrior_tier_2_spell_2_root = add(SkillsCommon.spellRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
-            "warrior_tier_2_spell_2_root", "rogues:throw_net", "Throw Net", 1F));
-    public static final Skills.Entry warrior_tier_3_spell_2_root = add(SkillsCommon.lingerRoot(
+            "warrior_tier_2_spell_2_root", "rogues:throw_net", "Throw Net",
+            "Net Trap lasts {effect_duration_add} sec longer.",
+            modifier -> modifier.effect_duration_add = 1F));
+    public static final Skills.Entry warrior_tier_3_spell_2_root = add(SkillsCommon.radiusRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
             "warrior_tier_3_spell_2_root", "rogues:shout", "Shout", 2F));
     public static final Skills.Entry warrior_tier_4_spell_2_root = add(SkillsCommon.cooldownRoot(

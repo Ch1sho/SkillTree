@@ -228,9 +228,9 @@ public class PaladinSkills {
     public static final Skills.Entry paladin_tier_3_spell_1_root = add(SkillsCommon.lingerRoot(
             Skills.Category.PALADIN, SpellSchools.HEALING,
             "paladin_tier_3_spell_1_root", "paladins:divine_protection", "Divine Protection", 2F));
-    public static final Skills.Entry paladin_tier_4_spell_1_root = add(SkillsCommon.fieldRoot(
+    public static final Skills.Entry paladin_tier_4_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.PALADIN, SpellSchools.HEALING,
-            "paladin_tier_4_spell_1_root", "paladins:battle_banner", "Battle Banner", 2F));
+            "paladin_tier_4_spell_1_root", "paladins:battle_banner", "Battle Banner", 5F));
     public static final Skills.Entry paladin_tier_2_spell_2_root = add(SkillsCommon.powerRoot(
             Skills.Category.PALADIN, SpellSchools.HEALING,
             "paladin_tier_2_spell_2_root", "paladins:blessed_strikes", "Blessed Strikes", 0.1F));

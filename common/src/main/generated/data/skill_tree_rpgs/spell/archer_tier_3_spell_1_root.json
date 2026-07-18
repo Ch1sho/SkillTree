@@ -6,9 +6,7 @@
   "modifiers": [
     {
       "spell_pattern": "archers:barrage",
-      "power_modifier": {
-        "critical_chance_bonus": 0.05
-      }
+      "cooldown_duration_deduct": 1.0
     }
   ]
 }

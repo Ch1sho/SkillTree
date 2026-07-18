@@ -6,7 +6,9 @@
   "modifiers": [
     {
       "spell_pattern": "rogues:throw",
-      "projectile_scale_multiply": 0.15
+      "power_modifier": {
+        "power_multiplier": 0.1
+      }
     }
   ]
 }

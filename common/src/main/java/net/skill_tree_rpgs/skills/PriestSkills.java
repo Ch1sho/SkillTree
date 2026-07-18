@@ -222,7 +222,7 @@ public class PriestSkills {
 
     public static final Skills.Entry priest_tier_2_spell_1_root = add(SkillsCommon.channelRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
-            "priest_tier_2_spell_1_root", "paladins:holy_beam", "Holy Beam", 4));
+            "priest_tier_2_spell_1_root", "paladins:holy_beam", "Holy Beam", 2));
     public static final Skills.Entry priest_tier_3_spell_1_root = add(SkillsCommon.powerRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
             "priest_tier_3_spell_1_root", "paladins:circle_of_healing", "Circle of Healing", 0.1F));

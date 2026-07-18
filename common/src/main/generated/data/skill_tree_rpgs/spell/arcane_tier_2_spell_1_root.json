@@ -6,7 +6,9 @@
   "modifiers": [
     {
       "spell_pattern": "wizards:arcane_missile",
-      "channel_ticks_add": 2
+      "power_modifier": {
+        "power_multiplier": 0.1
+      }
     }
   ]
 }

@@ -6,7 +6,7 @@
   "modifiers": [
     {
       "spell_pattern": "paladins:holy_beam",
-      "channel_ticks_add": 4
+      "channel_ticks_add": 2
     }
   ]
 }
