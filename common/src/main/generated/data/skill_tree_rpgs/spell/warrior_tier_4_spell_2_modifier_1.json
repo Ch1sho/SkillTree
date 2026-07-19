@@ -17,6 +17,9 @@
               "amplifier_cap": 4,
               "apply_mode": "ADD"
             }
+          },
+          "sound": {
+            "id": "skill_tree_rpgs:warrior_stomp"
           }
         }
       ]

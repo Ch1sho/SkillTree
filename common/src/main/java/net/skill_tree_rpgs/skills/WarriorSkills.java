@@ -132,8 +132,20 @@ public class WarriorSkills {
 
         var impact = SpellBuilder.Impacts.effectSet(effect.id.toString(), 6, 0);
         impact.action.apply_to_caster = true;
+        impact.particles = new ParticleBatch[]{
+                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_crit.id(), Color.RAGE),
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.STRIPE,
+                                SpellEngineParticles.MagicParticles.Motion.DECELERATE).id().toString(),
+                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
+                        15, 0.1F, 0.25F)
+                        .color(Color.RAGE.toRGBA())
+        };
+        impact.sound = Sound.of(SkillSounds.recklessness_impact.id());
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
         modifier.impacts = List.of(impact);
+
         spell.modifiers = List.of(modifier);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WARRIOR));
@@ -163,18 +175,24 @@ public class WarriorSkills {
         cloud.volume.radius = 0.9F;
         cloud.volume.area.vertical_range_multiplier = 2F;
         cloud.delay_ticks = 0;
-        // Damage exactly once, timed to the spike's apex: impact ticks fall at ages 0 (spawn, no hit)
-        // and SPIKE_APEX_TICK; trimming the lifetime to just under two intervals despawns the cloud
-        // before a second hit, so only the apex hit lands — right as the spikes reach full height.
+        // Damage exactly once: impact ticks fall at ages 0 (spawn, no hit) and SPIKE_APEX_TICK;
+        // trimming the lifetime to just under two intervals despawns the cloud before a second hit,
+        // so only that single hit lands. Same cloud timing as Wizards' Frost Spikes.
         cloud.impact_tick_interval = SPIKE_APEX_TICK;
         cloud.time_to_live_seconds = (SPIKE_APEX_TICK * 2 - 1) / 20F;
         cloud.spawn = new Spell.Delivery.Cloud.Spawn();
-        cloud.spawn.sound = new Sound(SkillSounds.warrior_stomp.id());
+        cloud.spawn.sound = new Sound(SkillSounds.rock_spike_impact.id());
         cloud.spawn.particles = new ParticleBatch[]{
                 new ParticleBatch(
                         SpellEngineParticles.smoke_medium.id().toString(),
                         ParticleBatch.Shape.PILLAR, ParticleBatch.Origin.FEET,
-                        18, 0.1F, 0.4F)
+                        18, 0.1F, 0.4F),
+                // Cosy campfire smoke drifting up from the eruption: it carries its own slow rise
+                // and long lifetime, so near-zero batch speed lets it hang and linger around the base.
+                new ParticleBatch(
+                        "minecraft:campfire_cosy_smoke",
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.FEET,
+                        3, 0F, 0.02F)
         };
         cloud.spawn.model_fx = impalingSpikeModelFx();
         cloud.client_data = new Spell.Delivery.Cloud.ClientData();
@@ -182,7 +200,8 @@ public class WarriorSkills {
         // Four spike-clouds marching straight forward from the caster, 1.5 blocks apart, the first
         // 1.5 blocks out; each erupts 2 ticks after the previous one (like Frost Spikes).
         var row = SpellBuilder.Placements.ray(4, 1.5F, 1.5F);
-        SpellBuilder.Placements.delayCascade(row, 2);
+        SpellBuilder.Placements.delayCascade(row, 3);
+        SpellBuilder.Placements.delayUniform(row, 6);
         cloud.placement = row.get(0);
         cloud.placement_delay_stacks = false;
         cloud.additional_placements = List.copyOf(row.subList(1, row.size()));
@@ -199,7 +218,6 @@ public class WarriorSkills {
                         15, 0.2F, 0.5F)
                         .color(Color.RAGE.toRGBA())
         };
-        damage.sound = new Sound(SkillSounds.warrior_stomp.id());
 
         // Vertical launch of struck enemies as the spikes burst upward. Harmful, so knockback
         // resistance applies; reset_velocity makes the pop consistent regardless of prior motion.
@@ -212,21 +230,23 @@ public class WarriorSkills {
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WARRIOR));
     }
 
-    /// Tick at which the spikes reach full height and deal their single hit. Shared by the cloud
-    /// (impact interval = this, lifetime = 2*this - 1) and the spike model FX (rise ends here).
-    private static final int SPIKE_APEX_TICK = 6;
+    /// Tick at which the cloud lands its single hit. Drives the cloud's impact interval and
+    /// lifetime (= 2*this - 1 ticks). Matches Wizards' Frost Spikes; the spike model's own
+    /// rise/sink animation runs on its own longer timeline (see {@link #impalingSpikeModelFx}).
+    private static final int SPIKE_APEX_TICK = 5;
     /// Blocks a spike model rests below ground at the start/end of its eruption, so it stays hidden.
     private static final float SPIKE_BURY_DEPTH = 1.6F;
 
     /// A single ice spike erupting from the ground (reusing Wizards' second Frost Spike model): it
-    /// shoots up to full height by {@link #SPIKE_APEX_TICK} — when the cloud lands its single hit —
-    /// holds briefly, then sinks back underground. Spawned per cloud node via {@code cloud.spawn.model_fx}.
+    /// shoots up to full height over 20 ticks, then sinks back underground — a ~2s eruption that
+    /// outlives the cloud's brief single hit so the animation reads clearly. Matches the per-spike
+    /// timing of Wizards' Frost Spikes. Spawned per cloud node via {@code cloud.spawn.model_fx}.
     private static List<ModelEffect> impalingSpikeModelFx() {
         var spike = ModelEffectBuilder.Preset.spike(
-                        ModelEffectBuilder.create("wizards:spell_effect/frost_spike_2")
+                        ModelEffectBuilder.create("wizards:spell_effect/frost_spike_1")
                                 .light(LightEmission.GLOW_TRANSLUCENT)
                                 .initialTranslateY(0.5F),
-                        SPIKE_APEX_TICK, 3, true, SPIKE_BURY_DEPTH)
+                        20, 0, true, SPIKE_BURY_DEPTH)
                 .build();
         return List.of(spike);
     }
@@ -369,6 +389,7 @@ public class WarriorSkills {
         // Mirrors the base buff's stacking: one Juggernaut stack per channel release, same
         // 10s duration, so size tracks the Last Stand stack count.
         var growth = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 10, 1, 4);
+        growth.sound = Sound.of(SkillSounds.warrior_stomp.id());
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
         modifier.impacts = List.of(growth);
 

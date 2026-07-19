@@ -55,6 +55,8 @@ public class SkillSounds {
     public static final SpellEngineSounds.Entry warrior_stomp = add(entry("warrior_stomp").variants(3));
     public static final SpellEngineSounds.Entry warrior_enrage = add(entry("warrior_enrage"));
     public static final SpellEngineSounds.Entry warrior_shockwave = add(entry("warrior_shockwave"));
+    public static final SpellEngineSounds.Entry rock_spike_impact = add(entry("rock_spike_impact").variants(3));
+    public static final SpellEngineSounds.Entry recklessness_impact = add(entry("recklessness_impact"));
 
     public static void register() {
         for (var entry: entries) {

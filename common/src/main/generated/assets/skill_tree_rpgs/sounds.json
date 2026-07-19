@@ -149,6 +149,18 @@
       "skill_tree_rpgs:priest_pain_suppression"
     ]
   },
+  "recklessness_impact": {
+    "sounds": [
+      "skill_tree_rpgs:recklessness_impact"
+    ]
+  },
+  "rock_spike_impact": {
+    "sounds": [
+      "skill_tree_rpgs:rock_spike_impact_1",
+      "skill_tree_rpgs:rock_spike_impact_2",
+      "skill_tree_rpgs:rock_spike_impact_3"
+    ]
+  },
   "rogue_cheat_death": {
     "sounds": [
       "skill_tree_rpgs:rogue_cheat_death"
