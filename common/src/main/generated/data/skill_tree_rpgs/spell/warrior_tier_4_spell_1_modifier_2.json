@@ -2,11 +2,175 @@
   "school": "spell_power:physical_melee",
   "range": 0.0,
   "tier": 1,
-  "type": "MODIFIER",
-  "modifiers": [
+  "tooltip": {
+    "show_activation": false
+  },
+  "type": "PASSIVE",
+  "passive": {
+    "triggers": [
+      {
+        "target_override": "CASTER",
+        "aoe_source_override": "CASTER",
+        "type": "SPELL_CAST",
+        "spell": {
+          "id": "rogues:mortal_strike"
+        }
+      }
+    ]
+  },
+  "target": {
+    "type": "FROM_TRIGGER"
+  },
+  "deliver": {
+    "type": "CLOUD",
+    "clouds": [
+      {
+        "volume": {
+          "radius": 0.9,
+          "area": {
+            "vertical_range_multiplier": 2.0
+          }
+        },
+        "time_to_live_seconds": 0.55,
+        "impact_tick_interval": 6,
+        "placement_delay_stacks": false,
+        "placement": {
+          "location_offset_by_look": 1.5,
+          "apply_yaw": true
+        },
+        "additional_placements": [
+          {
+            "delay_ticks": 2,
+            "location_offset_by_look": 3.0,
+            "apply_yaw": true
+          },
+          {
+            "delay_ticks": 4,
+            "location_offset_by_look": 4.5,
+            "apply_yaw": true
+          },
+          {
+            "delay_ticks": 6,
+            "location_offset_by_look": 6.0,
+            "apply_yaw": true
+          }
+        ],
+        "spawn": {
+          "sound": {
+            "id": "skill_tree_rpgs:warrior_stomp"
+          },
+          "particles": [
+            {
+              "particle_id": "spell_engine:smoke_medium",
+              "origin": "FEET",
+              "shape": "PILLAR",
+              "count": 18.0,
+              "min_speed": 0.1,
+              "max_speed": 0.4
+            }
+          ],
+          "model_fx": [
+            {
+              "model_id": "wizards:spell_effect/frost_spike_2",
+              "light_emission": "GLOW_TRANSLUCENT",
+              "duration": 15,
+              "initial": [
+                {
+                  "operation": "scale",
+                  "x": -1.0,
+                  "y": -1.0,
+                  "z": -1.0
+                },
+                {
+                  "operation": "translate",
+                  "x": 0.0,
+                  "y": -1.1,
+                  "z": 0.0
+                }
+              ],
+              "animations": [
+                {
+                  "start": 0,
+                  "end": 6,
+                  "easing": "EASE_OUT_ELASTIC",
+                  "operation": "translate",
+                  "x": 0.0,
+                  "y": 1.6,
+                  "z": 0.0
+                },
+                {
+                  "start": 9,
+                  "end": 15,
+                  "easing": "EASE_IN_ELASTIC",
+                  "operation": "translate",
+                  "x": 0.0,
+                  "y": -1.6,
+                  "z": 0.0
+                },
+                {
+                  "start": 0,
+                  "end": 6,
+                  "easing": "EASE_OUT_ELASTIC",
+                  "operation": "scale",
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                {
+                  "start": 9,
+                  "end": 15,
+                  "easing": "EASE_IN_ELASTIC",
+                  "operation": "scale",
+                  "x": -1.0,
+                  "y": -1.0,
+                  "z": -1.0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "impacts": [
     {
-      "spell_pattern": "rogues:mortal_strike",
-      "effect_duration_add": 3.0
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 0.5
+        }
+      },
+      "particles": [
+        {
+          "particle_id": "spell_engine:magic_spark_burst",
+          "origin": "CENTER",
+          "shape": "SPHERE",
+          "count": 15.0,
+          "min_speed": 0.2,
+          "max_speed": 0.5,
+          "color_rgba": 3208659199
+        }
+      ],
+      "sound": {
+        "id": "skill_tree_rpgs:warrior_stomp"
+      }
+    },
+    {
+      "action": {
+        "type": "VELOCITY",
+        "velocity": {
+          "frame": "LOOK",
+          "push": {
+            "x": 0.0,
+            "y": 0.8,
+            "z": 0.0
+          },
+          "reset_velocity": true
+        }
+      }
     }
-  ]
+  ],
+  "cost": {
+    "durability": 0
+  }
 }

@@ -254,6 +254,16 @@ public class FireSkills {
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
         modifier.impacts = List.of(slow, pull);
 
+        // A converging ground ring at the caster, replayed with each burst's release FX.
+        modifier.release_particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.area_effect_678.id().toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.GROUND,
+                        1, 0, 0)
+                        .scale(3.5F)
+                        .color(FIRE_MAGIC_COLOR.toRGBA())
+        };
+
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
     }

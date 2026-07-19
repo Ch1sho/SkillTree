@@ -292,7 +292,7 @@ public class FrostSkills {
                         40, 0.5F, 0.5F)
                         .color(Color.FROST.toRGBA()),
                 new ParticleBatch(
-                        SpellEngineParticles.aura_effect_649.id().toString(),
+                        SpellEngineParticles.aura_effect_676.id().toString(),
                         ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
                         1, 0, 0)
                         .color(Color.FROST.toRGBA())

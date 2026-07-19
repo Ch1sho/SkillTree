@@ -250,34 +250,24 @@ public class PaladinSkills {
             Skills.Category.PALADIN, SpellSchools.HEALING,
             "paladin_tier_4_spell_2_root", IMMOLATION, "Immolation", 1F));
 
-    public static final Skills.Entry paladin_tier_2_spell_2_modifier_1 = add(paladin_tier_2_spell_2_modifier_1()); // Zeal
+    public static final Skills.Entry paladin_tier_2_spell_2_modifier_1 = add(paladin_tier_2_spell_2_modifier_1()); // Seal of Wrath
     private static Skills.Entry paladin_tier_2_spell_2_modifier_1() {
         var id = Identifier.of(NAMESPACE, "paladin_tier_2_spell_2_modifier_1");
-        var effect = SkillEffects.ZEAL;
-        var title = "Zeal";
-        var description = "Empowered strikes of Blessed Strikes fill you with " + effect.title
-                + ", increasing your Healing Power by {bonus}, stacking up to {effect_amplifier_cap} times, for {effect_duration} sec.";
-        SpellTooltip.DescriptionMutator mutator = (args) -> {
-            var bonus = SpellTooltip.percent(effect.config().firstModifier().value);
-            return args.description().replace("{bonus}", bonus);
-        };
+        var title = "Seal of Wrath";
+        var description = "Increases the damage of Blessed Strikes by {power_multiplier}.";
 
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.HEALING;
 
+        // Flat power boost to the seared holy damage — no buff, no icon: the sole tracked state
+        // stays the seal count itself. {power_multiplier} auto-resolves from the value below.
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = BLESSED_STRIKES;
-        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
-
-        // Joins the stashed payload: runs on each seal-spending melee strike. The strike's damage
-        // establishes harmful intent on the victim, so the buff rides on `apply_to_caster` — one
-        // Zeal stack per empowered strike, feeding the paladin's Healing Power based spells.
-        var impact = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 15, 1, 4);
-        impact.action.apply_to_caster = true;
+        modifier.power_modifier = new Spell.Impact.Modifier();
+        modifier.power_modifier.power_multiplier = 0.2F;
         spell.modifiers = List.of(modifier);
-        modifier.impacts = List.of(impact);
 
-        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PALADIN));
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PALADIN));
     }
 
     public static final Skills.Entry paladin_tier_2_spell_2_modifier_2 = add(paladin_tier_2_spell_2_modifier_2()); // Seal of Light
@@ -331,6 +321,16 @@ public class PaladinSkills {
         pull.action.velocity.reset_velocity = true;
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
         modifier.impacts = List.of(pull);
+
+        // A converging ground ring at the caster, played with Immolation's release FX.
+        modifier.release_particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.area_effect_678.id().toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.GROUND,
+                        1, 0, 0)
+                        .scale(4.5F)
+                        .color(Color.HOLY.toRGBA())
+        };
 
         spell.modifiers = List.of(modifier);
 
@@ -476,14 +476,15 @@ public class PaladinSkills {
         buff.particles = new ParticleBatch[]{
                 new ParticleBatch(
                         SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.STRIPE,
-                                SpellEngineParticles.MagicParticles.Motion.FLOAT).id().toString(),
+                                SpellEngineParticles.MagicParticles.Shape.SPARK,
+                                SpellEngineParticles.MagicParticles.Motion.DECELERATE).id().toString(),
                         ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
                         15, 0.2F, 0.3F)
-                        .color(SkillsCommon.MIGHT_COLOR.toRGBA()),
-                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_fist.id(), SkillsCommon.MIGHT_COLOR)
+                        .color(SkillsCommon.MIGHT_COLOR.toRGBA())
         };
-        buff.sound = new Sound(SkillSounds.paladin_crusader_activate.id());
+        // No impact particles: the Vengeance status effect renders its own ground decal
+        // (see SkillTreeClientMod), so gaining a stack only chimes.
+        buff.sound = Sound.withVolume(SkillSounds.paladin_crusader_activate.id(), 0.25F);
         spell.impacts = List.of(buff);
 
         return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PALADIN));
@@ -525,6 +526,8 @@ public class PaladinSkills {
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PALADIN));
     }
 
+    public static final Color FREEDOM_COLOR = Color.from(0xff9933);
+
     public static final Skills.Entry paladin_tier_2_passive_2 = add(paladin_tier_2_passive_2()); // Blessing of Freedom
     private static Skills.Entry paladin_tier_2_passive_2() {
         var id = Identifier.of(NAMESPACE, "paladin_tier_2_passive_2");
@@ -547,11 +550,12 @@ public class PaladinSkills {
         impact.particles = new ParticleBatch[]{
                 new ParticleBatch(
                         SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.STRIPE,
+                                SpellEngineParticles.MagicParticles.Shape.ARCANE,
                                 SpellEngineParticles.MagicParticles.Motion.FLOAT).id().toString(),
-                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
-                        15, 0.2F, 0.3F)
-                        .color(SkillsCommon.HOLY_COLOR)
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.FEET,
+                        15, 0.3F, 0.4F)
+                        .color(FREEDOM_COLOR.toRGBA()),
+                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_fist.id(), FREEDOM_COLOR)
         };
         spell.impacts = List.of(impact);
 

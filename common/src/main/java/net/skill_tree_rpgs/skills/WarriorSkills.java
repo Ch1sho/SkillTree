@@ -5,14 +5,18 @@ import net.skill_tree_rpgs.SkillTreeMod;
 import net.skill_tree_rpgs.effect.SkillEffects;
 import net.spell_engine.api.datagen.SpellBuilder;
 import net.spell_engine.api.effect.SpellEngineEffects;
+import net.spell_engine.api.render.LightEmission;
 import net.spell_engine.api.spell.ExternalSpellSchools;
 import net.spell_engine.api.spell.Spell;
+import net.spell_engine.api.spell.fx.ModelEffect;
+import net.spell_engine.api.spell.fx.ModelEffectBuilder;
 import net.spell_engine.api.spell.fx.ParticleBatch;
 import net.spell_engine.api.spell.fx.Sound;
 import net.spell_engine.client.gui.SpellTooltip;
 import net.spell_engine.client.util.Color;
 import net.spell_engine.fx.SpellEngineParticles;
 import net.spell_engine.fx.SpellEngineSounds;
+import net.spell_engine.internals.target.SpellTarget;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -138,17 +142,93 @@ public class WarriorSkills {
     public static final Skills.Entry warrior_tier_4_spell_1_modifier_2 = add(warrior_tier_4_spell_1_modifier_2());
     private static Skills.Entry warrior_tier_4_spell_1_modifier_2() {
         var id = Identifier.of(NAMESPACE, "warrior_tier_4_spell_1_modifier_2");
-        var title = "Deep Wounds";
-        var description = "Mortal Strike's Bleed lasts {effect_duration_add} sec longer.";
-        var spell = SpellBuilder.createSpellModifier();
-        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+        var title = "Impaling Spikes";
+        var description = "Mortal Strike erupts a line of spikes from the ground, dealing {damage} damage and launching struck enemies into the air.";
 
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = MORTAL_STRIKE;
-        modifier.effect_duration_add = 3;
-        spell.modifiers = List.of(modifier);
+        // Under-the-hood passive: triggered whenever Mortal Strike is cast, it lays a forward row of
+        // spike-clouds from the caster's feet — the same eruption mechanic as Wizards' Frost Spikes.
+        var spell = SkillsCommon.createModifierAlikePassiveSpell();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+
+        var trigger = SpellBuilder.Triggers.specificSpellCast(MORTAL_STRIKE);
+        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
+        trigger.aoe_source_override = Spell.Trigger.TargetSelector.CASTER;
+        spell.passive.triggers = List.of(trigger);
+
+        spell.deliver.type = Spell.Delivery.Type.CLOUD;
+        var cloud = new Spell.Delivery.Cloud();
+        cloud.volume.radius = 0.9F;
+        cloud.volume.area.vertical_range_multiplier = 2F;
+        cloud.delay_ticks = 0;
+        // Damage exactly once, timed to the spike's apex: impact ticks fall at ages 0 (spawn, no hit)
+        // and SPIKE_APEX_TICK; trimming the lifetime to just under two intervals despawns the cloud
+        // before a second hit, so only the apex hit lands — right as the spikes reach full height.
+        cloud.impact_tick_interval = SPIKE_APEX_TICK;
+        cloud.time_to_live_seconds = (SPIKE_APEX_TICK * 2 - 1) / 20F;
+        cloud.spawn = new Spell.Delivery.Cloud.Spawn();
+        cloud.spawn.sound = new Sound(SkillSounds.warrior_stomp.id());
+        cloud.spawn.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.smoke_medium.id().toString(),
+                        ParticleBatch.Shape.PILLAR, ParticleBatch.Origin.FEET,
+                        18, 0.1F, 0.4F)
+        };
+        cloud.spawn.model_fx = impalingSpikeModelFx();
+        cloud.client_data = new Spell.Delivery.Cloud.ClientData();
+
+        // Four spike-clouds marching straight forward from the caster, 1.5 blocks apart, the first
+        // 1.5 blocks out; each erupts 2 ticks after the previous one (like Frost Spikes).
+        var row = SpellBuilder.Placements.ray(4, 1.5F, 1.5F);
+        SpellBuilder.Placements.delayCascade(row, 2);
+        cloud.placement = row.get(0);
+        cloud.placement_delay_stacks = false;
+        cloud.additional_placements = List.copyOf(row.subList(1, row.size()));
+
+        spell.deliver.clouds = List.of(cloud);
+
+        var damage = SpellBuilder.Impacts.damage(0.5F);
+        damage.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.SPARK,
+                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        15, 0.2F, 0.5F)
+                        .color(Color.RAGE.toRGBA())
+        };
+        damage.sound = new Sound(SkillSounds.warrior_stomp.id());
+
+        // Vertical launch of struck enemies as the spikes burst upward. Harmful, so knockback
+        // resistance applies; reset_velocity makes the pop consistent regardless of prior motion.
+        var launch = SpellBuilder.Impacts.velocityUp(0.8F);
+        launch.action.velocity.reset_velocity = true;
+        launch.action.velocity.intent = SpellTarget.Intent.HARMFUL;
+
+        spell.impacts = List.of(damage, launch);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WARRIOR));
+    }
+
+    /// Tick at which the spikes reach full height and deal their single hit. Shared by the cloud
+    /// (impact interval = this, lifetime = 2*this - 1) and the spike model FX (rise ends here).
+    private static final int SPIKE_APEX_TICK = 6;
+    /// Blocks a spike model rests below ground at the start/end of its eruption, so it stays hidden.
+    private static final float SPIKE_BURY_DEPTH = 1.6F;
+
+    /// A single ice spike erupting from the ground (reusing Wizards' second Frost Spike model): it
+    /// shoots up to full height by {@link #SPIKE_APEX_TICK} — when the cloud lands its single hit —
+    /// holds briefly, then sinks back underground. Spawned per cloud node via {@code cloud.spawn.model_fx}.
+    private static List<ModelEffect> impalingSpikeModelFx() {
+        var spike = ModelEffectBuilder.Preset.spike(
+                        ModelEffectBuilder.create("wizards:spell_effect/frost_spike_2")
+                                .light(LightEmission.GLOW_TRANSLUCENT)
+                                .initialTranslateY(0.5F),
+                        SPIKE_APEX_TICK, 3, true, SPIKE_BURY_DEPTH)
+                .build();
+        return List.of(spike);
     }
 
     public static final Skills.Entry warrior_tier_3_spell_2_modifier_1 = add(warrior_tier_3_spell_2_modifier_1());

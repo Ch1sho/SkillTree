@@ -315,7 +315,7 @@ public class ArcaneSkills {
                         30, 0.4F, 0.4F)
                         .color(Color.ARCANE.toRGBA()),
                 new ParticleBatch(
-                        SpellEngineParticles.area_effect_293.id().toString(),
+                        SpellEngineParticles.area_effect_574.id().toString(),
                         ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.GROUND,
                         1, 0,0)
                         .scale(radius - 0.5F)

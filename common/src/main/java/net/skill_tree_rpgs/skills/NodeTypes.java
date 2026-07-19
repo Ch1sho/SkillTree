@@ -492,7 +492,10 @@ public class NodeTypes {
             .require(ROGUES)
     );
     public static final Entry WARRIOR_TIER_4_SPELL_1_MODIFIER_1 = add(modifierSpell(WarriorSkills.warrior_tier_4_spell_1_modifier_1).require(ROGUES));
-    public static final Entry WARRIOR_TIER_4_SPELL_1_MODIFIER_2 = add(modifierSpell(WarriorSkills.warrior_tier_4_spell_1_modifier_2).require(ROGUES));
+    public static final Entry WARRIOR_TIER_4_SPELL_1_MODIFIER_2 = add(passiveSpell(WarriorSkills.warrior_tier_4_spell_1_modifier_2)
+            .withIcon(Icon.spell(Identifier.of("rogues", "mortal_strike")))
+            .require(ROGUES)
+    );
 
     public static final Entry WARRIOR_TIER_1_PASSIVE_1 = add(passiveSpell(WarriorSkills.warrior_tier_1_passive_1).require(ROGUES));
     public static final Entry WARRIOR_TIER_1_PASSIVE_2 = add(passiveSpell(WarriorSkills.warrior_tier_1_passive_2).require(ROGUES));
@@ -763,7 +766,7 @@ public class NodeTypes {
     public static final Entry PALADIN_TIER_3_SPELL_1_ROOT = add(modifierSpell(PaladinSkills.paladin_tier_3_spell_1_root).require(PALADINS));
     public static final Entry PALADIN_TIER_4_SPELL_1_ROOT = add(modifierSpell(PaladinSkills.paladin_tier_4_spell_1_root).require(PALADINS));
     public static final Entry PALADIN_TIER_2_SPELL_2_ROOT = add(modifierSpell(PaladinSkills.paladin_tier_2_spell_2_root).require(PALADINS));
-    public static final Entry PALADIN_TIER_2_SPELL_2_MODIFIER_1 = add(modifierSpell(PaladinSkills.paladin_tier_2_spell_2_modifier_1).require(PALADINS)); // Zeal
+    public static final Entry PALADIN_TIER_2_SPELL_2_MODIFIER_1 = add(modifierSpell(PaladinSkills.paladin_tier_2_spell_2_modifier_1).require(PALADINS)); // Seal of Wrath
     public static final Entry PALADIN_TIER_2_SPELL_2_MODIFIER_2 = add(modifierSpell(PaladinSkills.paladin_tier_2_spell_2_modifier_2).require(PALADINS)); // Seal of Light
     public static final Entry PALADIN_TIER_3_SPELL_2_ROOT = add(modifierSpell(PaladinSkills.paladin_tier_3_spell_2_root).require(PALADINS));
     public static final Entry PALADIN_TIER_3_SPELL_2_MODIFIER_1 = add(modifierSpell(PaladinSkills.paladin_tier_3_spell_2_modifier_1).require(PALADINS));

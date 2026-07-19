@@ -259,16 +259,15 @@ public class SkillTreeClientMod {
 
         CustomModelStatusEffect.register(SkillEffects.CELESTIAL_ORB.effect, new HolyChargeEffectRenderer());
 
-        final var zealParticles = new ParticleBatch(
-                SpellEngineParticles.MagicParticles.get(
-                        SpellEngineParticles.MagicParticles.Shape.SPARK,
-                        SpellEngineParticles.MagicParticles.Motion.DECELERATE).id().toString(),
-                ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.CENTER,
-                1F, 0.05F, 0.1F)
-                .color(Color.HOLY.toRGBA());
+        // Vengeance: no per-entity buff particles — just a ground decal pulsing under the
+        // holder every second, in the effect's own ember color.
         CustomParticleStatusEffect.register(
-                SkillEffects.ZEAL.effect,
-                new BuffParticleSpawner(new ParticleBatch[]{ zealParticles })
+                SkillEffects.VENGEANCE.effect,
+                new BuffParticleSpawner(new ParticleBatch[]{})
+                        .withGroundEffect(
+                                SpellEngineParticles.area_effect_307.id().toString(),
+                                SkillsCommon.MIGHT_COLOR,
+                                20)
         );
 
         final var enrageParticles = new ParticleBatch(
