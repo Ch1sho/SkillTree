@@ -41,48 +41,6 @@ public class RogueSkills {
     public static final Skills.Entry rogue_tier_2_spell_1_modifier_1 = add(rogue_tier_2_spell_1_modifier_1());
     private static Skills.Entry rogue_tier_2_spell_1_modifier_1() {
         var id = Identifier.of(NAMESPACE, "rogue_tier_2_spell_1_modifier_1");
-        var title = "Blade Fury";
-        var description = "Increases the maximum number of Slice and Dice stacks by {effect_amplifier_cap_add}.";
-        var spell = SpellBuilder.createSpellModifier();
-        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
-
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = SLICE_AND_DICE;
-        modifier.effect_amplifier_cap_add = 2;
-        spell.modifiers = List.of(modifier);
-
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ROGUE));
-    }
-
-    public static final Skills.Entry rogue_tier_2_spell_1_modifier_2 = add(rogue_tier_2_spell_1_modifier_2());
-    private static Skills.Entry rogue_tier_2_spell_1_modifier_2() {
-        var id = Identifier.of(NAMESPACE, "rogue_tier_2_spell_1_modifier_2");
-        var title = "Fleet Footed";
-        var effect = SkillEffects.FLEET_FOOTED;
-        var description = "Slice and Dice attacks increases movement speed by {bonus}, stacking up to {effect_amplifier_cap}, lasting {effect_duration} sec.";
-        SpellTooltip.DescriptionMutator mutator = (args) -> {
-            var modifier = effect.config().firstModifier();
-            var bonus = SpellTooltip.bonus(modifier.value, modifier.operation);
-            return args.description().replace("{bonus}", bonus);
-        };
-        var spell = SpellBuilder.createSpellModifier();
-        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
-
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = SLICE_AND_DICE;
-
-        var impact = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 4, 1, 4);
-        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
-        modifier.impacts = List.of(impact);
-
-        spell.modifiers = List.of(modifier);
-
-        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.ROGUE));
-    }
-
-    public static final Skills.Entry rogue_tier_2_spell_2_modifier_1 = add(rogue_tier_2_spell_2_modifier_1());
-    private static Skills.Entry rogue_tier_2_spell_2_modifier_1() {
-        var id = Identifier.of(NAMESPACE, "rogue_tier_2_spell_2_modifier_1");
         var title = "Explosive Powder";
         var description = "Shock Powder has {trigger_chance} chance to create secondary explosions dealing {damage} damage, and its stun lasts 1 sec longer.";
         var spell = SkillsCommon.createModifierAlikePassiveSpell();
@@ -104,9 +62,9 @@ public class RogueSkills {
     /// Hidden companion to Explosive Powder: the node grants this MODIFIER spell alongside the
     /// passive above (a passive spell's `modifiers` are never collected — only MODIFIER-type
     /// spells are — so the stun extension needs its own spell in a second container).
-    public static final Skills.Entry rogue_tier_2_spell_2_modifier_1_bonus = add(rogue_tier_2_spell_2_modifier_1_bonus());
-    private static Skills.Entry rogue_tier_2_spell_2_modifier_1_bonus() {
-        var id = Identifier.of(NAMESPACE, "rogue_tier_2_spell_2_modifier_1_bonus");
+    public static final Skills.Entry rogue_tier_2_spell_1_modifier_1_bonus = add(rogue_tier_2_spell_1_modifier_1_bonus());
+    private static Skills.Entry rogue_tier_2_spell_1_modifier_1_bonus() {
+        var id = Identifier.of(NAMESPACE, "rogue_tier_2_spell_1_modifier_1_bonus");
         var title = "Explosive Powder";
         var description = "Shock Powder's stun lasts {effect_duration_add} sec longer.";
         var spell = SpellBuilder.createSpellModifier();
@@ -120,9 +78,9 @@ public class RogueSkills {
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ROGUE));
     }
 
-    public static final Skills.Entry rogue_tier_2_spell_2_modifier_2 = add(rogue_tier_2_spell_2_modifier_2());
-    private static Skills.Entry rogue_tier_2_spell_2_modifier_2() {
-        var id = Identifier.of(NAMESPACE, "rogue_tier_2_spell_2_modifier_2");
+    public static final Skills.Entry rogue_tier_2_spell_1_modifier_2 = add(rogue_tier_2_spell_1_modifier_2());
+    private static Skills.Entry rogue_tier_2_spell_1_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "rogue_tier_2_spell_1_modifier_2");
         var title = "Smoke Screen";
         var effect = SkillEffects.SMOKE_SCREEN;
         var description = "Shock Powder leaves a smoke screen behind for {cloud_duration} sec, increasing evasion chance of allies inside by {bonus}.";
@@ -159,6 +117,48 @@ public class RogueSkills {
 
         var evasion = SpellBuilder.Impacts.effectSet(effect.id.toString(), 1, 0);
         spell.impacts = List.of(evasion);
+
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.ROGUE));
+    }
+
+    public static final Skills.Entry rogue_tier_2_spell_2_modifier_1 = add(rogue_tier_2_spell_2_modifier_1());
+    private static Skills.Entry rogue_tier_2_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "rogue_tier_2_spell_2_modifier_1");
+        var title = "Blade Fury";
+        var description = "Increases the maximum number of Slice and Dice stacks by {effect_amplifier_cap_add}.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = SLICE_AND_DICE;
+        modifier.effect_amplifier_cap_add = 2;
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ROGUE));
+    }
+
+    public static final Skills.Entry rogue_tier_2_spell_2_modifier_2 = add(rogue_tier_2_spell_2_modifier_2());
+    private static Skills.Entry rogue_tier_2_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "rogue_tier_2_spell_2_modifier_2");
+        var title = "Fleet Footed";
+        var effect = SkillEffects.FLEET_FOOTED;
+        var description = "Slice and Dice attacks increases movement speed by {bonus}, stacking up to {effect_amplifier_cap}, lasting {effect_duration} sec.";
+        SpellTooltip.DescriptionMutator mutator = (args) -> {
+            var modifier = effect.config().firstModifier();
+            var bonus = SpellTooltip.bonus(modifier.value, modifier.operation);
+            return args.description().replace("{bonus}", bonus);
+        };
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = SLICE_AND_DICE;
+
+        var impact = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 4, 1, 4);
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(impact);
+
+        spell.modifiers = List.of(modifier);
 
         return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.ROGUE));
     }
@@ -266,18 +266,18 @@ public class RogueSkills {
     // nodes). Patterns come from the shared palette in SkillsCommon, picked per spell.
     // ===================================================================================
 
-    public static final Skills.Entry rogue_tier_2_spell_1_root = add(SkillsCommon.cooldownRoot(
+    public static final Skills.Entry rogue_tier_2_spell_1_root = add(SkillsCommon.lingerRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
-            "rogue_tier_2_spell_1_root", SLICE_AND_DICE, "Slice and Dice", 2F));
+            "rogue_tier_2_spell_1_root", SHOCK_POWDER, "Shock Powder", 1F));
     public static final Skills.Entry rogue_tier_3_spell_1_root = add(SkillsCommon.reachRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
             "rogue_tier_3_spell_1_root", SHADOW_STEP, "Shadow Step", 3F));
     public static final Skills.Entry rogue_tier_4_spell_1_root = add(SkillsCommon.lingerRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
             "rogue_tier_4_spell_1_root", VANISH, "Vanish", 2F));
-    public static final Skills.Entry rogue_tier_2_spell_2_root = add(SkillsCommon.lingerRoot(
+    public static final Skills.Entry rogue_tier_2_spell_2_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
-            "rogue_tier_2_spell_2_root", SHOCK_POWDER, "Shock Powder", 1F));
+            "rogue_tier_2_spell_2_root", SLICE_AND_DICE, "Slice and Dice", 2F));
     public static final Skills.Entry rogue_tier_3_spell_2_root = add(SkillsCommon.critRoot(
             Skills.Category.ROGUE, ExternalSpellSchools.PHYSICAL_MELEE,
             "rogue_tier_3_spell_2_root", BEAR_TRAP, "Bear Trap", 0.05F));

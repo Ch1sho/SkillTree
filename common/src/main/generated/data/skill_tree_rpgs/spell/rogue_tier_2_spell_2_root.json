@@ -5,8 +5,8 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "rogues:shock_powder",
-      "effect_duration_add": 1.0
+      "spell_pattern": "rogues:slice_and_dice",
+      "cooldown_duration_deduct": 2.0
     }
   ]
 }

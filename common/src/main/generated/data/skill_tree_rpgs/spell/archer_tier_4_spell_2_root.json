@@ -5,9 +5,9 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "archers:rain_of_arrows",
+      "spell_pattern": "archers:magic_arrow",
       "power_modifier": {
-        "critical_chance_bonus": 0.05
+        "power_multiplier": 0.1
       }
     }
   ]

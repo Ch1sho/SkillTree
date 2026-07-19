@@ -2,16 +2,36 @@
   "school": "spell_power:physical_ranged",
   "range": 0.0,
   "tier": 1,
-  "type": "MODIFIER",
-  "modifiers": [
+  "tooltip": {
+    "show_activation": false
+  },
+  "type": "PASSIVE",
+  "passive": {
+    "triggers": [
+      {
+        "type": "SPELL_CAST",
+        "chance": 0.4,
+        "spell": {
+          "id": "archers:magic_arrow"
+        }
+      }
+    ]
+  },
+  "impacts": [
     {
-      "spell_pattern": "archers:rain_of_arrows",
-      "projectile_launch": {
-        "velocity": 0.0,
-        "extra_launch_count": 10,
-        "extra_launch_delay": 0
-      },
-      "meteor_launch_radius_add": 1.5
+      "action": {
+        "type": "COOLDOWN",
+        "apply_to_caster": true,
+        "cooldown": {
+          "actives": {
+            "id": "archers:magic_arrow",
+            "duration_multiplier": 0.0
+          }
+        }
+      }
     }
-  ]
+  ],
+  "cost": {
+    "durability": 0
+  }
 }

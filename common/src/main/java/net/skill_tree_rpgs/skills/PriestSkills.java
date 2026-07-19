@@ -36,6 +36,41 @@ public class PriestSkills {
     public static final String PENANCE = "paladins:penance";
     public static final String LIGHTWELL = "paladins:lightwell";
 
+    /// Helper spell cast by the Lightwell when the Cleansing Light node is taken. Not bound to any
+    /// node or book; it exists so `actions_add` below has a spell for the well to cast (player spell
+    /// modifiers never apply to summon-cast spells, so the orb spell itself cannot be modified).
+    public static final Skills.Entry lightwell_cleanse = add(lightwell_cleanse());
+    private static Skills.Entry lightwell_cleanse() {
+        var id = Identifier.of(NAMESPACE, "lightwell_cleanse");
+        var title = "Cleansing Light";
+        var description = "Removes a negative effect.";
+        var spell = SpellBuilder.createSpellActive();
+        spell.school = SpellSchools.HEALING;
+        spell.range = 12;
+        spell.learn = null; // summon-cast helper, never learnable
+
+        spell.target.type = Spell.Target.Type.AIM;
+        spell.target.aim = new Spell.Target.Aim();
+        spell.target.aim.required = true;
+
+        var cleanse = SpellBuilder.Impacts.effectCleanse();
+        cleanse.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.SPARK,
+                                SpellEngineParticles.MagicParticles.Motion.ASCEND).id().toString(),
+                        ParticleBatch.Shape.PIPE, ParticleBatch.Origin.CENTER,
+                        10, 0.2F, 0.4F)
+                        .color(Color.WHITE.toRGBA())
+        };
+        cleanse.sound = new Sound(SpellEngineSounds.GENERIC_DISPEL_1.id());
+        spell.impacts = List.of(cleanse);
+
+        SpellBuilder.Cost.cooldown(spell, 8);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PRIEST));
+    }
+
     public static final Skills.Entry priest_tier_2_spell_1_modifier_1 = add(priest_tier_2_spell_1_modifier_1());
     private static Skills.Entry priest_tier_2_spell_1_modifier_1() {
         var id = Identifier.of(NAMESPACE, "priest_tier_2_spell_1_modifier_1");
@@ -155,59 +190,23 @@ public class PriestSkills {
     public static final Skills.Entry priest_tier_4_spell_1_modifier_1 = add(priest_tier_4_spell_1_modifier_1());
     private static Skills.Entry priest_tier_4_spell_1_modifier_1() {
         var id = Identifier.of(NAMESPACE, "priest_tier_4_spell_1_modifier_1");
-        var title = "Sacred Refuge";
-        var description = "While your Barrier stands, its interior heals allies for {heal} and cleanses a negative effect every 2 sec, for {cloud_duration} sec.";
-
-        var spell = SkillsCommon.createModifierAlikePassiveSpell();
+        var title = "Cleansing Light";
+        var description = "The Lightwell also cleanses negative effects from the allies it tends.";
+        var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.HEALING;
-        spell.range = 0;
 
-        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = LIGHTWELL;
 
-        var trigger = SpellBuilder.Triggers.specificSpellCast(BARRIER);
-        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
-        trigger.aoe_source_override = Spell.Trigger.TargetSelector.CASTER;
-        spell.passive.triggers = List.of(trigger);
+        // Give the well a second spell-cast action; its cadence comes from the cleanse
+        // spell's own cooldown, and it fires at the same acquired friendly target.
+        var cast = new SummonBehaviour.Action.SpellCast(
+                lightwell_cleanse.id().toString(), 30);
+        cast.aiming.accept_target = true;
+        cast.aiming.fallback = SummonBehaviour.Action.SpellCast.Aiming.Fallback.NONE;
+        modifier.summon_behaviour.actions_add = List.of(SummonBehaviour.Action.spell(cast));
 
-        // A gentle cloud matching the dome: same radius and the barrier's 10s lifetime.
-        spell.deliver.type = Spell.Delivery.Type.CLOUD;
-        var cloud = new Spell.Delivery.Cloud();
-        cloud.volume.radius = 4F;
-        cloud.impact_tick_interval = 40;
-        cloud.time_to_live_seconds = 10;
-        cloud.client_data.particles = new ParticleBatch[]{
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.SPARK,
-                                SpellEngineParticles.MagicParticles.Motion.FLOAT).id().toString(),
-                        ParticleBatch.Shape.PILLAR, ParticleBatch.Origin.GROUND,
-                        2, 0.02F, 0.08F)
-                        .color(Color.from(0xccffff).toRGBA())
-        };
-        spell.deliver.clouds = List.of(cloud);
-
-        var heal = SpellBuilder.Impacts.heal(0.1F);
-        heal.particles = new ParticleBatch[]{
-                new ParticleBatch(
-                        SkillsCommon.HEAL_DECELERATE.toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
-                        6, 0.1F, 0.15F)
-                        .color(Color.from(0xccffff).toRGBA())
-        };
-        heal.sound = Sound.withVolume(SpellEngineSounds.GENERIC_HEALING_IMPACT_2.id(), 0.4F);
-
-        // Default cleanse carries a dispel chime; muted here so it doesn't ring on every cloud tick.
-        var cleanse = SpellBuilder.Impacts.effectCleanse();
-        cleanse.sound = Sound.of(SpellEngineSounds.GENERIC_DISPEL_1.id());
-        cleanse.particles = new ParticleBatch[]{
-                new ParticleBatch(
-                        SkillsCommon.SPARK_DECELERATE.toString(),
-                        ParticleBatch.Shape.PILLAR, ParticleBatch.Origin.CENTER,
-                        25, 0.3F, 0.5F)
-                        .color(Color.from(0xccffff).toRGBA())
-        };
-
-        spell.impacts = List.of(heal, cleanse);
+        spell.modifiers = List.of(modifier);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PRIEST));
     }
@@ -215,15 +214,24 @@ public class PriestSkills {
     public static final Skills.Entry priest_tier_4_spell_1_modifier_2 = add(priest_tier_4_spell_1_modifier_2());
     private static Skills.Entry priest_tier_4_spell_1_modifier_2() {
         var id = Identifier.of(NAMESPACE, "priest_tier_4_spell_1_modifier_2");
-        var title = "Barrier Duration";
-        var description = "Increases the duration of Barrier by {spawn_duration_add} sec.";
-
+        var title = "Radiance";
+        var description = "Increases the Lightwell's healing power by 50%.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = BARRIER;
-        modifier.spawn_duration_add = 4;
+        modifier.spell_pattern = LIGHTWELL;
+
+        // The well's base scaling copies 0.5x of the owner's healing power; merging in another
+        // 0.25x raises that to 0.75x — i.e. +50% of the well's own healing power.
+        var healingPower = new AttributeScaling.Entry();
+        healingPower.attribute_id = SpellSchools.HEALING.id.toString();
+        healingPower.modifiers = List.of(new AttributeScaling.Entry.OwnerModifier(
+                SpellSchools.HEALING.id.toString(),
+                EntityAttributeModifier.Operation.ADD_VALUE, 0.0, 0.25));
+        modifier.summon_attribute_scaling = new AttributeScaling();
+        modifier.summon_attribute_scaling.entries = List.of(healingPower);
+
         spell.modifiers = List.of(modifier);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PRIEST));
@@ -240,22 +248,22 @@ public class PriestSkills {
     public static final Skills.Entry priest_tier_3_spell_1_root = add(SkillsCommon.powerRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
             "priest_tier_3_spell_1_root", CIRCLE_OF_HEALING, "Circle of Healing", 0.1F));
-    public static final Skills.Entry priest_tier_4_spell_1_root = add(SkillsCommon.cooldownRoot(
+    public static final Skills.Entry priest_tier_4_spell_1_root = add(SkillsCommon.companionRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
-            "priest_tier_4_spell_1_root", BARRIER, "Barrier", 5F));
+            "priest_tier_4_spell_1_root", LIGHTWELL, "Lightwell", 4));
     public static final Skills.Entry priest_tier_2_spell_2_root = add(SkillsCommon.lingerRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
             "priest_tier_2_spell_2_root", LEVITATE, "Levitate", 2F));
     public static final Skills.Entry priest_tier_3_spell_2_root = add(SkillsCommon.lingerRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
             "priest_tier_3_spell_2_root", PENANCE, "Penance", 2F));
-    public static final Skills.Entry priest_tier_4_spell_2_root = add(SkillsCommon.companionRoot(
+    public static final Skills.Entry priest_tier_4_spell_2_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.PRIEST, SpellSchools.HEALING,
-            "priest_tier_4_spell_2_root", LIGHTWELL, "Lightwell", 4));
+            "priest_tier_4_spell_2_root", BARRIER, "Barrier", 5F));
 
     // ===================================================================================
     // Powerful mutex nodes for the second spell of each tier (spell_2):
-    // Levitate (T2), Penance (T3), Lightwell (T4).
+    // Levitate (T2), Penance (T3), Barrier (T4).
     // ===================================================================================
 
     public static final Skills.Entry priest_tier_2_spell_2_modifier_1 = add(priest_tier_2_spell_2_modifier_1());
@@ -381,61 +389,62 @@ public class PriestSkills {
         return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PRIEST));
     }
 
-    /// Helper spell cast by the Lightwell when the Cleansing Light node is taken. Not bound to any
-    /// node or book; it exists so `actions_add` below has a spell for the well to cast (player spell
-    /// modifiers never apply to summon-cast spells, so the orb spell itself cannot be modified).
-    public static final Skills.Entry lightwell_cleanse = add(lightwell_cleanse());
-    private static Skills.Entry lightwell_cleanse() {
-        var id = Identifier.of(NAMESPACE, "lightwell_cleanse");
-        var title = "Cleansing Light";
-        var description = "Removes a negative effect.";
-        var spell = SpellBuilder.createSpellActive();
-        spell.school = SpellSchools.HEALING;
-        spell.range = 12;
-        spell.learn = null; // summon-cast helper, never learnable
-
-        spell.target.type = Spell.Target.Type.AIM;
-        spell.target.aim = new Spell.Target.Aim();
-        spell.target.aim.required = true;
-
-        var cleanse = SpellBuilder.Impacts.effectCleanse();
-        cleanse.particles = new ParticleBatch[]{
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.SPARK,
-                                SpellEngineParticles.MagicParticles.Motion.ASCEND).id().toString(),
-                        ParticleBatch.Shape.PIPE, ParticleBatch.Origin.CENTER,
-                        10, 0.2F, 0.4F)
-                        .color(Color.WHITE.toRGBA())
-        };
-        cleanse.sound = new Sound(SpellEngineSounds.GENERIC_DISPEL_1.id());
-        spell.impacts = List.of(cleanse);
-
-        SpellBuilder.Cost.cooldown(spell, 8);
-
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PRIEST));
-    }
-
     public static final Skills.Entry priest_tier_4_spell_2_modifier_1 = add(priest_tier_4_spell_2_modifier_1());
     private static Skills.Entry priest_tier_4_spell_2_modifier_1() {
         var id = Identifier.of(NAMESPACE, "priest_tier_4_spell_2_modifier_1");
-        var title = "Cleansing Light";
-        var description = "The Lightwell also cleanses negative effects from the allies it tends.";
-        var spell = SpellBuilder.createSpellModifier();
+        var title = "Sacred Refuge";
+        var description = "While your Barrier stands, its interior heals allies for {heal} and cleanses a negative effect every 2 sec, for {cloud_duration} sec.";
+
+        var spell = SkillsCommon.createModifierAlikePassiveSpell();
         spell.school = SpellSchools.HEALING;
+        spell.range = 0;
 
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = LIGHTWELL;
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
-        // Give the well a second spell-cast action; its cadence comes from the cleanse
-        // spell's own cooldown, and it fires at the same acquired friendly target.
-        var cast = new SummonBehaviour.Action.SpellCast(
-                lightwell_cleanse.id().toString(), 30);
-        cast.aiming.accept_target = true;
-        cast.aiming.fallback = SummonBehaviour.Action.SpellCast.Aiming.Fallback.NONE;
-        modifier.summon_behaviour.actions_add = List.of(SummonBehaviour.Action.spell(cast));
+        var trigger = SpellBuilder.Triggers.specificSpellCast(BARRIER);
+        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
+        trigger.aoe_source_override = Spell.Trigger.TargetSelector.CASTER;
+        spell.passive.triggers = List.of(trigger);
 
-        spell.modifiers = List.of(modifier);
+        // A gentle cloud matching the dome: same radius and the barrier's 10s lifetime.
+        spell.deliver.type = Spell.Delivery.Type.CLOUD;
+        var cloud = new Spell.Delivery.Cloud();
+        cloud.volume.radius = 4F;
+        cloud.impact_tick_interval = 40;
+        cloud.time_to_live_seconds = 10;
+        cloud.client_data.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.SPARK,
+                                SpellEngineParticles.MagicParticles.Motion.FLOAT).id().toString(),
+                        ParticleBatch.Shape.PILLAR, ParticleBatch.Origin.GROUND,
+                        2, 0.02F, 0.08F)
+                        .color(Color.from(0xccffff).toRGBA())
+        };
+        spell.deliver.clouds = List.of(cloud);
+
+        var heal = SpellBuilder.Impacts.heal(0.1F);
+        heal.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SkillsCommon.HEAL_DECELERATE.toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        6, 0.1F, 0.15F)
+                        .color(Color.from(0xccffff).toRGBA())
+        };
+        heal.sound = Sound.withVolume(SpellEngineSounds.GENERIC_HEALING_IMPACT_2.id(), 0.4F);
+
+        // Default cleanse carries a dispel chime; muted here so it doesn't ring on every cloud tick.
+        var cleanse = SpellBuilder.Impacts.effectCleanse();
+        cleanse.sound = Sound.of(SpellEngineSounds.GENERIC_DISPEL_1.id());
+        cleanse.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SkillsCommon.SPARK_DECELERATE.toString(),
+                        ParticleBatch.Shape.PILLAR, ParticleBatch.Origin.CENTER,
+                        25, 0.3F, 0.5F)
+                        .color(Color.from(0xccffff).toRGBA())
+        };
+
+        spell.impacts = List.of(heal, cleanse);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PRIEST));
     }
@@ -443,24 +452,15 @@ public class PriestSkills {
     public static final Skills.Entry priest_tier_4_spell_2_modifier_2 = add(priest_tier_4_spell_2_modifier_2());
     private static Skills.Entry priest_tier_4_spell_2_modifier_2() {
         var id = Identifier.of(NAMESPACE, "priest_tier_4_spell_2_modifier_2");
-        var title = "Radiance";
-        var description = "Increases the Lightwell's healing power by 50%.";
+        var title = "Barrier Duration";
+        var description = "Increases the duration of Barrier by {spawn_duration_add} sec.";
+
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
-        modifier.spell_pattern = LIGHTWELL;
-
-        // The well's base scaling copies 0.5x of the owner's healing power; merging in another
-        // 0.25x raises that to 0.75x — i.e. +50% of the well's own healing power.
-        var healingPower = new AttributeScaling.Entry();
-        healingPower.attribute_id = SpellSchools.HEALING.id.toString();
-        healingPower.modifiers = List.of(new AttributeScaling.Entry.OwnerModifier(
-                SpellSchools.HEALING.id.toString(),
-                EntityAttributeModifier.Operation.ADD_VALUE, 0.0, 0.25));
-        modifier.summon_attribute_scaling = new AttributeScaling();
-        modifier.summon_attribute_scaling.entries = List.of(healingPower);
-
+        modifier.spell_pattern = BARRIER;
+        modifier.spawn_duration_add = 4;
         spell.modifiers = List.of(modifier);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PRIEST));

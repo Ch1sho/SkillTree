@@ -333,10 +333,7 @@ public class NodeTypes {
     public static final Entry PRIEST_TIER_2_SPELL_1_MODIFIER_2 = add(modifierSpell(PriestSkills.priest_tier_2_spell_1_modifier_2).require(PALADINS));
     public static final Entry PRIEST_TIER_3_SPELL_1_MODIFIER_1 = add(modifierSpell(PriestSkills.priest_tier_3_spell_1_modifier_1).require(PALADINS));
     public static final Entry PRIEST_TIER_3_SPELL_1_MODIFIER_2 = add(modifierSpell(PriestSkills.priest_tier_3_spell_1_modifier_2).require(PALADINS));
-    public static final Entry PRIEST_TIER_4_SPELL_1_MODIFIER_1 = add(passiveSpell(PriestSkills.priest_tier_4_spell_1_modifier_1)
-            .withIcon(Icon.spell(Identifier.of("paladins", "barrier")))
-            .require(PALADINS)
-    );
+    public static final Entry PRIEST_TIER_4_SPELL_1_MODIFIER_1 = add(modifierSpell(PriestSkills.priest_tier_4_spell_1_modifier_1).require(PALADINS));
     public static final Entry PRIEST_TIER_4_SPELL_1_MODIFIER_2 = add(modifierSpell(PriestSkills.priest_tier_4_spell_1_modifier_2).require(PALADINS));
 
     public static final Entry PRIEST_TIER_1_PASSIVE_1 = add(passiveSpell(PriestSkills.priest_tier_1_passive_1).require(PALADINS));
@@ -399,9 +396,9 @@ public class NodeTypes {
     public static final Entry ARCHER_TIER_2_SPELL_1_MODIFIER_2 = add(modifierSpell(ArcherSkills.archer_tier_2_spell_1_modifier_2).require(ARCHERS));
     public static final Entry ARCHER_TIER_3_SPELL_1_MODIFIER_1 = add(modifierSpell(ArcherSkills.archer_tier_3_spell_1_modifier_1).require(ARCHERS));
     public static final Entry ARCHER_TIER_3_SPELL_1_MODIFIER_2 = add(modifierSpell(ArcherSkills.archer_tier_3_spell_1_modifier_2).require(ARCHERS));
-    public static final Entry ARCHER_TIER_4_SPELL_1_MODIFIER_1 = add(passiveSpell(ArcherSkills.archer_tier_4_spell_1_modifier_1)
-            .withIcon(Icon.spell(Identifier.of("archers", "magic_arrow"))).require(ARCHERS));
-    public static final Entry ARCHER_TIER_4_SPELL_1_MODIFIER_2 = add(modifierSpell(ArcherSkills.archer_tier_4_spell_1_modifier_2).require(ARCHERS));
+    public static final Entry ARCHER_TIER_4_SPELL_1_MODIFIER_1 = add(modifierSpell(ArcherSkills.archer_tier_4_spell_1_modifier_1).require(ARCHERS));
+    public static final Entry ARCHER_TIER_4_SPELL_1_MODIFIER_2 = add(passiveSpell(ArcherSkills.archer_tier_4_spell_1_modifier_2)
+            .withIcon(Icon.spell(Identifier.of("archers", "rain_of_arrows"))).require(ARCHERS));
 
     // Weak "root" nodes + second-spell (spell_2) mutex modifiers.
     // Tier 2 spell_2 (Entangling Roots) modifiers are reused leftovers, now registered.
@@ -415,11 +412,11 @@ public class NodeTypes {
     public static final Entry ARCHER_TIER_3_SPELL_2_MODIFIER_2 = add(modifierSpell(ArcherSkills.archer_tier_3_spell_2_modifier_2).require(ARCHERS));
     public static final Entry ARCHER_TIER_4_SPELL_1_ROOT = add(modifierSpell(ArcherSkills.archer_tier_4_spell_1_root).require(ARCHERS));
     public static final Entry ARCHER_TIER_4_SPELL_2_ROOT = add(modifierSpell(ArcherSkills.archer_tier_4_spell_2_root).require(ARCHERS));
-    public static final Entry ARCHER_TIER_4_SPELL_2_MODIFIER_1 = add(modifierSpell(ArcherSkills.archer_tier_4_spell_2_modifier_1).require(ARCHERS));
-    public static final Entry ARCHER_TIER_4_SPELL_2_MODIFIER_2 = add(passiveSpell(ArcherSkills.archer_tier_4_spell_2_modifier_2)
-            .withIcon(Icon.spell(Identifier.of("archers", "rain_of_arrows")))
+    public static final Entry ARCHER_TIER_4_SPELL_2_MODIFIER_1 = add(passiveSpell(ArcherSkills.archer_tier_4_spell_2_modifier_1)
+            .withIcon(Icon.spell(Identifier.of("archers", "magic_arrow")))
             .require(ARCHERS)
     );
+    public static final Entry ARCHER_TIER_4_SPELL_2_MODIFIER_2 = add(modifierSpell(ArcherSkills.archer_tier_4_spell_2_modifier_2).require(ARCHERS));
 
     public static final Entry ARCHER_TIER_1_PASSIVE_1 = add(passiveSpell(ArcherSkills.archer_tier_1_passive_1).require(ARCHERS));
     public static final Entry ARCHER_TIER_1_PASSIVE_2 = add(passiveSpell(ArcherSkills.archer_tier_1_passive_2).require(ARCHERS));
@@ -445,8 +442,19 @@ public class NodeTypes {
                     Icon.item("rogues:iron_sickle"),
                     ROGUE_ROOT.attributeReward()).require(ROGUES)
     );
-    public static final Entry ROGUE_TIER_2_SPELL_1_MODIFIER_1 = add(modifierSpell(RogueSkills.rogue_tier_2_spell_1_modifier_1).require(ROGUES));
-    public static final Entry ROGUE_TIER_2_SPELL_1_MODIFIER_2 = add(modifierSpell(RogueSkills.rogue_tier_2_spell_1_modifier_2).require(ROGUES));
+    // Explosive Powder grants two spells: the trigger passive plus a hidden companion
+    // MODIFIER carrying the stun extension (passive spells' modifiers are never collected).
+    public static final Entry ROGUE_TIER_2_SPELL_1_MODIFIER_1 = add(Entry.spell(
+            "rogue_tier_2_spell_1_modifier_1",
+            RogueSkills.rogue_tier_2_spell_1_modifier_1.title(),
+            null,
+            Icon.spell(Identifier.of("rogues:shock_powder")),
+            List.of(SpellContainers.forModifier(RogueSkills.rogue_tier_2_spell_1_modifier_1.id()),
+                    SpellContainers.forModifier(RogueSkills.rogue_tier_2_spell_1_modifier_1_bonus.id()))
+    ).require(ROGUES));
+    public static final Entry ROGUE_TIER_2_SPELL_1_MODIFIER_2 = add(passiveSpell(RogueSkills.rogue_tier_2_spell_1_modifier_2)
+            .withIcon(Icon.spell(Identifier.of("rogues:shock_powder")))
+            .require(ROGUES));
     public static final Entry ROGUE_TIER_3_SPELL_1_MODIFIER_1 = add(modifierSpell(RogueSkills.rogue_tier_3_spell_1_modifier_1).require(ROGUES));
     public static final Entry ROGUE_TIER_3_SPELL_1_MODIFIER_2 = add(modifierSpell(RogueSkills.rogue_tier_3_spell_1_modifier_2).require(ROGUES));
     public static final Entry ROGUE_TIER_4_SPELL_1_MODIFIER_1 = add(modifierSpell(RogueSkills.rogue_tier_4_spell_1_modifier_1).require(ROGUES));
@@ -745,7 +753,10 @@ public class NodeTypes {
     public static final Entry PRIEST_TIER_3_SPELL_2_MODIFIER_1 = add(modifierSpell(PriestSkills.priest_tier_3_spell_2_modifier_1).require(PALADINS));
     public static final Entry PRIEST_TIER_3_SPELL_2_MODIFIER_2 = add(modifierSpell(PriestSkills.priest_tier_3_spell_2_modifier_2).require(PALADINS));
     public static final Entry PRIEST_TIER_4_SPELL_2_ROOT = add(modifierSpell(PriestSkills.priest_tier_4_spell_2_root).require(PALADINS));
-    public static final Entry PRIEST_TIER_4_SPELL_2_MODIFIER_1 = add(modifierSpell(PriestSkills.priest_tier_4_spell_2_modifier_1).require(PALADINS));
+    public static final Entry PRIEST_TIER_4_SPELL_2_MODIFIER_1 = add(passiveSpell(PriestSkills.priest_tier_4_spell_2_modifier_1)
+            .withIcon(Icon.spell(Identifier.of("paladins", "barrier")))
+            .require(PALADINS)
+    );
     public static final Entry PRIEST_TIER_4_SPELL_2_MODIFIER_2 = add(modifierSpell(PriestSkills.priest_tier_4_spell_2_modifier_2).require(PALADINS));
     // Paladin (tier 3 spell_2 powerful nodes are reused real leftovers)
     public static final Entry PALADIN_TIER_2_SPELL_1_ROOT = add(modifierSpell(PaladinSkills.paladin_tier_2_spell_1_root).require(PALADINS));
@@ -768,19 +779,8 @@ public class NodeTypes {
     public static final Entry ROGUE_TIER_3_SPELL_1_ROOT = add(modifierSpell(RogueSkills.rogue_tier_3_spell_1_root).require(ROGUES));
     public static final Entry ROGUE_TIER_4_SPELL_1_ROOT = add(modifierSpell(RogueSkills.rogue_tier_4_spell_1_root).require(ROGUES));
     public static final Entry ROGUE_TIER_2_SPELL_2_ROOT = add(modifierSpell(RogueSkills.rogue_tier_2_spell_2_root).require(ROGUES));
-    // Explosive Powder grants two spells: the trigger passive plus a hidden companion
-    // MODIFIER carrying the stun extension (passive spells' modifiers are never collected).
-    public static final Entry ROGUE_TIER_2_SPELL_2_MODIFIER_1 = add(Entry.spell(
-            "rogue_tier_2_spell_2_modifier_1",
-            RogueSkills.rogue_tier_2_spell_2_modifier_1.title(),
-            null,
-            Icon.spell(Identifier.of("rogues:shock_powder")),
-            List.of(SpellContainers.forModifier(RogueSkills.rogue_tier_2_spell_2_modifier_1.id()),
-                    SpellContainers.forModifier(RogueSkills.rogue_tier_2_spell_2_modifier_1_bonus.id()))
-    ).require(ROGUES));
-    public static final Entry ROGUE_TIER_2_SPELL_2_MODIFIER_2 = add(passiveSpell(RogueSkills.rogue_tier_2_spell_2_modifier_2)
-            .withIcon(Icon.spell(Identifier.of("rogues:shock_powder")))
-            .require(ROGUES));
+    public static final Entry ROGUE_TIER_2_SPELL_2_MODIFIER_1 = add(modifierSpell(RogueSkills.rogue_tier_2_spell_2_modifier_1).require(ROGUES));
+    public static final Entry ROGUE_TIER_2_SPELL_2_MODIFIER_2 = add(modifierSpell(RogueSkills.rogue_tier_2_spell_2_modifier_2).require(ROGUES));
     public static final Entry ROGUE_TIER_3_SPELL_2_ROOT = add(modifierSpell(RogueSkills.rogue_tier_3_spell_2_root).require(ROGUES));
     public static final Entry ROGUE_TIER_3_SPELL_2_MODIFIER_1 = add(modifierSpell(RogueSkills.rogue_tier_3_spell_2_modifier_1).require(ROGUES));
     public static final Entry ROGUE_TIER_3_SPELL_2_MODIFIER_2 = add(modifierSpell(RogueSkills.rogue_tier_3_spell_2_modifier_2).require(ROGUES));
