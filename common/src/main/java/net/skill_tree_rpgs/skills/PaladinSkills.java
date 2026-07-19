@@ -402,9 +402,49 @@ public class PaladinSkills {
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PALADIN));
     }
 
-    public static final Skills.Entry paladin_tier_1_passive_1 = add(paladin_tier_1_passive_1()); // Vengeance
+    public static final Skills.Entry paladin_tier_1_passive_1 = add(paladin_tier_1_passive_1()); // Redoubt
     private static Skills.Entry paladin_tier_1_passive_1() {
         var id = Identifier.of(NAMESPACE, "paladin_tier_1_passive_1");
+        var title = "Redoubt";
+        var description = "Blocking with shield grants {bonus} armor, stacking up to {effect_amplifier_cap} times, lasting {effect_duration} sec.";
+
+        var effect = SkillEffects.REDOUBT;
+        SpellTooltip.DescriptionMutator mutator = (args) -> {
+            var bonus = SpellTooltip.percent(effect.config().firstModifier().value);
+            return args.description().replace("{bonus}", bonus);
+        };
+
+        var spell = SpellBuilder.createSpellPassive();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+
+        var trigger = SpellBuilder.Triggers.shieldBlock();
+        spell.passive.triggers = List.of(trigger);
+
+        var impact = SpellBuilder.Impacts.effectAdd(SkillEffects.REDOUBT.id.toString(), 8, 1, 2);
+        impact.action.apply_to_caster = true;
+        impact.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.SPARK,
+                                SpellEngineParticles.MagicParticles.Motion.DECELERATE).id().toString(),
+                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
+                        20, 0.2F, 0.3F)
+                        .color(SkillsCommon.MIGHT_COLOR.toRGBA())
+        };
+        impact.sound = new Sound(SkillSounds.paladin_redoubt.id());
+        spell.impacts = List.of(impact);
+
+        SpellBuilder.Cost.cooldown(spell, 1F);
+
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PALADIN));
+    }
+
+    public static final Skills.Entry paladin_tier_1_passive_2 = add(paladin_tier_1_passive_2()); // Vengeance
+    private static Skills.Entry paladin_tier_1_passive_2() {
+        var id = Identifier.of(NAMESPACE, "paladin_tier_1_passive_2");
         var effect = SkillEffects.VENGEANCE;
         var title = "Vengeance";
         var description = "Critical strikes grant " + effect.title
@@ -448,84 +488,9 @@ public class PaladinSkills {
         return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PALADIN));
     }
 
-    public static final Skills.Entry paladin_tier_1_passive_2 = add(paladin_tier_1_passive_2());
-    private static Skills.Entry paladin_tier_1_passive_2() {
-        var id = Identifier.of(NAMESPACE, "paladin_tier_1_passive_2");
-        var title = "Redoubt";
-        var description = "Blocking with shield grants {bonus} armor, stacking up to {effect_amplifier_cap} times, lasting {effect_duration} sec.";
-
-        var effect = SkillEffects.REDOUBT;
-        SpellTooltip.DescriptionMutator mutator = (args) -> {
-            var bonus = SpellTooltip.percent(effect.config().firstModifier().value);
-            return args.description().replace("{bonus}", bonus);
-        };
-
-        var spell = SpellBuilder.createSpellPassive();
-        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
-        spell.range = 0;
-
-        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
-
-        var trigger = SpellBuilder.Triggers.shieldBlock();
-        spell.passive.triggers = List.of(trigger);
-
-        var impact = SpellBuilder.Impacts.effectAdd(SkillEffects.REDOUBT.id.toString(), 8, 1, 2);
-        impact.action.apply_to_caster = true;
-        impact.particles = new ParticleBatch[]{
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.SPARK,
-                                SpellEngineParticles.MagicParticles.Motion.DECELERATE).id().toString(),
-                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
-                        20, 0.2F, 0.3F)
-                        .color(SkillsCommon.MIGHT_COLOR.toRGBA())
-        };
-        impact.sound = new Sound(SkillSounds.paladin_redoubt.id());
-        spell.impacts = List.of(impact);
-
-        SpellBuilder.Cost.cooldown(spell, 1F);
-
-        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PALADIN));
-    }
-
-    public static final Skills.Entry paladin_tier_2_passive_1 = add(paladin_tier_2_passive_1()); // Blessing of Freedom
+    public static final Skills.Entry paladin_tier_2_passive_1 = add(paladin_tier_2_passive_1()); // Conviction
     private static Skills.Entry paladin_tier_2_passive_1() {
         var id = Identifier.of(NAMESPACE, "paladin_tier_2_passive_1");
-        var title = "Blessing of Freedom";
-        var description = "Rolling breaks you free, removing all movement impairing effects.";
-
-        var spell = SpellBuilder.createSpellPassive();
-        spell.school = SpellSchools.HEALING;
-        spell.range = 0;
-
-        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
-
-        var trigger = SpellBuilder.Triggers.roll();
-        spell.passive.triggers = List.of(trigger);
-
-        // ALL-selector dispel: strips every harmful movement-impairing effect at once
-        // (classification-based, so modded slows/snares are covered too)
-        var impact = SpellBuilder.Impacts.effectRemoveMovementImpairing();
-        impact.action.apply_to_caster = true;
-        impact.particles = new ParticleBatch[]{
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.STRIPE,
-                                SpellEngineParticles.MagicParticles.Motion.FLOAT).id().toString(),
-                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
-                        15, 0.2F, 0.3F)
-                        .color(SkillsCommon.HOLY_COLOR)
-        };
-        spell.impacts = List.of(impact);
-
-        SpellBuilder.Cost.cooldown(spell, 10F);
-
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PALADIN));
-    }
-
-    public static final Skills.Entry paladin_tier_2_passive_2 = add(paladin_tier_2_passive_2()); // Conviction
-    private static Skills.Entry paladin_tier_2_passive_2() {
-        var id = Identifier.of(NAMESPACE, "paladin_tier_2_passive_2");
         var title = "Conviction";
         var description = "Upon rolling, you have {trigger_chance} chance to reset the cooldown of Blessed Strikes and Flash Heal.";
 
@@ -559,66 +524,44 @@ public class PaladinSkills {
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PALADIN));
     }
 
-    public static final Skills.Entry paladin_tier_3_passive_1 = add(paladin_tier_3_passive_1()); // Divine Hammer
-    private static Skills.Entry paladin_tier_3_passive_1() {
-        var id = Identifier.of(NAMESPACE, "paladin_tier_3_passive_1");
-        var title = "Divine Hammer";
-        var description = "Melee attacks throw a hammer at the target, dealing {damage} damage, ricocheting {ricochet} to nearby enemies.";
+    public static final Skills.Entry paladin_tier_2_passive_2 = add(paladin_tier_2_passive_2()); // Blessing of Freedom
+    private static Skills.Entry paladin_tier_2_passive_2() {
+        var id = Identifier.of(NAMESPACE, "paladin_tier_2_passive_2");
+        var title = "Blessing of Freedom";
+        var description = "Rolling breaks you free, removing all movement impairing effects.";
 
         var spell = SpellBuilder.createSpellPassive();
-        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
-        spell.range = 5;
+        spell.school = SpellSchools.HEALING;
+        spell.range = 0;
 
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
-        spell.release.sound = new Sound(SpellEngineSounds.GENERIC_HEALING_RELEASE.id());
 
-        var triggers = SpellBuilder.Triggers.meleeImpact();
-        for (var trigger : triggers) {
-            trigger.chance = 1F;
-        }
-        spell.passive.triggers = triggers;
+        var trigger = SpellBuilder.Triggers.roll();
+        spell.passive.triggers = List.of(trigger);
 
-        spell.deliver.type = Spell.Delivery.Type.PROJECTILE;
-        spell.deliver.projectile = new Spell.Delivery.ShootProjectile();
-        spell.deliver.projectile.direct_towards_target = true;
-        spell.deliver.projectile.launch_properties.velocity = 0.6F;
-        spell.deliver.projectile.projectile = new Spell.ProjectileData();
-        spell.deliver.projectile.projectile.perks = new Spell.ProjectileData.Perks();
-        spell.deliver.projectile.projectile.perks.ricochet_range = 8F;
-        spell.deliver.projectile.projectile.perks.ricochet = 2;
-        spell.deliver.projectile.projectile.perks.bounce = 3;
-
-        var model = SpellBuilder.ProjectileModels.model("paladins:spell_projectile/judgement", 0.8F, LightEmission.RADIATE);
-        model.rotate_degrees_per_tick = 20F;
-
-        spell.deliver.projectile.projectile.client_data = new Spell.ProjectileData.Client();
-        spell.deliver.projectile.projectile.client_data.composite_model = SpellBuilder.ProjectileModels.composite(model);
-
-
-        // Same hybrid power split as Judgement: 75% melee / 25% healing
-        // (base PHYSICAL_MELEE weighs 1, healing weighs 1/3).
-        var impact = SpellBuilder.Impacts.damage(0.5F, 0F);
-        impact.power_blend = List.of(SpellBuilder.Impacts.powerBlend(SpellSchools.HEALING, 1F / 3F));
+        // ALL-selector dispel: strips every harmful movement-impairing effect at once
+        // (classification-based, so modded slows/snares are covered too)
+        var impact = SpellBuilder.Impacts.effectRemoveMovementImpairing();
+        impact.action.apply_to_caster = true;
         impact.particles = new ParticleBatch[]{
                 new ParticleBatch(
                         SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.HOLY,
-                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
-                        15, 0.6F, 0.8F)
+                                SpellEngineParticles.MagicParticles.Shape.STRIPE,
+                                SpellEngineParticles.MagicParticles.Motion.FLOAT).id().toString(),
+                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
+                        15, 0.2F, 0.3F)
                         .color(SkillsCommon.HOLY_COLOR)
         };
-        impact.sound = new Sound(SkillSounds.paladin_divine_hammer_impact.id());
         spell.impacts = List.of(impact);
 
-        SpellBuilder.Cost.cooldown(spell, 5F);
+        SpellBuilder.Cost.cooldown(spell, 10F);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PALADIN));
     }
 
-    public static final Skills.Entry paladin_tier_3_passive_2 = add(paladin_tier_3_passive_2()); // Ardent Defender (hp boost on low HP)
-    private static Skills.Entry paladin_tier_3_passive_2() {
-        var id = Identifier.of(NAMESPACE, "paladin_tier_3_passive_2");
+    public static final Skills.Entry paladin_tier_3_passive_1 = add(paladin_tier_3_passive_1()); // Ardent Defender (hp boost on low HP)
+    private static Skills.Entry paladin_tier_3_passive_1() {
+        var id = Identifier.of(NAMESPACE, "paladin_tier_3_passive_1");
         var effect = SkillEffects.ARDENT_DEFENDER;
         var title = "Ardent Defender";
         var healthThreshold = 0.3F;
@@ -683,5 +626,62 @@ public class PaladinSkills {
         SpellBuilder.Cost.cooldown(spell, 60F);
 
         return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.PALADIN));
+    }
+
+    public static final Skills.Entry paladin_tier_3_passive_2 = add(paladin_tier_3_passive_2()); // Divine Hammer
+    private static Skills.Entry paladin_tier_3_passive_2() {
+        var id = Identifier.of(NAMESPACE, "paladin_tier_3_passive_2");
+        var title = "Divine Hammer";
+        var description = "Melee attacks throw a hammer at the target, dealing {damage} damage, ricocheting {ricochet} to nearby enemies.";
+
+        var spell = SpellBuilder.createSpellPassive();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+        spell.range = 5;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+        spell.release.sound = new Sound(SpellEngineSounds.GENERIC_HEALING_RELEASE.id());
+
+        var triggers = SpellBuilder.Triggers.meleeImpact();
+        for (var trigger : triggers) {
+            trigger.chance = 1F;
+        }
+        spell.passive.triggers = triggers;
+
+        spell.deliver.type = Spell.Delivery.Type.PROJECTILE;
+        spell.deliver.projectile = new Spell.Delivery.ShootProjectile();
+        spell.deliver.projectile.direct_towards_target = true;
+        spell.deliver.projectile.launch_properties.velocity = 0.6F;
+        spell.deliver.projectile.projectile = new Spell.ProjectileData();
+        spell.deliver.projectile.projectile.perks = new Spell.ProjectileData.Perks();
+        spell.deliver.projectile.projectile.perks.ricochet_range = 8F;
+        spell.deliver.projectile.projectile.perks.ricochet = 2;
+        spell.deliver.projectile.projectile.perks.bounce = 3;
+
+        var model = SpellBuilder.ProjectileModels.model("paladins:spell_projectile/judgement", 0.8F, LightEmission.RADIATE);
+        model.rotate_degrees_per_tick = 20F;
+
+        spell.deliver.projectile.projectile.client_data = new Spell.ProjectileData.Client();
+        spell.deliver.projectile.projectile.client_data.composite_model = SpellBuilder.ProjectileModels.composite(model);
+
+
+        // Same hybrid power split as Judgement: 75% melee / 25% healing
+        // (base PHYSICAL_MELEE weighs 1, healing weighs 1/3).
+        var impact = SpellBuilder.Impacts.damage(0.5F, 0F);
+        impact.power_blend = List.of(SpellBuilder.Impacts.powerBlend(SpellSchools.HEALING, 1F / 3F));
+        impact.particles = new ParticleBatch[]{
+                new ParticleBatch(
+                        SpellEngineParticles.MagicParticles.get(
+                                SpellEngineParticles.MagicParticles.Shape.HOLY,
+                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        15, 0.6F, 0.8F)
+                        .color(SkillsCommon.HOLY_COLOR)
+        };
+        impact.sound = new Sound(SkillSounds.paladin_divine_hammer_impact.id());
+        spell.impacts = List.of(impact);
+
+        SpellBuilder.Cost.cooldown(spell, 5F);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PALADIN));
     }
 }
