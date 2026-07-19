@@ -66,7 +66,7 @@
   "cost": {
     "durability": 0,
     "cooldown": {
-      "duration": 30.0
+      "duration": 15.0
     }
   }
 }

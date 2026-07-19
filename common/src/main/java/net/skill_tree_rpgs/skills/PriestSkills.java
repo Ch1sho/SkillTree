@@ -214,8 +214,8 @@ public class PriestSkills {
     public static final Skills.Entry priest_tier_4_spell_1_modifier_2 = add(priest_tier_4_spell_1_modifier_2());
     private static Skills.Entry priest_tier_4_spell_1_modifier_2() {
         var id = Identifier.of(NAMESPACE, "priest_tier_4_spell_1_modifier_2");
-        var title = "Radiance";
-        var description = "Increases the Lightwell's healing power by 50%.";
+        var title = "Empowered Well";
+        var description = "Increases the Lightwell's healing power by 50%%.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.HEALING;
 
@@ -604,7 +604,7 @@ public class PriestSkills {
         SpellBuilder.Deliver.stash(spell, effect.id.toString(), cooldownDuration, stashTriggers);
         spell.deliver.stash_effect.consumed_next_tick = true;
 
-        SpellBuilder.Cost.cooldown(spell, 30F);
+        SpellBuilder.Cost.cooldown(spell, 15F);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.PRIEST));
     }

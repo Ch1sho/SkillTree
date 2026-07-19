@@ -286,20 +286,21 @@ public class PaladinSkills {
         var title = "Seal of Light";
         var description = "Empowered strikes of Blessed Strikes also heal you for {heal}.";
 
-        // PHYSICAL_MELEE school so the tooltip's {heal} estimation resolves against the same base
+        // HEALING school so the tooltip's {heal} estimation resolves against the same base
         // school the impact uses at runtime (Blessed Strikes' own school).
         var spell = SpellBuilder.createSpellModifier();
-        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+        spell.school = SpellSchools.HEALING;
 
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = BLESSED_STRIKES;
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
 
         // Joins the stashed payload: heals the paladin on each seal-spending strike. Same hybrid
-        // power split as the base spell's damage (25% melee / 75% healing).
+        // power split as the base spell's damage (25% melee / 75% healing, crit blended alike).
         var heal = SpellBuilder.Impacts.heal(0.25F);
         heal.action.apply_to_caster = true;
-        heal.power_blend = List.of(SpellBuilder.Impacts.powerBlend(SpellSchools.HEALING, 3F));
+        heal.power_blend = List.of(SpellBuilder.Impacts.powerBlend(
+                ExternalSpellSchools.PHYSICAL_MELEE, 1F / 3F, true, true, true));
         heal.particles = new ParticleBatch[]{
                 new ParticleBatch(
                         SkillsCommon.HEAL_DECELERATE.toString(),
