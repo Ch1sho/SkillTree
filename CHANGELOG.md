@@ -1,6 +1,6 @@
-# 1.4.5
+# 1.5.0
 
-Spell Expansion - introducing:
+SPELL EXPANSION! - Introducing:
 
 - 48 new major (flavor) skill modifiers - targeting newly added spells
 - 48 new minor skill modifiers - targeting existing and new spells
