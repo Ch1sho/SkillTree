@@ -59,7 +59,10 @@
           "max_speed": 0.3,
           "color_rgba": 4284888063
         }
-      ]
+      ],
+      "sound": {
+        "id": "skill_tree_rpgs:recklessness_impact"
+      }
     }
   ],
   "cost": {

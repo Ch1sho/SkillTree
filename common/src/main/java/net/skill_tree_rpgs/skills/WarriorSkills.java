@@ -199,7 +199,7 @@ public class WarriorSkills {
 
         // Four spike-clouds marching straight forward from the caster, 1.5 blocks apart, the first
         // 1.5 blocks out; each erupts 2 ticks after the previous one (like Frost Spikes).
-        var row = SpellBuilder.Placements.ray(4, 1.5F, 1.5F);
+        var row = SpellBuilder.Placements.ray(5, 1.5F, 1.5F);
         SpellBuilder.Placements.delayCascade(row, 3);
         SpellBuilder.Placements.delayUniform(row, 6);
         cloud.placement = row.get(0);
@@ -243,8 +243,8 @@ public class WarriorSkills {
     /// timing of Wizards' Frost Spikes. Spawned per cloud node via {@code cloud.spawn.model_fx}.
     private static List<ModelEffect> impalingSpikeModelFx() {
         var spike = ModelEffectBuilder.Preset.spike(
-                        ModelEffectBuilder.create("wizards:spell_effect/frost_spike_1")
-                                .light(LightEmission.GLOW_TRANSLUCENT)
+                        ModelEffectBuilder.create(SkillTreeMod.NAMESPACE + ":spell_effect/stone_spike")
+                                .light(LightEmission.NONE)
                                 .initialTranslateY(0.5F),
                         20, 0, true, SPIKE_BURY_DEPTH)
                 .build();
@@ -440,6 +440,7 @@ public class WarriorSkills {
                         10, 0.15F, 0.3F)
                         .color(Color.from(0xff6633).toRGBA())
         };
+        haste.sound = Sound.of(SkillSounds.recklessness_impact.id());
         spell.impacts = List.of(haste);
 
         return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.WARRIOR));

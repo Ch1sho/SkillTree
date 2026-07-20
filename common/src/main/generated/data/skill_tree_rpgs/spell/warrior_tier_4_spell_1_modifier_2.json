@@ -53,6 +53,11 @@
             "delay_ticks": 15,
             "location_offset_by_look": 6.0,
             "apply_yaw": true
+          },
+          {
+            "delay_ticks": 18,
+            "location_offset_by_look": 7.5,
+            "apply_yaw": true
           }
         ],
         "spawn": {
@@ -78,8 +83,8 @@
           ],
           "model_fx": [
             {
-              "model_id": "wizards:spell_effect/frost_spike_1",
-              "light_emission": "GLOW_TRANSLUCENT",
+              "model_id": "skill_tree_rpgs:spell_effect/stone_spike",
+              "light_emission": "NONE",
               "duration": 40,
               "initial": [
                 {
