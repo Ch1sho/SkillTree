@@ -73,7 +73,7 @@ dependencies {
     modImplementation("maven.modrinth:tiny-config:${project.tiny_config_version}-${platform}")
 
     // Trinkets
-    modImplementation("dev.emi:trinkets:${project.trinkets_version}")
+    modImplementation("maven.modrinth:trinkets:${project.trinkets_version}")
 
     modImplementation("net.puffish:skillsmod:${project.pufferfish_skills_version}:${platform}")
 
