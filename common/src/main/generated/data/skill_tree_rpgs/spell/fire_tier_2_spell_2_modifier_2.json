@@ -10,14 +10,10 @@
     "triggers": [
       {
         "target_override": "CASTER",
-        "type": "SPELL_IMPACT_SPECIFIC",
-        "cap_per_tick": 1,
+        "type": "SPELL_CAST",
         "chance": 0.33,
         "spell": {
           "id": "wizards:fire_slash"
-        },
-        "impact": {
-          "impact_type": "DAMAGE"
         }
       }
     ]

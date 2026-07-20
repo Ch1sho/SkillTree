@@ -497,7 +497,7 @@
   "spell.skill_tree_rpgs.fire_tier_2_spell_1_root.name": "Improved Fire Breath",
   "spell.skill_tree_rpgs.fire_tier_2_spell_2_modifier_1.description": "Flame Slash is 33%% larger.",
   "spell.skill_tree_rpgs.fire_tier_2_spell_2_modifier_1.name": "Towering Slash",
-  "spell.skill_tree_rpgs.fire_tier_2_spell_2_modifier_2.description": "Flame Slash hits have {trigger_chance} chance to reset its cooldown.",
+  "spell.skill_tree_rpgs.fire_tier_2_spell_2_modifier_2.description": "Casting Flame Slash has {trigger_chance} chance to reset its cooldown.",
   "spell.skill_tree_rpgs.fire_tier_2_spell_2_modifier_2.name": "Rekindle",
   "spell.skill_tree_rpgs.fire_tier_2_spell_2_root.description": "Range of Flame Slash increased by {range_add} blocks.",
   "spell.skill_tree_rpgs.fire_tier_2_spell_2_root.name": "Improved Flame Slash",

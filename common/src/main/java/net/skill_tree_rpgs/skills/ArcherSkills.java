@@ -211,6 +211,9 @@ public class ArcherSkills {
         var trigger = SpellBuilder.Triggers.specificSpellHit(RAIN_OF_ARROWS);
         trigger.chance = 0.1F;
         trigger.cap_per_tick = 1;
+        // One shared roll per cast, not one per enemy struck — so multi-hit AoE doesn't inflate the
+        // effective reset chance above the advertised value (e.g. 10% vs ~41% against 5 targets).
+        trigger.chance_batching = true;
         trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
         spell.passive.triggers = List.of(trigger);
 

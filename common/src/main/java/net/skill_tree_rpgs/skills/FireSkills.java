@@ -207,16 +207,18 @@ public class FireSkills {
     private static Skills.Entry fire_tier_2_spell_2_modifier_2() {
         var id = Identifier.of(NAMESPACE, "fire_tier_2_spell_2_modifier_2");
         var title = "Rekindle";
-        var description = "Flame Slash hits have {trigger_chance} chance to reset its cooldown.";
+        var description = "Casting Flame Slash has {trigger_chance} chance to reset its cooldown.";
         var spell = SkillsCommon.createModifierAlikePassiveSpell();
         spell.school = SpellSchools.FIRE;
         spell.range = 0;
 
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
-        var trigger = SpellBuilder.Triggers.specificSpellHit(FIRE_SLASH);
+        // Rolls once on each Flame Slash cast (whether or not it hits anything), so the advertised
+        // chance is exact — no per-enemy multi-roll inflation to correct for. target_override routes
+        // the reset onto the caster, since a cast trigger carries no victim to inherit as target.
+        var trigger = SpellBuilder.Triggers.specificSpellCast(FIRE_SLASH);
         trigger.chance = 0.33F;
-        trigger.cap_per_tick = 1;
         trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
         spell.passive.triggers = List.of(trigger);
 
@@ -229,7 +231,8 @@ public class FireSkills {
         reset.action.apply_to_caster = true;
         spell.impacts = List.of(reset);
 
-        // Internal cooldown matching the base spell's, so one cast can grant at most one reset.
+        // Internal cooldown so a lucky reset — and the immediate recast it enables — can't chain
+        // into a runaway loop: at most one Rekindle reset per this window.
         SpellBuilder.Cost.cooldown(spell, 8F);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));

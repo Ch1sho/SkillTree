@@ -253,13 +253,17 @@ public class FrostSkills {
         var id = Identifier.of(NAMESPACE, "frost_tier_3_spell_2_modifier_1");
         var title = "Colossal Lance";
         var bonus = 0.5F;
-        var description = "Ice Lance is " + SpellTooltip.percent(bonus) + "% larger.";
+        var critChance = 0.15F;
+        var description = "Ice Lance is " + SpellTooltip.percent(bonus) + "% larger and gains {critical_chance_bonus} increased critical strike chance.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FROST;
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = FROST_LANCE;
-        // Stacks on top of the base spell's charge growth (up to 2x at full charge -> up to 2.5x).
+        // Purely cosmetic: frost_lance has no projectile hitbox, so it uses raycast collision and
+        // scale never reaches hit detection. The reward the node actually grants is the crit chance.
         modifier.projectile_scale_multiply = bonus;
+        modifier.power_modifier = new Spell.Impact.Modifier();
+        modifier.power_modifier.critical_chance_bonus = critChance;
         spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FROST));
     }
