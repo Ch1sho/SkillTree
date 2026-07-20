@@ -1,3 +1,7 @@
+# 1.5.1
+
+- Fixed invalid `parent` reference in the Stone Spike effect model (exporter artifact)
+
 # 1.5.0
 
 SPELL EXPANSION! - Introducing:

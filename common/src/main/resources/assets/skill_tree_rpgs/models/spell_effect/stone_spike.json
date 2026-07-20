@@ -1,7 +1,6 @@
 {
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
-	"parent": "stone_spike",
 	"textures": {
 		"1": "skill_tree_rpgs:spell_effect/stone_spike",
 		"particle": "skill_tree_rpgs:spell_effect/stone_spike"
