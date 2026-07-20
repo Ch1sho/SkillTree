@@ -559,7 +559,7 @@
   "spell.skill_tree_rpgs.frost_tier_3_spell_1_modifier_2.name": "Durable Shield",
   "spell.skill_tree_rpgs.frost_tier_3_spell_1_root.description": "Reduces the cooldown of Frost Shield by {cooldown_duration_deduct} sec.",
   "spell.skill_tree_rpgs.frost_tier_3_spell_1_root.name": "Improved Frost Shield",
-  "spell.skill_tree_rpgs.frost_tier_3_spell_2_modifier_1.description": "Ice Lance is 50%% larger.",
+  "spell.skill_tree_rpgs.frost_tier_3_spell_2_modifier_1.description": "Ice Lance is 50%% larger and gains {critical_chance_bonus} increased critical strike chance.",
   "spell.skill_tree_rpgs.frost_tier_3_spell_2_modifier_1.name": "Colossal Lance",
   "spell.skill_tree_rpgs.frost_tier_3_spell_2_modifier_2.description": "Ice Lance hits explode, damaging enemies within {impact_range} blocks.",
   "spell.skill_tree_rpgs.frost_tier_3_spell_2_modifier_2.name": "Shattering Lance",
