@@ -1,3 +1,8 @@
+# 1.5.2
+
+- Update Juggernaut effect bonuses
+- Spell modifier root nodes are now in mutual exclusion
+
 # 1.5.1
 
 - Fixed invalid `parent` reference in the Stone Spike effect model (exporter artifact)

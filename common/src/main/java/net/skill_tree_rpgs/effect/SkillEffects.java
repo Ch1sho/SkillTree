@@ -728,7 +728,12 @@ public class SkillEffects {
                     List.of(
                             new AttributeModifier(
                                     EntityAttributes.GENERIC_SCALE.getIdAsString(),
-                                    0.08F,
+                                    0.1F,
+                                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                            ),
+                            new AttributeModifier(
+                                    "spell_engine:damage_taken",
+                                    -0.05F,
                                     EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )

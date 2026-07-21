@@ -3,6 +3,7 @@ package net.skill_tree_rpgs.skills;
 import net.minecraft.util.Identifier;
 import net.skill_tree_rpgs.SkillTreeMod;
 import net.skill_tree_rpgs.effect.SkillEffects;
+import net.spell_engine.api.config.AttributeModifier;
 import net.spell_engine.api.datagen.SpellBuilder;
 import net.spell_engine.api.effect.SpellEngineEffects;
 import net.spell_engine.api.render.LightEmission;
@@ -375,10 +376,19 @@ public class WarriorSkills {
         var id = Identifier.of(NAMESPACE, "warrior_tier_4_spell_2_modifier_1");
         var title = "Juggernaut";
         var effect = SkillEffects.JUGGERNAUT;
-        var description = "Each stack of Last Stand also grows you in size by {bonus}.";
+        var description = "Each stack of Last Stand also grows you in size by {bonus_1}, and reduces damage taken by {bonus_2}.";
         SpellTooltip.DescriptionMutator mutator = (args) -> {
-            var bonus = SpellTooltip.percent(effect.config().firstModifier().value);
-            return args.description().replace("{bonus}", bonus);
+            var bonus1 = SpellTooltip.percent(effect.config().firstModifier().value);
+            var bonus2 = "";
+            if (effect.config().attributes().size() > 1) {
+                var value2 = Math.abs(effect.config().attributes().get(1).value);
+                bonus2 = SpellTooltip.percent(value2);
+            }
+            var result = args.description().replace("{bonus_1}", bonus1);
+            if (!bonus2.isEmpty()) {
+                result = result.replace("{bonus_2}", bonus2);
+            }
+            return result;
         };
         var spell = SpellBuilder.createSpellModifier();
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
