@@ -7,6 +7,7 @@
 - Swap archer tier 1 passive placements
 - Fixed Presence of Mind not working #20
 - Fixed Arctic Reflex passive
+- Fixed Pain Suppression missing icon #21
 
 # 1.5.1
 
