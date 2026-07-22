@@ -61,7 +61,7 @@ public class SkillTreeModDataGenerator implements DataGeneratorEntrypoint {
                     translationBuilder.add(lore.translationKey(), lore.line().text());
                 }
             }
-            for (var skill: NodeTypes.ENTRIES) {
+            for (var skill: NodeTypes.allNodes()) {
                 if (skill.title() != null && !skill.title().isEmpty()) {
                     translationBuilder.add(skill.titleTranslationKey(), skill.title());
                 }
@@ -145,7 +145,7 @@ public class SkillTreeModDataGenerator implements DataGeneratorEntrypoint {
         @Override
         public void generate(Builder builder) {
             LinkedHashMap<String, Format> skillDefinitions = new LinkedHashMap<>();
-            for (var skill : NodeTypes.ENTRIES) {
+            for (var skill : NodeTypes.allNodes()) {
                 Translatable title = null;
                 if (skill.title() != null && !skill.title().isEmpty()) {
                     title = new Translatable(skill.titleTranslationKey());

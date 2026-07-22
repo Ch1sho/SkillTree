@@ -25,7 +25,7 @@ public class SkillTreeClientMod {
                 SpellTooltip.addDescriptionMutator(spell.id(), spell.mutator());
             }
         }
-        for (var entry: NodeTypes.ENTRIES) {
+        for (var entry: NodeTypes.allNodes()) {
             var skillId = entry.id();
             if (entry.spellReward() != null) {
                 var container = entry.spellReward().get(0);
