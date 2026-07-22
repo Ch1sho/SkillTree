@@ -8,6 +8,7 @@
 - Fixed Presence of Mind not working #20
 - Fixed Arctic Reflex passive
 - Fixed Pain Suppression missing icon #21
+- Fixed Cheat Death
 
 # 1.5.1
 

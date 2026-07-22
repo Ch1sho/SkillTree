@@ -676,13 +676,16 @@ public class SkillEffects {
     public static Effects.Entry CHEAT_DEATH = add(new Effects.Entry(Identifier.of(SkillTreeMod.NAMESPACE, "cheat_death"),
             "Cheat Death",
             "Reduces damage taken.",
-            new CustomStatusEffect(StatusEffectCategory.BENEFICIAL, 0x9999ff),
+            // Immunity-based (like Phase Shift): the custom effect refreshes a LivingEntityImmunity each
+            // tick, which cancels the triggering fatal hit via SpellEngine's post-trigger isInvulnerableTo
+            // re-check. The DAMAGE_TAKEN -100% attribute is kept as a redundant fallback.
+            new CheatDeathStatusEffect(StatusEffectCategory.BENEFICIAL, 0x9999ff),
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
                                     SpellEngineAttributes.DAMAGE_TAKEN.id,
                                     -1F,
-                                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
                             )
                     )
             )
