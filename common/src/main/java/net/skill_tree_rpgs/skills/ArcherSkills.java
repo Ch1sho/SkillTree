@@ -348,35 +348,7 @@ public class ArcherSkills {
     public static final Skills.Entry archer_tier_1_passive_1 = add(archer_tier_1_passive_1());
     private static Skills.Entry archer_tier_1_passive_1() {
         var id = Identifier.of(NAMESPACE, "archer_tier_1_passive_1");
-        var title = "Rhythm";
-        var description = "Hitting Marked target increasing ranged attack speed by {bonus}, stacking up to {effect_amplifier_cap} times, lasting {effect_duration} sec.";
-        var effect = SkillEffects.RHYTHM;
-        SpellTooltip.DescriptionMutator mutator = (args) -> {
-            var bonus = SpellTooltip.percent(effect.config().firstModifier().value);
-            return args.description().replace("{bonus}", bonus);
-        };
 
-        var spell = SpellBuilder.createSpellPassive();
-        spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
-        spell.range = 0;
-
-        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
-
-        var trigger = SpellBuilder.Triggers.arrowHit();
-        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
-        var condition = new Spell.TargetCondition();
-        condition.entity_predicate_id = HAS_HUNTERS_MARK.id().toString();
-        trigger.target_conditions = List.of(condition);
-        spell.passive.triggers = List.of(trigger);
-
-        spell.impacts = List.of(rhythmImpact());
-
-        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.ARCHER));
-    }
-
-    public static final Skills.Entry archer_tier_1_passive_2 = add(archer_tier_1_passive_2());
-    private static Skills.Entry archer_tier_1_passive_2() {
-        var id = Identifier.of(NAMESPACE, "archer_tier_1_passive_2");
         var title = "Concussive Shot";
         var description = "Arrows have {trigger_chance} chance, to stun the target for {effect_duration} sec.";
         var effect = SpellEngineEffects.STUN;
@@ -403,6 +375,36 @@ public class ArcherSkills {
         SpellBuilder.Cost.cooldown(spell, 10F);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCHER));
+    }
+
+    public static final Skills.Entry archer_tier_1_passive_2 = add(archer_tier_1_passive_2());
+    private static Skills.Entry archer_tier_1_passive_2() {
+        var id = Identifier.of(NAMESPACE, "archer_tier_1_passive_2");
+
+        var title = "Rhythm";
+        var description = "Hitting Marked target increasing ranged attack speed by {bonus}, stacking up to {effect_amplifier_cap} times, lasting {effect_duration} sec.";
+        var effect = SkillEffects.RHYTHM;
+        SpellTooltip.DescriptionMutator mutator = (args) -> {
+            var bonus = SpellTooltip.percent(effect.config().firstModifier().value);
+            return args.description().replace("{bonus}", bonus);
+        };
+
+        var spell = SpellBuilder.createSpellPassive();
+        spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+
+        var trigger = SpellBuilder.Triggers.arrowHit();
+        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
+        var condition = new Spell.TargetCondition();
+        condition.entity_predicate_id = HAS_HUNTERS_MARK.id().toString();
+        trigger.target_conditions = List.of(condition);
+        spell.passive.triggers = List.of(trigger);
+
+        spell.impacts = List.of(rhythmImpact());
+
+        return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.ARCHER));
     }
 
     public static final Skills.Entry archer_tier_2_passive_1 = add(archer_tier_2_passive_1()); // Momentum (additional stack of Rhythm on roll)

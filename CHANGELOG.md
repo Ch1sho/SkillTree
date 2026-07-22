@@ -4,6 +4,7 @@
 - Spell modifier root nodes are now mutually exclusive
 - Reworked Flame Slash cooldown modifier
 - Reworked Rain of Arrows cooldown modifier
+- Swap archer tier 1 passive placements
 
 # 1.5.1
 
