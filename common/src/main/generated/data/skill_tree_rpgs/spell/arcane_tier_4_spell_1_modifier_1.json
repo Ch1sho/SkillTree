@@ -56,7 +56,7 @@
         {
           "type": "SPELL_CAST",
           "spell": {
-            "id": "#wizards:spell_book/arcane"
+            "id": "#wizards:arcane"
           }
         }
       ]
