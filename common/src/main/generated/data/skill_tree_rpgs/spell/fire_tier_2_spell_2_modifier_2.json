@@ -2,61 +2,25 @@
   "school": "spell_power:fire",
   "range": 0.0,
   "tier": 1,
-  "tooltip": {
-    "show_activation": false
-  },
-  "type": "PASSIVE",
-  "passive": {
-    "triggers": [
-      {
-        "target_override": "CASTER",
-        "type": "SPELL_CAST",
-        "chance": 0.33,
-        "spell": {
-          "id": "wizards:fire_slash"
-        }
-      }
-    ]
-  },
-  "release": {
-    "particles": [
-      {
-        "particle_id": "spell_engine:sign_cast",
-        "origin": "CENTER",
-        "shape": "LINE_VERTICAL",
-        "count": 1.0,
-        "min_speed": 0.8,
-        "max_speed": 0.8,
-        "color_rgba": 4284875007,
-        "scale": 0.8,
-        "follow_entity": true
-      }
-    ],
-    "sound": {
-      "id": "spell_engine:signal_spell_crit"
-    }
-  },
-  "target": {
-    "type": "FROM_TRIGGER"
-  },
-  "impacts": [
+  "type": "MODIFIER",
+  "modifiers": [
     {
-      "action": {
-        "type": "COOLDOWN",
-        "apply_to_caster": true,
-        "cooldown": {
-          "actives": {
-            "id": "wizards:fire_slash",
-            "duration_multiplier": 0.0
+      "spell_pattern": "wizards:fire_slash",
+      "mutate_impacts": "APPEND",
+      "impacts": [
+        {
+          "action": {
+            "type": "COOLDOWN",
+            "apply_to_caster": true,
+            "cooldown": {
+              "actives": {
+                "id": "wizards:fire_slash",
+                "duration_add": -20.0
+              }
+            }
           }
         }
-      }
+      ]
     }
-  ],
-  "cost": {
-    "durability": 0,
-    "cooldown": {
-      "duration": 8.0
-    }
-  }
+  ]
 }

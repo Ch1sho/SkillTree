@@ -12,8 +12,6 @@
         "target_override": "CASTER",
         "type": "SPELL_IMPACT_SPECIFIC",
         "cap_per_tick": 1,
-        "chance": 0.1,
-        "chance_batching": true,
         "spell": {
           "id": "archers:rain_of_arrows"
         },
@@ -22,24 +20,6 @@
         }
       }
     ]
-  },
-  "release": {
-    "particles": [
-      {
-        "particle_id": "spell_engine:sign_arrow",
-        "origin": "CENTER",
-        "shape": "LINE_VERTICAL",
-        "count": 1.0,
-        "min_speed": 0.8,
-        "max_speed": 0.8,
-        "color_rgba": 4294967295,
-        "scale": 0.8,
-        "follow_entity": true
-      }
-    ],
-    "sound": {
-      "id": "spell_engine:signal_spell_crit"
-    }
   },
   "target": {
     "type": "FROM_TRIGGER"
@@ -52,16 +32,13 @@
         "cooldown": {
           "actives": {
             "id": "archers:rain_of_arrows",
-            "duration_multiplier": 0.0
+            "duration_add": -20.0
           }
         }
       }
     }
   ],
   "cost": {
-    "durability": 0,
-    "cooldown": {
-      "duration": 15.0
-    }
+    "durability": 0
   }
 }

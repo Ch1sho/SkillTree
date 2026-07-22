@@ -206,34 +206,31 @@ public class FireSkills {
     public static final Skills.Entry fire_tier_2_spell_2_modifier_2 = add(fire_tier_2_spell_2_modifier_2());
     private static Skills.Entry fire_tier_2_spell_2_modifier_2() {
         var id = Identifier.of(NAMESPACE, "fire_tier_2_spell_2_modifier_2");
-        var title = "Rekindle";
-        var description = "Casting Flame Slash has {trigger_chance} chance to reset its cooldown.";
-        var spell = SkillsCommon.createModifierAlikePassiveSpell();
+        var title = "Wave after Wave";
+        var description = "Flame Slash hits reduce its own remaining cooldown by 1 sec.";
+        var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.FIRE;
-        spell.range = 0;
 
-        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+        // True modifier: inject a cooldown-shaving impact into Flame Slash itself, so it fires on
+        // every enemy struck (chaining through a crowd shortens the cooldown faster — "wave after
+        // wave"). apply_to_caster routes the deduction onto the caster, not the victim; duration_add
+        // trims the remaining cooldown (multiplier stays 1, so it's not a reset). NOTE: the engine
+        // applies duration_add in TICKS against the remaining tick count (SpellHelper.modifyCooldowns,
+        // no seconds->ticks conversion), so -20 ticks == -1 second per hit.
+        var shave = new Spell.Impact();
+        shave.action = new Spell.Impact.Action();
+        shave.action.type = Spell.Impact.Action.Type.COOLDOWN;
+        shave.action.apply_to_caster = true;
+        shave.action.cooldown = new Spell.Impact.Action.Cooldown();
+        shave.action.cooldown.actives = new Spell.Impact.Action.Cooldown.Modify();
+        shave.action.cooldown.actives.id = FIRE_SLASH;
+        shave.action.cooldown.actives.duration_add = -20F; // 20 ticks = 1 second
 
-        // Rolls once on each Flame Slash cast (whether or not it hits anything), so the advertised
-        // chance is exact — no per-enemy multi-roll inflation to correct for. target_override routes
-        // the reset onto the caster, since a cast trigger carries no victim to inherit as target.
-        var trigger = SpellBuilder.Triggers.specificSpellCast(FIRE_SLASH);
-        trigger.chance = 0.33F;
-        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
-        spell.passive.triggers = List.of(trigger);
-
-        spell.release.particles = new ParticleBatch[]{
-                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_cast.id(), FIRE_MAGIC_COLOR)
-        };
-        spell.release.sound = new Sound(SpellEngineSounds.SIGNAL_SPELL_CRIT.id());
-
-        var reset = SpellBuilder.Impacts.resetCooldownActive(FIRE_SLASH);
-        reset.action.apply_to_caster = true;
-        spell.impacts = List.of(reset);
-
-        // Internal cooldown so a lucky reset — and the immediate recast it enables — can't chain
-        // into a runaway loop: at most one Rekindle reset per this window.
-        SpellBuilder.Cost.cooldown(spell, 8F);
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = FIRE_SLASH;
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(shave);
+        spell.modifiers = List.of(modifier);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.FIRE));
     }

@@ -200,7 +200,7 @@ public class ArcherSkills {
     private static Skills.Entry archer_tier_4_spell_1_modifier_2() {
         var id = Identifier.of(NAMESPACE, "archer_tier_4_spell_1_modifier_2");
         var title = "Endless Volley";
-        var description = "Rain of Arrows hits have {trigger_chance} chance to reset its cooldown.";
+        var description = "Rain of Arrows hits reduce its remaining cooldown by 1 sec.";
 
         var spell = SkillsCommon.createModifierAlikePassiveSpell();
         spell.school = ExternalSpellSchools.PHYSICAL_RANGED;
@@ -209,25 +209,25 @@ public class ArcherSkills {
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
 
         var trigger = SpellBuilder.Triggers.specificSpellHit(RAIN_OF_ARROWS);
-        trigger.chance = 0.1F;
+        // At most one cooldown trim per tick, so the multi-tick, multi-target volley trims 1 sec per
+        // tick it lands on someone — not once per arrow per enemy. No internal self-cooldown: the
+        // trigger must keep firing across ticks for the deduction to accumulate.
         trigger.cap_per_tick = 1;
-        // One shared roll per cast, not one per enemy struck — so multi-hit AoE doesn't inflate the
-        // effective reset chance above the advertised value (e.g. 10% vs ~41% against 5 targets).
-        trigger.chance_batching = true;
         trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
         spell.passive.triggers = List.of(trigger);
 
-        spell.release.particles = new ParticleBatch[]{
-                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_arrow.id(), Color.WHITE)
-        };
-        spell.release.sound = new Sound(SpellEngineSounds.SIGNAL_SPELL_CRIT.id());
-
-        var reset = SpellBuilder.Impacts.resetCooldownActive(RAIN_OF_ARROWS);
-        reset.action.apply_to_caster = true;
-        spell.impacts = List.of(reset);
-
-        // Internal cooldown matching the base spell's, so one cast can grant at most one reset.
-        SpellBuilder.Cost.cooldown(spell, 15F);
+        // Deterministic per-tick trim of the remaining cooldown (multiplier stays 1, so it's not a
+        // reset). The engine applies duration_add in TICKS against the remaining tick count
+        // (SpellHelper.modifyCooldowns, no seconds->ticks conversion), so -20 ticks == -1 second.
+        var shave = new Spell.Impact();
+        shave.action = new Spell.Impact.Action();
+        shave.action.type = Spell.Impact.Action.Type.COOLDOWN;
+        shave.action.apply_to_caster = true;
+        shave.action.cooldown = new Spell.Impact.Action.Cooldown();
+        shave.action.cooldown.actives = new Spell.Impact.Action.Cooldown.Modify();
+        shave.action.cooldown.actives.id = RAIN_OF_ARROWS;
+        shave.action.cooldown.actives.duration_add = -20F; // 20 ticks = 1 second
+        spell.impacts = List.of(shave);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCHER));
     }
