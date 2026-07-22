@@ -46,7 +46,7 @@ public class WeaponSkillModifiers {
     public static final Skills.Entry weapon_arcane_root = add(weapon_arcane_root());
     private static Skills.Entry weapon_arcane_root() {
         var id = Identifier.of(NAMESPACE, "weapon_arcane_root");
-        var title = "Arcane Mastery";
+        var title = "Arcane Staff Specialisation";
         var description = "Arcane Blast deals {power_multiplier} increased damage.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.ARCANE;
@@ -97,7 +97,7 @@ public class WeaponSkillModifiers {
     public static final Skills.Entry weapon_fire_root = add(weapon_fire_root());
     private static Skills.Entry weapon_fire_root() {
         var id = Identifier.of(NAMESPACE, "weapon_fire_root");
-        var title = "Fire Mastery";
+        var title = "Fire Staff Specialisation";
         var critChance = 0.04F;
         var description = "Pyroblast has {bonus} increased critical strike chance.";
         SpellTooltip.DescriptionMutator mutator = (args) ->
@@ -166,7 +166,7 @@ public class WeaponSkillModifiers {
     public static final Skills.Entry weapon_frost_root = add(weapon_frost_root());
     private static Skills.Entry weapon_frost_root() {
         var id = Identifier.of(NAMESPACE, "weapon_frost_root");
-        var title = "Frost Mastery";
+        var title = "Frost Staff Specialisation";
         var critDamage = 0.08F;
         var description = "Frostbolt deals {bonus} increased critical strike damage.";
         SpellTooltip.DescriptionMutator mutator = (args) ->
@@ -221,7 +221,7 @@ public class WeaponSkillModifiers {
     public static final Skills.Entry weapon_holy_root = add(weapon_holy_root());
     private static Skills.Entry weapon_holy_root() {
         var id = Identifier.of(NAMESPACE, "weapon_holy_root");
-        var title = "Holy Swiftness";
+        var title = "Holy Staff Specialisation";
         var description = "Reduces the cooldown of Holy Shock by {cooldown_duration_deduct} sec.";
         var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.HEALING;

@@ -112,9 +112,6 @@ public class NodeTypes {
         public Entry withItemIcon(String itemId) {
             return withIcon(Icon.item(itemId));
         }
-        public Entry withTitle(String title) {
-            return new Entry(id, title, description, icon, spellReward, attributeReward, conditionalAttributeReward, required_mods);
-        }
         public Entry require(String modId) {
             return new Entry(id, title, description, icon, spellReward, attributeReward, conditionalAttributeReward, List.of(modId));
         }
@@ -518,7 +515,6 @@ public class NodeTypes {
 
     // Arcane Staff
     public static final Entry WEAPON_ARCANE_ROOT = add(modifierSpell(WeaponSkillModifiers.weapon_arcane_root)
-            .withTitle("Arcane Staff Specialisation")
             .withItemIcon("wizards:staff_arcane")
             .require(WIZARDS)
     );
@@ -527,7 +523,6 @@ public class NodeTypes {
 
     // Fire Staff
     public static final Entry WEAPON_FIRE_ROOT = add(modifierSpell(WeaponSkillModifiers.weapon_fire_root)
-            .withTitle("Fire Staff Specialisation")
             .withItemIcon("wizards:staff_fire")
             .require(WIZARDS)
     );
@@ -536,7 +531,6 @@ public class NodeTypes {
 
     // Frost Staff
     public static final Entry WEAPON_FROST_ROOT = add(modifierSpell(WeaponSkillModifiers.weapon_frost_root)
-            .withTitle("Frost Staff Specialisation")
             .withItemIcon("wizards:staff_frost")
             .require(WIZARDS)
     );
@@ -545,7 +539,6 @@ public class NodeTypes {
 
     // Holy Staff
     public static final Entry WEAPON_HOLY_ROOT = add(modifierSpell(WeaponSkillModifiers.weapon_holy_root)
-            .withTitle("Holy Staff Specialisation")
             .withItemIcon("paladins:holy_staff")
             .require(PALADINS));
     public static final Entry WEAPON_HOLY_SHOCK_MODIFIER_1 = add(modifierSpell(WeaponSkillModifiers.weapon_holy_shock_modifier_1).require(PALADINS));
