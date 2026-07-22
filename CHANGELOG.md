@@ -5,6 +5,8 @@
 - Reworked Flame Slash cooldown modifier
 - Reworked Rain of Arrows cooldown modifier
 - Swap archer tier 1 passive placements
+- Fixed Presence of Mind not working #20
+- Fixed Arctic Reflex passive
 
 # 1.5.1
 
