@@ -143,7 +143,7 @@ publishMods {
         client = true                    // >=1 of client/server REQUIRED by CurseForge (Error 1021)
         server = true
         changelogType = "markdown"
-        requires("fabric-api", "spell-engine", "ranged-weapon-api", "puffish-skills")
+        requires("fabric-api", "puffish-skills", "spell-engine", "ranged-weapon-api", "critical-strike", )
     }
 
     modrinth {
@@ -152,9 +152,10 @@ publishMods {
         minecraftVersions.add(project.minecraft_version)
         minecraftVersions.add(project.minecraft_compat_version)
         requires { slug = "fabric-api" }
-        requires { slug = "ranged-weapon-api" }
-        requires { slug = "spell-engine" }
         requires { slug = "skills" }
+        requires { slug = "spell-engine" }
+        requires { slug = "ranged-weapon-api" }
+        requires { slug = "critical-strike" }
     }
 
     // Each platform publishes its own GitHub release under a distinct, platform-suffixed
