@@ -163,6 +163,14 @@ public class SkillsCommon {
                 modifier -> modifier.range_add = blocks);
     }
 
+    /** Blinks and dashes: teleports the caster further. Only affects TELEPORT impacts in FORWARD mode. */
+    public static Skills.Entry teleportRoot(Skills.Category category, SpellSchool school,
+                                            String path, String spellPattern, String spellName, float blocks) {
+        return spellRoot(category, school, path, spellPattern, spellName,
+                spellName + " teleports {teleport_distance_add} blocks further.",
+                modifier -> modifier.teleport_distance_add = blocks);
+    }
+
     /** Area spells centered on the caster or target: wider area. */
     public static Skills.Entry radiusRoot(Skills.Category category, SpellSchool school,
                                           String path, String spellPattern, String spellName, float blocks) {

@@ -1,6 +1,10 @@
 # 1.5.3
 
 - Renamed "Evocation Radiance" to "Arcane Radiance"
+- Improved Spirit Wolf now grants +10% maximum health instead of extra duration
+- Replaced "Spell Riposte" with "Presence of Mind", now a passive triggered by Blink or Evocation
+- Improved Blink now increases teleport distance instead of reducing cooldown
+- Replaced the "Presence of Mind" Blink modifier with "Slipstream" (reduces Blink cooldown)
 - Reworked Chain Detonation: now detonates on up to 4 targets, with larger radius and improved visuals
 - Fissile Magic and Arcane Radiance now roll their chance once per cast, instead of once per enemy hit
 - Fixed Crippling Missiles never stacking beyond 1

@@ -453,7 +453,6 @@ public class NodeTypes {
     /// (MODIFIER → the modified spell, otherwise → the spell's own texture).
     private static final Map<String, Icon> ICON_OVERRIDES = Map.ofEntries(
             // Passives whose node icon points at the associated class spell:
-            Map.entry("arcane_tier_4_spell_1_modifier_1",  Icon.spell(Identifier.of("wizards", "arcane_blink"))),
             Map.entry("arcane_tier_2_spell_2_modifier_1",  Icon.spell(Identifier.of("wizards", "arcane_explosion"))),
             Map.entry("arcane_tier_2_spell_2_modifier_2",  Icon.spell(Identifier.of("wizards", "arcane_explosion"))),
             Map.entry("fire_tier_2_spell_1_modifier_1",    Icon.spell(Identifier.of("wizards", "fire_breath"))),

@@ -6,10 +6,20 @@
   "modifiers": [
     {
       "spell_pattern": "archers:spirit_wolf",
-      "summon_behaviour": {
-        "lifespan": {
-          "active_seconds_add": 5
-        }
+      "summon_attribute_scaling": {
+        "entries": [
+          {
+            "attribute_id": "minecraft:generic.max_health",
+            "modifiers": [
+              {
+                "attribute_id": "ranged_weapon:damage",
+                "operation": "ADD_VALUE",
+                "base": 2.0,
+                "coefficient": 0.1
+              }
+            ]
+          }
+        ]
       }
     }
   ]

@@ -39,7 +39,6 @@ public class ArcaneSkills {
 
     // Wizards is not a compile dependency of SkillTree, so its sounds are referenced by raw id.
     private static final String SOUND_ARCANE_BLAST_IMPACT = "wizards:arcane_blast_impact";
-    private static final String SOUND_ARCANE_MISSILE_IMPACT = "wizards:arcane_missile_impact";
 
     /// Mirror of `arcane_explosion`'s own cooldown. Same reason as the sounds above: the base spell
     /// lives in Wizards and cannot be referenced from here, so this must be kept in sync by hand.
@@ -56,9 +55,6 @@ public class ArcaneSkills {
     private static final Identifier SPELL_DECELERATE = SpellEngineParticles.MagicParticles.get(
             SpellEngineParticles.MagicParticles.Shape.SPELL,
             SpellEngineParticles.MagicParticles.Motion.DECELERATE).id();
-    private static final Identifier SPELL_ASCEND = SpellEngineParticles.MagicParticles.get(
-            SpellEngineParticles.MagicParticles.Shape.SPELL,
-            SpellEngineParticles.MagicParticles.Motion.ASCEND).id();
     private static final Identifier SPARK_BURST = SpellEngineParticles.MagicParticles.get(
             SpellEngineParticles.MagicParticles.Shape.SPARK,
             SpellEngineParticles.MagicParticles.Motion.BURST).id();
@@ -543,41 +539,40 @@ public class ArcaneSkills {
     public static final Skills.Entry arcane_tier_3_passive_1 = add(arcane_tier_3_passive_1());
     private static Skills.Entry arcane_tier_3_passive_1() {
         var id = Identifier.of(NAMESPACE, "arcane_tier_3_passive_1");
-        var title = "Spell Riposte";
-        var description = "Upon taking damage, an Arcane Bolt is launched at the attacker, dealing {damage} damage.";
+        var title = "Presence of Mind";
+        var description = "Blink and Evocation have {trigger_chance_1} chance, to turn your next spell cast instant, within the next {stash_duration} sec.";
 
         var spell = SpellBuilder.createSpellPassive();
         spell.school = SpellSchools.ARCANE;
-        spell.range = 30;
+        spell.range = 0;
+        var duration = 5F;
+
+        var effect = SkillEffects.PRESENCE_OF_MIND;
 
         spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+        spell.release.sound = Sound.withVolume(SpellEngineSounds.SIGNAL_INSTANT_CAST.id(), 0.75F);
 
-        var trigger = SpellBuilder.Triggers.damageTaken();
-        spell.passive.triggers = List.of(trigger);
-
-        spell.deliver.type = Spell.Delivery.Type.PROJECTILE;
-        spell.deliver.projectile = new Spell.Delivery.ShootProjectile();
-        var projectile = new Spell.ProjectileData();
-        projectile.homing_angle = 1F;
-        projectile.client_data = new Spell.ProjectileData.Client();
-        projectile.client_data.light_level = 10;
-        projectile.client_data.travel_particles = new ParticleBatch[] {
-                new ParticleBatch(SPELL_ASCEND.toString(),
-                        ParticleBatch.Shape.CIRCLE, ParticleBatch.Origin.CENTER,
-                        ParticleBatch.Rotation.LOOK, 1, 0.05F, 0.1F, 0.0F, 0F)
-                        .color(SkillsCommon.ARCANE_COLOR)
+        spell.release.particles = new ParticleBatch[]{
+                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_cast.id(), Color.ARCANE),
+                new ParticleBatch(SPARK_ASCEND.toString(),
+                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
+                        15, 0.1F, 0.3F).color(SkillsCommon.ARCANE_COLOR)
         };
-        projectile.client_data.composite_model = SpellBuilder.ProjectileModels.single("wizards:spell_projectile/arcane_bolt", 0.5F);
-        spell.deliver.projectile.projectile = projectile;
 
-        var impact = SpellBuilder.Impacts.damage(0.5F, 0.5F);
-        impact.particles = new ParticleBatch[]{
-                arcaneBurst(ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER, 25, 0.45F, 0.85F),
-        };
-        impact.sound = new Sound(SOUND_ARCANE_MISSILE_IMPACT);
-        spell.impacts = List.of(impact);
+        // Either cast can prime the instant. Two triggers means SpellTooltip indexes the chance
+        // token, so the description reads {trigger_chance_1} — the plain {trigger_chance} is only
+        // emitted for single-trigger spells and would be left unresolved here. Both are equal.
+        var chance = 0.5F;
+        var blinkTrigger = SpellBuilder.Triggers.specificSpellCast(ARCANE_BLINK);
+        blinkTrigger.chance = chance;
+        var evocationTrigger = SpellBuilder.Triggers.specificSpellCast(ARCANE_EVOCATION);
+        evocationTrigger.chance = chance;
+        spell.passive.triggers = List.of(blinkTrigger, evocationTrigger);
 
-        SpellBuilder.Cost.cooldown(spell, 2F);
+        var stashTrigger = SpellBuilder.Triggers.specificSpellCast(ARCANE_SPELL_TAG);
+        SpellBuilder.Deliver.stash(spell, effect.id.toString(), duration, stashTrigger);
+
+        SpellBuilder.Cost.cooldown(spell, 15F);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
     }
@@ -616,38 +611,21 @@ public class ArcaneSkills {
     // MARK: Tier 4 — Blink
     // ===================================================================================
 
-    public static final Skills.Entry arcane_tier_4_spell_1_root = add(SkillsCommon.cooldownRoot(
+    public static final Skills.Entry arcane_tier_4_spell_1_root = add(SkillsCommon.teleportRoot(
             Skills.Category.ARCANE, SpellSchools.ARCANE,
             "arcane_tier_4_spell_1_root", ARCANE_BLINK, "Blink", 3F));
 
     public static final Skills.Entry arcane_tier_4_spell_1_modifier_1 = add(arcane_tier_4_spell_1_modifier_1());
     private static Skills.Entry arcane_tier_4_spell_1_modifier_1() {
         var id = Identifier.of(NAMESPACE, "arcane_tier_4_spell_1_modifier_1");
-        var title = "Presence of Mind";
-        var description = "Blink turns your next spell cast instant, within the next {stash_duration} sec.";
-        var spell = SkillsCommon.createModifierAlikePassiveSpell();
+        var title = "Slipstream";
+        var description = "Reduces the cooldown of Blink by {cooldown_duration_deduct} sec.";
+        var spell = SpellBuilder.createSpellModifier();
         spell.school = SpellSchools.ARCANE;
-        spell.range = 0;
-        var duration = 5F;
-
-        var effect = SkillEffects.PRESENCE_OF_MIND;
-
-        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
-        spell.release.sound = Sound.withVolume(SpellEngineSounds.SIGNAL_INSTANT_CAST.id(), 0.75F);
-
-        spell.release.particles = new ParticleBatch[]{
-                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_cast.id(), Color.ARCANE),
-                new ParticleBatch(SPARK_ASCEND.toString(),
-                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
-                        15, 0.1F, 0.3F).color(SkillsCommon.ARCANE_COLOR)
-        };
-
-        var trigger = SpellBuilder.Triggers.specificSpellCast(ARCANE_BLINK);
-        spell.passive.triggers = List.of(trigger);
-
-        var stashTrigger = SpellBuilder.Triggers.specificSpellCast(ARCANE_SPELL_TAG);
-        SpellBuilder.Deliver.stash(spell, effect.id.toString(), duration, stashTrigger);
-
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = ARCANE_BLINK;
+        modifier.cooldown_duration_deduct = 4F;
+        spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
     }
 

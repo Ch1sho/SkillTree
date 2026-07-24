@@ -1,5 +1,7 @@
 package net.skill_tree_rpgs.skills;
 
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.Identifier;
 import net.skill_tree_rpgs.SkillTreeMod;
@@ -10,6 +12,7 @@ import net.spell_engine.api.entity.SpellEntityPredicates;
 import net.spell_engine.api.spell.ExternalSpellSchools;
 import net.spell_engine.api.spell.Spell;
 import net.spell_engine.api.spell.fx.ParticleBatch;
+import net.spell_engine.api.spell.summon.AttributeScaling;
 import net.spell_engine.api.spell.fx.Sound;
 import net.spell_engine.client.gui.SpellTooltip;
 import net.spell_engine.client.util.Color;
@@ -246,9 +249,24 @@ public class ArcherSkills {
     public static final Skills.Entry archer_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
             Skills.Category.ARCHER, ExternalSpellSchools.PHYSICAL_RANGED,
             "archer_tier_3_spell_1_root", BARRAGE, "Barrage", 1F));
-    public static final Skills.Entry archer_tier_3_spell_2_root = add(SkillsCommon.companionRoot(
+    // +10% max health on the wolves. Archers gives each wolf `20 + 1.0 x owner ranged power` HP
+    // (ArcherEntities.spiritWolfDefaults + ArcherSummons.rangedCombatScaling), so 10% of that is
+    // `2.0 + 0.1 x P` — reconstructed here as a flat base plus an owner coefficient because the
+    // engine applies summon scaling as ADD_VALUE only and ignores OwnerModifier.operation.
+    // Keep in sync if Archers retunes the wolf's base health or its health coefficient.
+    public static final Skills.Entry archer_tier_3_spell_2_root = add(SkillsCommon.spellRoot(
             Skills.Category.ARCHER, ExternalSpellSchools.PHYSICAL_RANGED,
-            "archer_tier_3_spell_2_root", SPIRIT_WOLF, "Spirit Wolf", 5));
+            "archer_tier_3_spell_2_root", SPIRIT_WOLF, "Spirit Wolf",
+            "Spirit Wolves gain 10%% increased maximum health.",
+            modifier -> {
+                var health = new AttributeScaling.Entry();
+                health.attribute_id = EntityAttributes.GENERIC_MAX_HEALTH.getIdAsString();
+                health.modifiers = List.of(new AttributeScaling.Entry.OwnerModifier(
+                        ExternalSpellSchools.PHYSICAL_RANGED.attributeEntry.getIdAsString(),
+                        EntityAttributeModifier.Operation.ADD_VALUE, 2.0, 0.1));
+                modifier.summon_attribute_scaling = new AttributeScaling();
+                modifier.summon_attribute_scaling.entries = List.of(health);
+            }));
     public static final Skills.Entry archer_tier_4_spell_1_root = add(SkillsCommon.critRoot(
             Skills.Category.ARCHER, ExternalSpellSchools.PHYSICAL_RANGED,
             "archer_tier_4_spell_1_root", RAIN_OF_ARROWS, "Rain of Arrows", 0.05F));
