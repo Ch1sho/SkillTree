@@ -66,11 +66,21 @@ public class ArcaneSkills {
             SpellEngineParticles.MagicParticles.Shape.SPARK,
             SpellEngineParticles.MagicParticles.Motion.ASCEND).id();
 
+    /// A third of the way from the arcane school color towards white — lands on the same light
+    /// arcane tone as Arcane Slowness (0xff99ff). Reads brighter than Arcane Blast's own
+    /// particles, which are tinted with the school color flat.
+    private static final long ARCANE_LIGHT_COLOR = Color.ARCANE.blend(Color.WHITE, 0.33F).toRGBA();
+
     /// The default arcane impact flourish: an ARCANE burst tinted to the school color.
     private static ParticleBatch arcaneBurst(ParticleBatch.Shape shape, ParticleBatch.Origin origin,
                                              int count, float spread, float speed) {
+        return arcaneBurst(shape, origin, count, spread, speed, SkillsCommon.ARCANE_COLOR);
+    }
+
+    private static ParticleBatch arcaneBurst(ParticleBatch.Shape shape, ParticleBatch.Origin origin,
+                                             int count, float spread, float speed, long color) {
         return new ParticleBatch(ARCANE_BURST.toString(), shape, origin, count, spread, speed)
-                .color(SkillsCommon.ARCANE_COLOR);
+                .color(color);
     }
 
     // ===================================================================================
@@ -276,34 +286,44 @@ public class ArcaneSkills {
     private static Skills.Entry arcane_tier_2_spell_2_modifier_2() {
         var id = Identifier.of(NAMESPACE, "arcane_tier_2_spell_2_modifier_2");
         var title = "Chain Detonation";
-        var description = "Arcane Explosion causes secondary explosions, dealing {damage} damage to nearby enemies.";
+        var maxTargets = 4;
+        var description = "Arcane Explosion causes up to " + maxTargets + " secondary explosions, dealing {damage} damage to nearby enemies.";
         var spell = SpellBuilder.createSpellPassive();
         spell.school = SpellSchools.ARCANE;
-        spell.range = 0;
+        // Matches arcane_explosion's own range, so the secondary blasts cover the enemies the
+        // parent explosion could have hit. Selection is centered on the caster, not the trigger.
+        spell.range = 6F;
 
-        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+        // Detonate on up to 4 targets rather than on whichever enemy happened to trigger this.
+        // `cap` keeps the nearest N (SpellHelper sorts by distance to caster); the engine has no
+        // random selection, so ordering is by proximity.
+        spell.target.type = Spell.Target.Type.AREA;
+        spell.target.area = new Spell.Target.Area(); // Required: Target.area has no default instance
+        spell.target.cap = maxTargets;
         spell.deliver.delay = 7;
 
         var trigger = SpellBuilder.Triggers.specificSpellHit(ARCANE_EXPLOSION);
         spell.passive.triggers = List.of(trigger);
 
-        var radius = 3.0F;
+        var radius = 4.0F;
 
         var impact = SpellBuilder.Impacts.damage(0.5F, 0.2F);
         var area_impact = new Spell.AreaImpact();
         area_impact.force_indirect = true;
         area_impact.radius = radius;
         area_impact.area.distance_dropoff = Spell.Target.Area.DropoffCurve.SQUARED;
+        // Ground ring + vertical aura of the same asset family, reading as a small Arcane Blast.
         area_impact.particles = new ParticleBatch[]{
-                arcaneBurst(ParticleBatch.Shape.CIRCLE, ParticleBatch.Origin.FEET, 30, 0.4F, 0.4F),
-                new ParticleBatch(
-                        SpellEngineParticles.area_effect_574.id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.GROUND,
-                        1, 0,0)
+                arcaneBurst(ParticleBatch.Shape.CIRCLE, ParticleBatch.Origin.CENTER, 30, 0.4F, 0.4F,
+                        ARCANE_LIGHT_COLOR),
+                SpellBuilder.Particles.area(SpellEngineParticles.area_effect_574.id())
                         .scale(radius - 0.5F)
-                        .color(SkillsCommon.ARCANE_COLOR)
+                        .color(ARCANE_LIGHT_COLOR),
+                SpellBuilder.Particles.aura(SpellEngineParticles.aura_effect_574.id())
+                        .scale(radius - 0.5F)
+                        .color(ARCANE_LIGHT_COLOR)
         };
-        area_impact.sound = new Sound(SOUND_ARCANE_BLAST_IMPACT);
+        area_impact.sound = new Sound(SOUND_ARCANE_BLAST_IMPACT, 1F, 1.2F, 0.1F);
         spell.area_impact = area_impact;
         spell.impacts = List.of(impact);
 

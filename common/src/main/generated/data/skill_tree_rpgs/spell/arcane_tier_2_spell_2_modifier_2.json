@@ -1,6 +1,6 @@
 {
   "school": "spell_power:arcane",
-  "range": 0.0,
+  "range": 6.0,
   "tier": 1,
   "type": "PASSIVE",
   "passive": {
@@ -17,7 +17,9 @@
     ]
   },
   "target": {
-    "type": "FROM_TRIGGER"
+    "type": "AREA",
+    "cap": 4,
+    "area": {}
   },
   "deliver": {
     "delay": 7
@@ -35,19 +37,19 @@
   ],
   "area_impact": {
     "force_indirect": true,
-    "radius": 3.0,
+    "radius": 4.0,
     "area": {
       "distance_dropoff": "SQUARED"
     },
     "particles": [
       {
         "particle_id": "spell_engine:magic_arcane_burst",
-        "origin": "FEET",
+        "origin": "CENTER",
         "shape": "CIRCLE",
         "count": 30.0,
         "min_speed": 0.4,
         "max_speed": 0.4,
-        "color_rgba": 4284940287
+        "color_rgba": 4288217087
       },
       {
         "particle_id": "spell_engine:area_effect_574",
@@ -55,12 +57,23 @@
         "shape": "SPHERE",
         "count": 1.0,
         "max_speed": 0.0,
-        "color_rgba": 4284940287,
-        "scale": 2.5
+        "color_rgba": 4288217087,
+        "scale": 3.5
+      },
+      {
+        "particle_id": "spell_engine:aura_effect_574",
+        "origin": "CENTER",
+        "shape": "LINE",
+        "count": 1.0,
+        "max_speed": 0.0,
+        "color_rgba": 4288217087,
+        "scale": 3.5,
+        "follow_entity": true
       }
     ],
     "sound": {
-      "id": "wizards:arcane_blast_impact"
+      "id": "wizards:arcane_blast_impact",
+      "pitch": 1.2
     }
   },
   "cost": {

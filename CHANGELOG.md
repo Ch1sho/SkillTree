@@ -1,6 +1,7 @@
 # 1.5.3
 
 - Renamed "Evocation Radiance" to "Arcane Radiance"
+- Reworked Chain Detonation: now detonates on up to 4 targets, with larger radius and improved visuals
 - Fissile Magic and Arcane Radiance now roll their chance once per cast, instead of once per enemy hit
 - Fixed Crippling Missiles never stacking beyond 1
 

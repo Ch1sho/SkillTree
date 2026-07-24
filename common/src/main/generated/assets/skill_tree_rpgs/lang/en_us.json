@@ -401,7 +401,7 @@
   "spell.skill_tree_rpgs.arcane_tier_2_spell_1_root.name": "Improved Arcane Missiles",
   "spell.skill_tree_rpgs.arcane_tier_2_spell_2_modifier_1.description": "Arcane Explosion hits have {trigger_chance} chance to reset its cooldown.",
   "spell.skill_tree_rpgs.arcane_tier_2_spell_2_modifier_1.name": "Echoing Blast",
-  "spell.skill_tree_rpgs.arcane_tier_2_spell_2_modifier_2.description": "Arcane Explosion causes secondary explosions, dealing {damage} damage to nearby enemies.",
+  "spell.skill_tree_rpgs.arcane_tier_2_spell_2_modifier_2.description": "Arcane Explosion causes up to 4 secondary explosions, dealing {damage} damage to nearby enemies.",
   "spell.skill_tree_rpgs.arcane_tier_2_spell_2_modifier_2.name": "Chain Detonation",
   "spell.skill_tree_rpgs.arcane_tier_2_spell_2_root.description": "Radius of Arcane Explosion increased by {range_add} blocks.",
   "spell.skill_tree_rpgs.arcane_tier_2_spell_2_root.name": "Improved Arcane Explosion",
