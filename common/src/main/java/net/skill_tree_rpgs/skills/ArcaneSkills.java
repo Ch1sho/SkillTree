@@ -230,7 +230,7 @@ public class ArcaneSkills {
     public static final Skills.Entry arcane_tier_3_spell_2_root = add(SkillsCommon.spellRoot(
             Skills.Category.ARCANE, SpellSchools.ARCANE,
             "arcane_tier_3_spell_2_root", ARCANE_BARRAGE, "Arcane Barrage",
-            "Arcane Barrage emitters gain 10% increased critical strike chance.",
+            "Arcane Barrage emitters gain 10%% increased critical strike chance.",
             modifier -> {
                 var critChance = new AttributeScaling.Entry();
                 critChance.attribute_id = SpellPowerMechanics.CRITICAL_CHANCE.id.toString();
