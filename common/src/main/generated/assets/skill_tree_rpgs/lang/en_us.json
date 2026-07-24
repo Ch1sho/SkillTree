@@ -697,7 +697,7 @@
   "spell.skill_tree_rpgs.rogue_tier_2_spell_2_modifier_2.name": "Fleet Footed",
   "spell.skill_tree_rpgs.rogue_tier_2_spell_2_root.description": "Reduces the cooldown of Slice and Dice by {cooldown_duration_deduct} sec.",
   "spell.skill_tree_rpgs.rogue_tier_2_spell_2_root.name": "Improved Slice and Dice",
-  "spell.skill_tree_rpgs.rogue_tier_3_passive_1.description": "When taking damage that would be fatal, you become invulnerable for {effect_duration} sec.",
+  "spell.skill_tree_rpgs.rogue_tier_3_passive_1.description": "Protects you from an attack that would be fatal, and you become invulnerable for {effect_duration} sec.",
   "spell.skill_tree_rpgs.rogue_tier_3_passive_1.name": "Cheat Death",
   "spell.skill_tree_rpgs.rogue_tier_3_passive_2.description": "Upon evading an attack, you have {trigger_chance} chance for all your cooldowns to reset.",
   "spell.skill_tree_rpgs.rogue_tier_3_passive_2.name": "Preparation",

@@ -545,7 +545,7 @@ public class RogueSkills {
         var id = Identifier.of(NAMESPACE, "rogue_tier_3_passive_1");
         var effect = SkillEffects.CHEAT_DEATH;
         var title = effect.title;
-        var description = "When taking damage that would be fatal, you become invulnerable for {effect_duration} sec.";
+        var description = "Protects you from an attack that would be fatal, and you become invulnerable for {effect_duration} sec.";
 
         var spell = SpellBuilder.createSpellPassive();
         spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
