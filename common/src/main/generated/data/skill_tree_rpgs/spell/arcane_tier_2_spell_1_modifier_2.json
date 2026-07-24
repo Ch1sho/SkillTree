@@ -14,6 +14,7 @@
             "status_effect": {
               "effect_id": "skill_tree_rpgs:arcane_slowness",
               "duration": 4.0,
+              "amplifier": 1,
               "amplifier_cap": 2,
               "apply_mode": "ADD"
             }

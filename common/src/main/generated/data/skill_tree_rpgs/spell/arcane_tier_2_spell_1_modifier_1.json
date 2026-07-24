@@ -10,8 +10,7 @@
         "velocity": 0.0,
         "extra_launch_mod": 3,
         "extra_launch_count": 1
-      },
-      "power_modifier": {}
+      }
     }
   ]
 }

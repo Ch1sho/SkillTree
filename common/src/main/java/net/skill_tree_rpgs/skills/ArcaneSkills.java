@@ -37,6 +37,146 @@ public class ArcaneSkills {
     public static final String ARCANE_EVOCATION = "wizards:arcane_evocation";
     public static final String ARCANE_SPELL_TAG = "#wizards:arcane";
 
+    // Wizards is not a compile dependency of SkillTree, so its sounds are referenced by raw id.
+    private static final String SOUND_ARCANE_BLAST_IMPACT = "wizards:arcane_blast_impact";
+    private static final String SOUND_ARCANE_MISSILE_IMPACT = "wizards:arcane_missile_impact";
+
+    /// Mirror of `arcane_explosion`'s own cooldown. Same reason as the sounds above: the base spell
+    /// lives in Wizards and cannot be referenced from here, so this must be kept in sync by hand.
+    private static final float ARCANE_EXPLOSION_COOLDOWN = 10F;
+
+    // MARK: Particles
+
+    private static final Identifier ARCANE_BURST = SpellEngineParticles.MagicParticles.get(
+            SpellEngineParticles.MagicParticles.Shape.ARCANE,
+            SpellEngineParticles.MagicParticles.Motion.BURST).id();
+    private static final Identifier ARCANE_DECELERATE = SpellEngineParticles.MagicParticles.get(
+            SpellEngineParticles.MagicParticles.Shape.ARCANE,
+            SpellEngineParticles.MagicParticles.Motion.DECELERATE).id();
+    private static final Identifier SPELL_DECELERATE = SpellEngineParticles.MagicParticles.get(
+            SpellEngineParticles.MagicParticles.Shape.SPELL,
+            SpellEngineParticles.MagicParticles.Motion.DECELERATE).id();
+    private static final Identifier SPELL_ASCEND = SpellEngineParticles.MagicParticles.get(
+            SpellEngineParticles.MagicParticles.Shape.SPELL,
+            SpellEngineParticles.MagicParticles.Motion.ASCEND).id();
+    private static final Identifier SPARK_BURST = SpellEngineParticles.MagicParticles.get(
+            SpellEngineParticles.MagicParticles.Shape.SPARK,
+            SpellEngineParticles.MagicParticles.Motion.BURST).id();
+    private static final Identifier SPARK_ASCEND = SpellEngineParticles.MagicParticles.get(
+            SpellEngineParticles.MagicParticles.Shape.SPARK,
+            SpellEngineParticles.MagicParticles.Motion.ASCEND).id();
+
+    /// The default arcane impact flourish: an ARCANE burst tinted to the school color.
+    private static ParticleBatch arcaneBurst(ParticleBatch.Shape shape, ParticleBatch.Origin origin,
+                                             int count, float spread, float speed) {
+        return new ParticleBatch(ARCANE_BURST.toString(), shape, origin, count, spread, speed)
+                .color(SkillsCommon.ARCANE_COLOR);
+    }
+
+    // ===================================================================================
+    // MARK: Tier 1 passives
+    // ===================================================================================
+
+    public static final Skills.Entry arcane_tier_1_passive_1 = add(arcane_tier_1_passive_1());
+    private static Skills.Entry arcane_tier_1_passive_1() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_1_passive_1");
+        var title = "Fissile Magic";
+        var description = "Arcane spell impacts have {trigger_chance} chance, to cause a small explosion, dealing {damage} damage.";
+
+        var spell = SpellBuilder.createSpellPassive();
+        spell.school = SpellSchools.ARCANE;
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+
+        var trigger = SpellBuilder.Triggers.activeSpellHit(0.2F, "arcane");
+        // One shared roll per cast rather than one per enemy struck, so the advertised chance holds
+        // for AoE arcane spells too (an independent roll per target would read as ~67% against 5).
+        trigger.chance_batching = true;
+        spell.passive.triggers = List.of(trigger);
+
+        var impact = SpellBuilder.Impacts.damage(0.4F, 0.2F);
+        impact.action.allow_on_center_target = false;
+        spell.impacts = List.of(impact);
+        var area_impact = new Spell.AreaImpact();
+        area_impact.radius = 2.5F;
+        area_impact.area.distance_dropoff = Spell.Target.Area.DropoffCurve.SQUARED;
+        area_impact.particles = new ParticleBatch[]{
+                new ParticleBatch(ARCANE_DECELERATE.toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        30, 0.5F, 0.5F)
+                        .color(SkillsCommon.ARCANE_COLOR),
+                new ParticleBatch(
+                        SpellEngineParticles.aura_effect_642.id().toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        1, 0, 0)
+                        .color(SkillsCommon.ARCANE_COLOR),
+        };
+        area_impact.sound = new Sound(SkillSounds.arcane_fissile_impact.id());
+        spell.area_impact = area_impact;
+
+        SpellBuilder.Cost.cooldown(spell, 1F);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    public static final Skills.Entry arcane_tier_1_passive_2 = add(arcane_tier_1_passive_2());
+    private static Skills.Entry arcane_tier_1_passive_2() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_1_passive_2");
+        var title = "Arcane Radiance";
+        var description = "Arcane spell impacts have {trigger_chance} chance, to heal you for {heal}.";
+
+        var spell = SpellBuilder.createSpellPassive();
+        spell.school = SpellSchools.ARCANE;
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+
+        var trigger = SpellBuilder.Triggers.activeSpellHit(0.1F, "arcane");
+        // See Fissile Magic: batched so the tooltip chance matches the real per-cast rate.
+        trigger.chance_batching = true;
+        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
+        spell.passive.triggers = List.of(trigger);
+
+        var impact = SpellBuilder.Impacts.heal(0.1F);
+        impact.particles = new ParticleBatch[]{
+                new ParticleBatch(SkillsCommon.SPARK_DECELERATE.toString(),
+                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
+                        20, 0.1F, 0.1F)
+                        .color(SkillsCommon.ARCANE_COLOR),
+                new ParticleBatch(
+                        SpellEngineParticles.area_circle_1.id().toString(),
+                        ParticleBatch.Shape.LINE_VERTICAL, ParticleBatch.Origin.FEET,
+                        1, 0.2F, 0.2F)
+                        .followEntity(true)
+                        .scale(0.8F)
+                        .maxAge(0.8F)
+                        .color(SkillsCommon.ARCANE_COLOR),
+                new ParticleBatch(
+                        SkillsCommon.HEAL_DECELERATE.toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        15, 0.2F, 0.25F)
+                        .color(SkillsCommon.ARCANE_COLOR)
+        };
+        impact.sound = new Sound(SkillSounds.arcane_radiance.id());
+        spell.impacts = List.of(impact);
+
+        SpellBuilder.Cost.cooldown(spell, 1F);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    // ===================================================================================
+    // MARK: Tier 2 — Arcane Missile
+    //
+    // Each book spell's cluster is a weak "root" modifier (patterns come from the shared
+    // palette in SkillsCommon, picked per spell) leading to two powerful mutex nodes.
+    // ===================================================================================
+
+    public static final Skills.Entry arcane_tier_2_spell_1_root = add(SkillsCommon.powerRoot(
+            Skills.Category.ARCANE, SpellSchools.ARCANE,
+            "arcane_tier_2_spell_1_root", ARCANE_MISSILE, "Arcane Missiles", 0.1F));
+
     public static final Skills.Entry arcane_tier_2_spell_1_modifier_1 = add(arcane_tier_2_spell_1_modifier_1());
     private static Skills.Entry arcane_tier_2_spell_1_modifier_1() {
         var id = Identifier.of(NAMESPACE, "arcane_tier_2_spell_1_modifier_1");
@@ -53,9 +193,6 @@ public class ArcaneSkills {
         modifier.projectile_launch.extra_launch_count = 1;
         modifier.projectile_launch.extra_launch_delay = 2;
         modifier.projectile_launch.extra_launch_mod = 3;
-        modifier.power_modifier = new Spell.Impact.Modifier();
-//        modifier.power_modifier.power_multiplier = -0.3F;
-//        modifier.knockback_multiply_base = -0.1F;
 
         spell.modifiers = List.of(modifier);
 
@@ -81,7 +218,9 @@ public class ArcaneSkills {
         var modifier = new Spell.Modifier();
         modifier.spell_pattern = ARCANE_MISSILE;
 
-        var impact = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 4, 0, 2);
+        // In ADD mode the amplifier argument is the per-hit increment, so it must be 1 for the
+        // effect to actually stack up to its cap (0 would pin it at a single stack forever).
+        var impact = SpellBuilder.Impacts.effectAdd(effect.id.toString(), 4, 1, 2);
         modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
         modifier.impacts = List.of(impact);
 
@@ -89,6 +228,185 @@ public class ArcaneSkills {
 
         return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.ARCANE));
     }
+
+    // ===================================================================================
+    // MARK: Tier 2 — Arcane Explosion
+    // ===================================================================================
+
+    public static final Skills.Entry arcane_tier_2_spell_2_root = add(SkillsCommon.radiusRoot(
+            Skills.Category.ARCANE, SpellSchools.ARCANE,
+            "arcane_tier_2_spell_2_root", ARCANE_EXPLOSION, "Arcane Explosion", 1F));
+
+    public static final Skills.Entry arcane_tier_2_spell_2_modifier_1 = add(arcane_tier_2_spell_2_modifier_1());
+    private static Skills.Entry arcane_tier_2_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_2_spell_2_modifier_1");
+        var title = "Echoing Blast";
+        var description = "Arcane Explosion hits have {trigger_chance} chance to reset its cooldown.";
+        var spell = SkillsCommon.createModifierAlikePassiveSpell();
+        spell.school = SpellSchools.ARCANE;
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+
+        var trigger = SpellBuilder.Triggers.specificSpellHit(ARCANE_EXPLOSION);
+        trigger.chance = 0.25F;
+        trigger.cap_per_tick = 1;
+        // One shared roll per cast, not one per enemy struck — so multi-hit AoE doesn't inflate the
+        // effective reset chance above the advertised value (e.g. 25% vs ~76% against 5 targets).
+        trigger.chance_batching = true;
+        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
+        spell.passive.triggers = List.of(trigger);
+
+        spell.release.particles = new ParticleBatch[]{
+                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_cast.id(), Color.ARCANE)
+        };
+        spell.release.sound = new Sound(SpellEngineSounds.SIGNAL_SPELL_CRIT.id());
+
+        var reset = SpellBuilder.Impacts.resetCooldownActive(ARCANE_EXPLOSION);
+        reset.action.apply_to_caster = true;
+        spell.impacts = List.of(reset);
+
+        // Internal cooldown matching the base spell's, so one cast can grant at most one reset.
+        SpellBuilder.Cost.cooldown(spell, ARCANE_EXPLOSION_COOLDOWN);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    public static final Skills.Entry arcane_tier_2_spell_2_modifier_2 = add(arcane_tier_2_spell_2_modifier_2());
+    private static Skills.Entry arcane_tier_2_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_2_spell_2_modifier_2");
+        var title = "Chain Detonation";
+        var description = "Arcane Explosion causes secondary explosions, dealing {damage} damage to nearby enemies.";
+        var spell = SpellBuilder.createSpellPassive();
+        spell.school = SpellSchools.ARCANE;
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+        spell.deliver.delay = 7;
+
+        var trigger = SpellBuilder.Triggers.specificSpellHit(ARCANE_EXPLOSION);
+        spell.passive.triggers = List.of(trigger);
+
+        var radius = 3.0F;
+
+        var impact = SpellBuilder.Impacts.damage(0.5F, 0.2F);
+        var area_impact = new Spell.AreaImpact();
+        area_impact.force_indirect = true;
+        area_impact.radius = radius;
+        area_impact.area.distance_dropoff = Spell.Target.Area.DropoffCurve.SQUARED;
+        area_impact.particles = new ParticleBatch[]{
+                arcaneBurst(ParticleBatch.Shape.CIRCLE, ParticleBatch.Origin.FEET, 30, 0.4F, 0.4F),
+                new ParticleBatch(
+                        SpellEngineParticles.area_effect_574.id().toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.GROUND,
+                        1, 0,0)
+                        .scale(radius - 0.5F)
+                        .color(SkillsCommon.ARCANE_COLOR)
+        };
+        area_impact.sound = new Sound(SOUND_ARCANE_BLAST_IMPACT);
+        spell.area_impact = area_impact;
+        spell.impacts = List.of(impact);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    // ===================================================================================
+    // MARK: Tier 2 passives
+    // ===================================================================================
+
+    public static final Skills.Entry arcane_tier_2_passive_1 = add(arcane_tier_2_passive_1());
+    private static Skills.Entry arcane_tier_2_passive_1() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_2_passive_1");
+        var title = "Arcane Trap";
+        var description = "Upon rolling, you leave behind an Arcane Trap, lasting {cloud_duration} sec, dealing {damage} damage to entering enemies.";
+
+        var spell = SpellBuilder.createSpellPassive();
+        spell.school = SpellSchools.ARCANE;
+        spell.range = 0;
+
+        spell.passive.triggers = List.of(SpellBuilder.Triggers.roll());
+
+        var radius = 1.5F;
+        spell.deliver.type = Spell.Delivery.Type.CLOUD;
+
+        var cloudParticles = SpellBuilder.Particles.zoneMagic(
+                SkillsCommon.ARCANE_COLOR,
+                SPELL_DECELERATE,
+                List.of(SkillsCommon.SPARK_DECELERATE),
+                1
+        );
+        var cloud = SpellBuilder.Deliver.cloud(
+                5,
+                1.5F,
+                SkillSounds.arcane_trap_activate.id(),
+                8,
+                cloudParticles
+        );
+        cloud.impact_particles = new ParticleBatch[] {
+                new ParticleBatch(SPELL_DECELERATE.toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.FEET,
+                        20, 0.4F, 0.4F)
+                        .color(SkillsCommon.ARCANE_COLOR)
+        };
+        cloud.impact_cap = 1; // Trap
+
+        cloud.client_data.interval_particles = new ParticleBatch[] {
+                new ParticleBatch(
+                        SpellEngineParticles.area_effect_715.id().toString(),
+                        ParticleBatch.Shape.LINE, ParticleBatch.Origin.GROUND,
+                        1, 0F, 0F)
+                        .scale(radius * 1.5F) // 1.5F is asset specific
+                        .color(SkillsCommon.ARCANE_COLOR)
+        };
+        cloud.client_data.particle_spawn_interval = 20;
+
+        spell.deliver.clouds = List.of(cloud);
+
+        var damage = SpellBuilder.Impacts.damage(0.75F, 0.5F);
+        damage.particles = new ParticleBatch[] {
+                arcaneBurst(ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER, 15, 0.45F, 0.75F),
+        };
+        damage.sound = new Sound(SOUND_ARCANE_BLAST_IMPACT);
+        spell.impacts = List.of(damage);
+
+        var area_impact = new Spell.AreaImpact();
+        area_impact.radius = radius;
+        spell.area_impact = area_impact;
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    public static final Skills.Entry arcane_tier_2_passive_2 = add(arcane_tier_2_passive_2());
+    private static Skills.Entry arcane_tier_2_passive_2() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_2_passive_2");
+        var title = "Phase Shift";
+        var description = "Upon rolling, you become invulnerable for {effect_duration} sec.";
+
+        var spell = SpellBuilder.createSpellPassive();
+        spell.school = SpellSchools.ARCANE;
+        spell.range = 0;
+
+        spell.passive.triggers = List.of(SpellBuilder.Triggers.roll());
+
+        var effect = SkillEffects.PHASE_SHIFT;
+
+        var duration = 2F;
+        var impact = SpellBuilder.Impacts.effectAdd(effect.id.toString(), duration, 0, 0);
+        impact.sound = new Sound(SkillSounds.arcane_phase_shift.id());
+        spell.impacts = List.of(impact);
+
+        SpellBuilder.Cost.cooldown(spell, duration * 2);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    // ===================================================================================
+    // MARK: Tier 3 — Arcane Beam
+    // ===================================================================================
+
+    public static final Skills.Entry arcane_tier_3_spell_1_root = add(SkillsCommon.critRoot(
+            Skills.Category.ARCANE, SpellSchools.ARCANE,
+            "arcane_tier_3_spell_1_root", ARCANE_BEAM, "Arcane Beam", 0.05F));
 
     public static final Skills.Entry arcane_tier_3_spell_1_modifier_1 = add(arcane_tier_3_spell_1_modifier_1());
     private static Skills.Entry arcane_tier_3_spell_1_modifier_1() {
@@ -138,93 +456,10 @@ public class ArcaneSkills {
         return new Skills.Entry(id, spell, title, description, mutator, EnumSet.of(Skills.Category.ARCANE));
     }
 
-    public static final Skills.Entry arcane_tier_4_spell_1_modifier_1 = add(arcane_tier_4_spell_1_modifier_1());
-    private static Skills.Entry arcane_tier_4_spell_1_modifier_1() {
-        var id = Identifier.of(NAMESPACE, "arcane_tier_4_spell_1_modifier_1");
-        var title = "Presence of Mind";
-        var description = "Blink turns your next spell cast instant, within the next {stash_duration} sec.";
-        var spell = SkillsCommon.createModifierAlikePassiveSpell();
-        spell.school = SpellSchools.ARCANE;
-        spell.range = 0;
-        var duration = 5F;
-
-        var effect = SkillEffects.PRESENCE_OF_MIND;
-
-        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
-        spell.release.sound = Sound.withVolume(SpellEngineSounds.SIGNAL_INSTANT_CAST.id(), 0.75F);
-
-        spell.release.particles = new ParticleBatch[]{
-                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_cast.id(), Color.ARCANE),
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.SPARK,
-                                SpellEngineParticles.MagicParticles.Motion.ASCEND).id().toString(),
-                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
-                        15, 0.1F, 0.3F).color(Color.ARCANE.toRGBA())
-        };
-
-        var trigger = SpellBuilder.Triggers.specificSpellCast(ARCANE_BLINK);
-        spell.passive.triggers = List.of(trigger);
-
-        var stashTrigger = SpellBuilder.Triggers.specificSpellCast(ARCANE_SPELL_TAG);
-        SpellBuilder.Deliver.stash(spell, effect.id.toString(), duration, stashTrigger);
-
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
-    }
-
-    public static final Skills.Entry arcane_tier_4_spell_1_modifier_2 = add(arcane_tier_4_spell_1_modifier_2());
-    private static Skills.Entry arcane_tier_4_spell_1_modifier_2() {
-        var id = Identifier.of(NAMESPACE, "arcane_tier_4_spell_1_modifier_2");
-        var title = "Purge";
-        var description = "Blink attempts to remove 2 negative effects from you entirely.";
-        var spell = SpellBuilder.createSpellModifier();
-        spell.school = SpellSchools.ARCANE;
-
-        var impact1 = SpellBuilder.Impacts.effectCleanse();
-        impact1.action.status_effect.amplifier = -1;
-        impact1.particles = new ParticleBatch[]{
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.SPARK,
-                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
-                        15, 0.6F, 0.6F)
-                        .color(Color.WHITE.toRGBA()),
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.SPARK,
-                                SpellEngineParticles.MagicParticles.Motion.ASCEND).id().toString(),
-                        ParticleBatch.Shape.PIPE, ParticleBatch.Origin.CENTER,
-                        10, 0.2F, 0.4F)
-                        .color(Color.WHITE.toRGBA())
-        };
-        impact1.sound = new Sound(SpellEngineSounds.GENERIC_DISPEL_1.id());
-        var impact2 = SpellBuilder.Impacts.effectCleanse();
-        impact2.action.status_effect.amplifier = -1;
-
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = ARCANE_BLINK;
-        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
-        modifier.impacts = List.of(impact1, impact2);
-        spell.modifiers = List.of(modifier);
-
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
-    }
-
     // ===================================================================================
-    // Weak "root" spell-improvement nodes (structural parents of the two powerful mutex
-    // nodes). Patterns come from the shared palette in SkillsCommon, picked per spell.
+    // MARK: Tier 3 — Arcane Barrage (summons emitters)
     // ===================================================================================
 
-    public static final Skills.Entry arcane_tier_2_spell_1_root = add(SkillsCommon.powerRoot(
-            Skills.Category.ARCANE, SpellSchools.ARCANE,
-            "arcane_tier_2_spell_1_root", ARCANE_MISSILE, "Arcane Missiles", 0.1F));
-    public static final Skills.Entry arcane_tier_2_spell_2_root = add(SkillsCommon.radiusRoot(
-            Skills.Category.ARCANE, SpellSchools.ARCANE,
-            "arcane_tier_2_spell_2_root", ARCANE_EXPLOSION, "Arcane Explosion", 1F));
-    public static final Skills.Entry arcane_tier_3_spell_1_root = add(SkillsCommon.critRoot(
-            Skills.Category.ARCANE, SpellSchools.ARCANE,
-            "arcane_tier_3_spell_1_root", ARCANE_BEAM, "Arcane Beam", 0.05F));
     // Flat +10% critical strike chance on the summoned emitters (crit chance attribute is
     // baseline-100, so a flat +10 with no owner scaling reads as +10%).
     public static final Skills.Entry arcane_tier_3_spell_2_root = add(SkillsCommon.spellRoot(
@@ -240,96 +475,6 @@ public class ArcaneSkills {
                 modifier.summon_attribute_scaling = new AttributeScaling();
                 modifier.summon_attribute_scaling.entries = List.of(critChance);
             }));
-    public static final Skills.Entry arcane_tier_4_spell_1_root = add(SkillsCommon.cooldownRoot(
-            Skills.Category.ARCANE, SpellSchools.ARCANE,
-            "arcane_tier_4_spell_1_root", ARCANE_BLINK, "Blink", 3F));
-    public static final Skills.Entry arcane_tier_4_spell_2_root = add(SkillsCommon.cooldownRoot(
-            Skills.Category.ARCANE, SpellSchools.ARCANE,
-            "arcane_tier_4_spell_2_root", ARCANE_EVOCATION, "Evocation", 5F));
-
-    // ===================================================================================
-    // Powerful mutex modifiers for the second spell of each tier (spell_2).
-    // arcane_explosion (T2), arcane_barrage / emitters (T3, summon), arcane_evocation (T4).
-    // ===================================================================================
-
-    public static final Skills.Entry arcane_tier_2_spell_2_modifier_1 = add(arcane_tier_2_spell_2_modifier_1());
-    private static Skills.Entry arcane_tier_2_spell_2_modifier_1() {
-        var id = Identifier.of(NAMESPACE, "arcane_tier_2_spell_2_modifier_1");
-        var title = "Echoing Blast";
-        var description = "Arcane Explosion hits have {trigger_chance} chance to reset its cooldown.";
-        var spell = SkillsCommon.createModifierAlikePassiveSpell();
-        spell.school = SpellSchools.ARCANE;
-        spell.range = 0;
-
-        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
-
-        var trigger = SpellBuilder.Triggers.specificSpellHit(ARCANE_EXPLOSION);
-        trigger.chance = 0.25F;
-        trigger.cap_per_tick = 1;
-        // One shared roll per cast, not one per enemy struck — so multi-hit AoE doesn't inflate the
-        // effective reset chance above the advertised value (e.g. 25% vs ~76% against 5 targets).
-        trigger.chance_batching = true;
-        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
-        spell.passive.triggers = List.of(trigger);
-
-        spell.release.particles = new ParticleBatch[]{
-                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_cast.id(), Color.ARCANE)
-        };
-        spell.release.sound = new Sound(SpellEngineSounds.SIGNAL_SPELL_CRIT.id());
-
-        var reset = SpellBuilder.Impacts.resetCooldownActive(ARCANE_EXPLOSION);
-        reset.action.apply_to_caster = true;
-        spell.impacts = List.of(reset);
-
-        // Internal cooldown matching the base spell's, so one cast can grant at most one reset.
-        SpellBuilder.Cost.cooldown(spell, 10F);
-
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
-    }
-
-    public static final Skills.Entry arcane_tier_2_spell_2_modifier_2 = add(arcane_tier_2_spell_2_modifier_2());
-    private static Skills.Entry arcane_tier_2_spell_2_modifier_2() {
-        var id = Identifier.of(NAMESPACE, "arcane_tier_2_spell_2_modifier_2");
-        var title = "Chain Detonation";
-        var description = "Arcane Explosion causes secondary explosions, dealing {damage} damage to nearby enemies.";
-        var spell = SpellBuilder.createSpellPassive();
-        spell.school = SpellSchools.ARCANE;
-        spell.range = 0;
-
-        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
-        spell.deliver.delay = 7;
-
-        var trigger = SpellBuilder.Triggers.specificSpellHit(ARCANE_EXPLOSION);
-        spell.passive.triggers = List.of(trigger);
-
-        var radius = 3.0F;
-
-        var impact = SpellBuilder.Impacts.damage(0.5F, 0.2F);
-        var area_impact = new Spell.AreaImpact();
-        area_impact.force_indirect = true;
-        area_impact.radius = radius;
-        area_impact.area.distance_dropoff = Spell.Target.Area.DropoffCurve.SQUARED;
-        area_impact.particles = new ParticleBatch[]{
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.ARCANE,
-                                SpellEngineParticles.MagicParticles.Motion.BURST).id().toString(),
-                        ParticleBatch.Shape.CIRCLE, ParticleBatch.Origin.FEET,
-                        30, 0.4F, 0.4F)
-                        .color(Color.ARCANE.toRGBA()),
-                new ParticleBatch(
-                        SpellEngineParticles.area_effect_574.id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.GROUND,
-                        1, 0,0)
-                        .scale(radius - 0.5F)
-                        .color(Color.ARCANE.toRGBA())
-        };
-        area_impact.sound = new Sound("wizards:arcane_blast_impact");
-        spell.area_impact = area_impact;
-        spell.impacts = List.of(impact);
-
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
-    }
 
     public static final Skills.Entry arcane_tier_3_spell_2_modifier_1 = add(arcane_tier_3_spell_2_modifier_1());
     private static Skills.Entry arcane_tier_3_spell_2_modifier_1() {
@@ -371,228 +516,9 @@ public class ArcaneSkills {
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
     }
 
-    public static final Skills.Entry arcane_tier_4_spell_2_modifier_1 = add(arcane_tier_4_spell_2_modifier_1());
-    private static Skills.Entry arcane_tier_4_spell_2_modifier_1() {
-        var id = Identifier.of(NAMESPACE, "arcane_tier_4_spell_2_modifier_1");
-        var title = "Rapid Evocation";
-        var extraChannels = 2;
-        var description = "Evocation channels " + extraChannels + " additional times, granting more stacks.";
-        var spell = SpellBuilder.createSpellModifier();
-        spell.school = SpellSchools.ARCANE;
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = ARCANE_EVOCATION;
-        modifier.channel_ticks_add = extraChannels;
-        spell.modifiers = List.of(modifier);
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
-    }
-
-    public static final Skills.Entry arcane_tier_4_spell_2_modifier_2 = add(arcane_tier_4_spell_2_modifier_2());
-    private static Skills.Entry arcane_tier_4_spell_2_modifier_2() {
-        var id = Identifier.of(NAMESPACE, "arcane_tier_4_spell_2_modifier_2");
-        var title = "Lasting Evocation";
-        var description = "Increases the duration of Evocation by {effect_duration_add} sec.";
-        var spell = SpellBuilder.createSpellModifier();
-        spell.school = SpellSchools.ARCANE;
-        var modifier = new Spell.Modifier();
-        modifier.spell_pattern = ARCANE_EVOCATION;
-        modifier.effect_duration_add = 2;
-        spell.modifiers = List.of(modifier);
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
-    }
-
-    public static final Skills.Entry arcane_tier_1_passive_1 = add(arcane_tier_1_passive_1());
-    private static Skills.Entry arcane_tier_1_passive_1() {
-        var id = Identifier.of(NAMESPACE, "arcane_tier_1_passive_1");
-        var title = "Fissile Magic";
-        var description = "Arcane spell impacts have {trigger_chance} chance, to cause a small explosion, dealing {damage} damage.";
-
-        var spell = SpellBuilder.createSpellPassive();
-        spell.school = SpellSchools.ARCANE;
-        spell.range = 0;
-
-        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
-
-        var trigger = SpellBuilder.Triggers.activeSpellHit(0.2F, "arcane");
-        spell.passive.triggers = List.of(trigger);
-
-        var impact = SpellBuilder.Impacts.damage(0.4F, 0.2F);
-        impact.action.allow_on_center_target = false;
-        spell.impacts = List.of(impact);
-        var area_impact = new Spell.AreaImpact();
-        area_impact.radius = 2.5F;
-        area_impact.area = new Spell.Target.Area();
-        area_impact.area.distance_dropoff = Spell.Target.Area.DropoffCurve.SQUARED;
-        area_impact.particles = new ParticleBatch[]{
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.ARCANE,
-                                SpellEngineParticles.MagicParticles.Motion.DECELERATE
-                        ).id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
-                        30, 0.5F, 0.5F)
-                        .color(Color.from(SpellSchools.ARCANE.color).toRGBA()),
-                new ParticleBatch(
-                        SpellEngineParticles.aura_effect_642.id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
-                        1, 0, 0)
-                        .color(SkillsCommon.ARCANE_COLOR),
-        };
-        area_impact.sound = new Sound(SkillSounds.arcane_fissile_impact.id());
-        spell.area_impact = area_impact;
-
-        SpellBuilder.Cost.cooldown(spell, 1F);
-
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
-    }
-
-    public static final Skills.Entry arcane_tier_1_passive_2 = add(arcane_tier_1_passive_2());
-    private static Skills.Entry arcane_tier_1_passive_2() {
-        var id = Identifier.of(NAMESPACE, "arcane_tier_1_passive_2");
-        var title = "Evocation Radiance";
-        var description = "Arcane spell impacts have {trigger_chance} chance, to heal the you for {heal}.";
-
-        var spell = SpellBuilder.createSpellPassive();
-        spell.school = SpellSchools.ARCANE;
-        spell.range = 0;
-
-        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
-
-        var trigger = SpellBuilder.Triggers.activeSpellHit(0.1F, "arcane");
-        trigger.target_override = Spell.Trigger.TargetSelector.CASTER;
-        spell.passive.triggers = List.of(trigger);
-
-        var impact = SpellBuilder.Impacts.heal(0.1F);
-        impact.particles = new ParticleBatch[]{
-                new ParticleBatch(SkillsCommon.SPARK_DECELERATE.toString(),
-                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
-                        20, 0.1F, 0.1F)
-                        .color(SkillsCommon.ARCANE_COLOR),
-                new ParticleBatch(
-                        SpellEngineParticles.area_circle_1.id().toString(),
-                        ParticleBatch.Shape.LINE_VERTICAL, ParticleBatch.Origin.FEET,
-                        1, 0.2F, 0.2F)
-                        .followEntity(true)
-                        .scale(0.8F)
-                        .maxAge(0.8F)
-                        .color(SkillsCommon.ARCANE_COLOR),
-                new ParticleBatch(
-                        SkillsCommon.HEAL_DECELERATE.toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
-                        15, 0.2F, 0.25F)
-                        .color(SkillsCommon.ARCANE_COLOR)
-        };
-        impact.sound = new Sound(SkillSounds.arcane_radiance.id());
-        spell.impacts = List.of(impact);
-
-        SpellBuilder.Cost.cooldown(spell, 1F);
-
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
-    }
-
-    public static final Skills.Entry arcane_tier_2_passive_1 = add(arcane_tier_2_passive_1());
-    private static Skills.Entry arcane_tier_2_passive_1() {
-        var id = Identifier.of(NAMESPACE, "arcane_tier_2_passive_1");
-        var title = "Arcane Trap";
-        var description = "Upon rolling, you leave behind an Arcane Trap, lasting {cloud_duration} sec, dealing {damage} damage to entering enemies.";
-
-        var spell = SpellBuilder.createSpellPassive();
-        spell.school = SpellSchools.ARCANE;
-        spell.range = 0;
-
-        spell.passive.triggers = List.of(SpellBuilder.Triggers.roll());
-
-        var radius = 1.5F;
-        spell.deliver.type = Spell.Delivery.Type.CLOUD;
-
-        var cloudParticles = SpellBuilder.Particles.zoneMagic(
-                Color.ARCANE.toRGBA(),
-                SpellEngineParticles.MagicParticles.get(
-                        SpellEngineParticles.MagicParticles.Shape.SPELL,
-                        SpellEngineParticles.MagicParticles.Motion.DECELERATE
-                ).id(),
-                List.of(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.SPARK,
-                                SpellEngineParticles.MagicParticles.Motion.DECELERATE
-                        ).id()
-                ),
-                1
-        );
-        var cloud = SpellBuilder.Deliver.cloud(
-                5,
-                1.5F,
-                SkillSounds.arcane_trap_activate.id(),
-                8,
-                cloudParticles
-        );
-        cloud.impact_particles = new ParticleBatch[] {
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.SPELL,
-                                SpellEngineParticles.MagicParticles.Motion.DECELERATE
-                        ).id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.FEET,
-                        20, 0.4F, 0.4F)
-                        .color(Color.from(SpellSchools.ARCANE.color).toRGBA())
-        };
-        cloud.impact_cap = 1; // Trap
-
-        cloud.client_data.interval_particles = new ParticleBatch[] {
-                new ParticleBatch(
-                        SpellEngineParticles.area_effect_715.id().toString(),
-                        ParticleBatch.Shape.LINE, ParticleBatch.Origin.GROUND,
-                        1, 0F, 0F)
-                        .scale(radius * 1.5F) // 1.5F is asset specific
-                        .color(Color.from(SpellSchools.ARCANE.color).toRGBA())
-        };
-        cloud.client_data.particle_spawn_interval = 20;
-
-        spell.deliver.clouds = List.of(cloud);
-
-        var damage = SpellBuilder.Impacts.damage(0.75F, 0.5F);
-        damage.particles = new ParticleBatch[] {
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.ARCANE,
-                                SpellEngineParticles.MagicParticles.Motion.BURST
-                        ).id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
-                        15, 0.45F, 0.75F)
-                        .color(Color.from(SpellSchools.ARCANE.color).toRGBA()),
-        };
-        damage.sound = new Sound("wizards:arcane_blast_impact");
-        spell.impacts = List.of(damage);
-
-        var area_impact = new Spell.AreaImpact();
-        area_impact.radius = radius;
-        spell.area_impact = area_impact;
-
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
-    }
-
-    public static final Skills.Entry arcane_tier_2_passive_2 = add(arcane_tier_2_passive_2());
-    private static Skills.Entry arcane_tier_2_passive_2() {
-        var id = Identifier.of(NAMESPACE, "arcane_tier_2_passive_2");
-        var title = "Phase Shift";
-        var description = "Upon rolling, you become invulnerable for {effect_duration} sec.";
-
-        var spell = SpellBuilder.createSpellPassive();
-        spell.school = SpellSchools.ARCANE;
-        spell.range = 0;
-
-        spell.passive.triggers = List.of(SpellBuilder.Triggers.roll());
-
-        var effect = SkillEffects.PHASE_SHIFT;
-
-        var duration = 2F;
-        var impact = SpellBuilder.Impacts.effectAdd(effect.id.toString(), duration, 0, 0);
-        impact.sound = new Sound(SkillSounds.arcane_phase_shift.id());
-        spell.impacts = List.of(impact);
-
-        SpellBuilder.Cost.cooldown(spell, duration * 2);
-
-        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
-    }
+    // ===================================================================================
+    // MARK: Tier 3 passives
+    // ===================================================================================
 
     public static final Skills.Entry arcane_tier_3_passive_1 = add(arcane_tier_3_passive_1());
     private static Skills.Entry arcane_tier_3_passive_1() {
@@ -616,11 +542,7 @@ public class ArcaneSkills {
         projectile.client_data = new Spell.ProjectileData.Client();
         projectile.client_data.light_level = 10;
         projectile.client_data.travel_particles = new ParticleBatch[] {
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.SPELL,
-                                SpellEngineParticles.MagicParticles.Motion.ASCEND
-                        ).id().toString(),
+                new ParticleBatch(SPELL_ASCEND.toString(),
                         ParticleBatch.Shape.CIRCLE, ParticleBatch.Origin.CENTER,
                         ParticleBatch.Rotation.LOOK, 1, 0.05F, 0.1F, 0.0F, 0F)
                         .color(SkillsCommon.ARCANE_COLOR)
@@ -630,23 +552,15 @@ public class ArcaneSkills {
 
         var impact = SpellBuilder.Impacts.damage(0.5F, 0.5F);
         impact.particles = new ParticleBatch[]{
-                new ParticleBatch(
-                        SpellEngineParticles.MagicParticles.get(
-                                SpellEngineParticles.MagicParticles.Shape.ARCANE,
-                                SpellEngineParticles.MagicParticles.Motion.BURST
-                        ).id().toString(),
-                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
-                        25, 0.45F, 0.85F)
-                        .color(Color.from(SpellSchools.ARCANE.color).toRGBA()),
+                arcaneBurst(ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER, 25, 0.45F, 0.85F),
         };
-        impact.sound = new Sound("wizards:arcane_missile_impact");
+        impact.sound = new Sound(SOUND_ARCANE_MISSILE_IMPACT);
         spell.impacts = List.of(impact);
 
         SpellBuilder.Cost.cooldown(spell, 2F);
 
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
     }
-
 
     public static final Skills.Entry arcane_tier_3_passive_2 = add(arcane_tier_3_passive_2());
     private static Skills.Entry arcane_tier_3_passive_2() {
@@ -675,6 +589,115 @@ public class ArcaneSkills {
 
         SpellBuilder.Cost.cooldown(spell, duration * 2);
 
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    // ===================================================================================
+    // MARK: Tier 4 — Blink
+    // ===================================================================================
+
+    public static final Skills.Entry arcane_tier_4_spell_1_root = add(SkillsCommon.cooldownRoot(
+            Skills.Category.ARCANE, SpellSchools.ARCANE,
+            "arcane_tier_4_spell_1_root", ARCANE_BLINK, "Blink", 3F));
+
+    public static final Skills.Entry arcane_tier_4_spell_1_modifier_1 = add(arcane_tier_4_spell_1_modifier_1());
+    private static Skills.Entry arcane_tier_4_spell_1_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_4_spell_1_modifier_1");
+        var title = "Presence of Mind";
+        var description = "Blink turns your next spell cast instant, within the next {stash_duration} sec.";
+        var spell = SkillsCommon.createModifierAlikePassiveSpell();
+        spell.school = SpellSchools.ARCANE;
+        spell.range = 0;
+        var duration = 5F;
+
+        var effect = SkillEffects.PRESENCE_OF_MIND;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+        spell.release.sound = Sound.withVolume(SpellEngineSounds.SIGNAL_INSTANT_CAST.id(), 0.75F);
+
+        spell.release.particles = new ParticleBatch[]{
+                SpellBuilder.Particles.popUpSign(SpellEngineParticles.sign_cast.id(), Color.ARCANE),
+                new ParticleBatch(SPARK_ASCEND.toString(),
+                        ParticleBatch.Shape.WIDE_PIPE, ParticleBatch.Origin.FEET,
+                        15, 0.1F, 0.3F).color(SkillsCommon.ARCANE_COLOR)
+        };
+
+        var trigger = SpellBuilder.Triggers.specificSpellCast(ARCANE_BLINK);
+        spell.passive.triggers = List.of(trigger);
+
+        var stashTrigger = SpellBuilder.Triggers.specificSpellCast(ARCANE_SPELL_TAG);
+        SpellBuilder.Deliver.stash(spell, effect.id.toString(), duration, stashTrigger);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    public static final Skills.Entry arcane_tier_4_spell_1_modifier_2 = add(arcane_tier_4_spell_1_modifier_2());
+    private static Skills.Entry arcane_tier_4_spell_1_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_4_spell_1_modifier_2");
+        var title = "Purge";
+        var description = "Blink attempts to remove 2 negative effects from you entirely.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.ARCANE;
+
+        var impact1 = SpellBuilder.Impacts.effectCleanse();
+        impact1.action.status_effect.amplifier = -1;
+        impact1.particles = new ParticleBatch[]{
+                new ParticleBatch(SPARK_BURST.toString(),
+                        ParticleBatch.Shape.SPHERE, ParticleBatch.Origin.CENTER,
+                        15, 0.6F, 0.6F)
+                        .color(Color.WHITE.toRGBA()),
+                new ParticleBatch(SPARK_ASCEND.toString(),
+                        ParticleBatch.Shape.PIPE, ParticleBatch.Origin.CENTER,
+                        10, 0.2F, 0.4F)
+                        .color(Color.WHITE.toRGBA())
+        };
+        impact1.sound = new Sound(SpellEngineSounds.GENERIC_DISPEL_1.id());
+        var impact2 = SpellBuilder.Impacts.effectCleanse();
+        impact2.action.status_effect.amplifier = -1;
+
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = ARCANE_BLINK;
+        modifier.mutate_impacts = Spell.Modifier.ImpactListModifier.APPEND;
+        modifier.impacts = List.of(impact1, impact2);
+        spell.modifiers = List.of(modifier);
+
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    // ===================================================================================
+    // MARK: Tier 4 — Evocation
+    // ===================================================================================
+
+    public static final Skills.Entry arcane_tier_4_spell_2_root = add(SkillsCommon.cooldownRoot(
+            Skills.Category.ARCANE, SpellSchools.ARCANE,
+            "arcane_tier_4_spell_2_root", ARCANE_EVOCATION, "Evocation", 5F));
+
+    public static final Skills.Entry arcane_tier_4_spell_2_modifier_1 = add(arcane_tier_4_spell_2_modifier_1());
+    private static Skills.Entry arcane_tier_4_spell_2_modifier_1() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_4_spell_2_modifier_1");
+        var title = "Rapid Evocation";
+        var extraChannels = 2;
+        var description = "Evocation channels " + extraChannels + " additional times, granting more stacks.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.ARCANE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = ARCANE_EVOCATION;
+        modifier.channel_ticks_add = extraChannels;
+        spell.modifiers = List.of(modifier);
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
+    }
+
+    public static final Skills.Entry arcane_tier_4_spell_2_modifier_2 = add(arcane_tier_4_spell_2_modifier_2());
+    private static Skills.Entry arcane_tier_4_spell_2_modifier_2() {
+        var id = Identifier.of(NAMESPACE, "arcane_tier_4_spell_2_modifier_2");
+        var title = "Lasting Evocation";
+        var description = "Increases the duration of Evocation by {effect_duration_add} sec.";
+        var spell = SpellBuilder.createSpellModifier();
+        spell.school = SpellSchools.ARCANE;
+        var modifier = new Spell.Modifier();
+        modifier.spell_pattern = ARCANE_EVOCATION;
+        modifier.effect_duration_add = 2;
+        spell.modifiers = List.of(modifier);
         return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.ARCANE));
     }
 }

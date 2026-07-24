@@ -8,6 +8,7 @@
       {
         "type": "SPELL_IMPACT_SPECIFIC",
         "chance": 0.2,
+        "chance_batching": true,
         "spell": {
           "school": "arcane",
           "type": "ACTIVE"

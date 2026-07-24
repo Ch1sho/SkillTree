@@ -1,3 +1,9 @@
+# 1.5.3
+
+- Renamed "Evocation Radiance" to "Arcane Radiance"
+- Fissile Magic and Arcane Radiance now roll their chance once per cast, instead of once per enemy hit
+- Fixed Crippling Missiles never stacking beyond 1
+
 # 1.5.2
 
 - Update Juggernaut effect bonuses
