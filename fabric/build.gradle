@@ -55,10 +55,10 @@ repositories {
     maven {
         url = 'https://maven.puffish.net'
     }
-//    maven {
-//        name = "TerraformersMC"
-//        url = "https://maven.terraformersmc.com/"
-//    }
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/"
+    }
     mavenLocal()
 }
 
@@ -72,19 +72,17 @@ dependencies {
     modImplementation("me.shedaniel.cloth:cloth-config-${platform}:${project.cloth_config_version}")
     modImplementation("maven.modrinth:tiny-config:${project.tiny_config_version}-${platform}")
 
-//    // Trinkets
-//    // Trinkets: Modrinth Maven serves minimal POMs (no transitive deps) and
-//    // TerraformersMC has been unreliable in CI. Use Modrinth on CI; use dev.emi
-//    // locally so runClient gets Trinkets' full transitive graph.
-//    if (System.getenv("CI")) {
-//        modImplementation("maven.modrinth:trinkets:${project.trinkets_version}")
-//    } else {
-//        modImplementation("dev.emi:trinkets:${project.trinkets_version}")
-//    }
-    modImplementation("maven.modrinth:trinkets:${project.trinkets_version}")
-    modImplementation("org.ladysnake.cardinal-components-api:cardinal-components-base:6.1.3")
-    modImplementation("org.ladysnake.cardinal-components-api:cardinal-components-entity:6.1.3")
-
+    // Trinkets
+    // Trinkets: Modrinth Maven serves minimal POMs (no transitive deps) and
+    // TerraformersMC has been unreliable in CI. Use Modrinth on CI; use dev.emi
+    // locally so runClient gets Trinkets' full transitive graph.
+    if (System.getenv("CI")) {
+        modImplementation("maven.modrinth:trinkets:${project.trinkets_version}")
+        modImplementation("org.ladysnake.cardinal-components-api:cardinal-components-base:6.1.3")
+        modImplementation("org.ladysnake.cardinal-components-api:cardinal-components-entity:6.1.3")
+    } else {
+        modImplementation("dev.emi:trinkets:${project.trinkets_version}")
+    }
 
     modImplementation("net.puffish:skillsmod:${project.pufferfish_skills_version}:${platform}")
 
