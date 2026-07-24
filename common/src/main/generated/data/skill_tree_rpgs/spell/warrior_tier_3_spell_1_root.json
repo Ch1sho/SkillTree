@@ -2,11 +2,42 @@
   "school": "spell_power:physical_melee",
   "range": 0.0,
   "tier": 1,
-  "type": "MODIFIER",
-  "modifiers": [
+  "tooltip": {
+    "show_activation": false
+  },
+  "type": "PASSIVE",
+  "passive": {
+    "triggers": [
+      {
+        "type": "EFFECT_TICK",
+        "effect": {
+          "id": "rogues:charge"
+        }
+      }
+    ]
+  },
+  "target": {
+    "type": "FROM_TRIGGER"
+  },
+  "impacts": [
     {
-      "spell_pattern": "rogues:charge",
-      "cooldown_duration_deduct": 2.0
+      "action": {
+        "type": "STATUS_EFFECT",
+        "apply_to_caster": true,
+        "status_effect": {
+          "apply_mode": "REMOVE",
+          "remove": {
+            "selector": "ALL",
+            "movement_impairing": true
+          }
+        }
+      },
+      "sound": {
+        "id": "spell_engine:generic_dispel_1"
+      }
     }
-  ]
+  ],
+  "cost": {
+    "durability": 0
+  }
 }

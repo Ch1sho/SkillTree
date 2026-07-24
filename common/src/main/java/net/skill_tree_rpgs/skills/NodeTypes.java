@@ -465,6 +465,7 @@ public class NodeTypes {
             Map.entry("paladin_tier_4_spell_2_modifier_2", Icon.spell(Identifier.of("paladins", "immolation"))),
             Map.entry("rogue_tier_2_spell_1_modifier_1",   Icon.spell(Identifier.of("rogues", "shock_powder"))),
             Map.entry("rogue_tier_2_spell_1_modifier_2",   Icon.spell(Identifier.of("rogues", "shock_powder"))),
+            Map.entry("warrior_tier_3_spell_1_root",       Icon.spell(Identifier.of("rogues", "charge"))),
             Map.entry("warrior_tier_3_spell_1_modifier_2", Icon.spell(Identifier.of("rogues", "charge"))),
             Map.entry("warrior_tier_4_spell_1_modifier_2", Icon.spell(Identifier.of("rogues", "mortal_strike"))),
             Map.entry("warrior_tier_3_spell_2_modifier_1", Icon.spell(Identifier.of("rogues", "shout"))),

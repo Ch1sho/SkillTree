@@ -1,6 +1,7 @@
 # 1.5.3
 
 - Renamed "Evocation Radiance" to "Arcane Radiance"
+- Improved Charge now frees you from movement impairing effects instead of reducing cooldown
 - Improved Spirit Wolf now grants +10% maximum health instead of extra duration
 - Replaced "Spell Riposte" with "Presence of Mind", now a passive triggered by Blink or Evocation
 - Improved Blink now increases teleport distance instead of reducing cooldown

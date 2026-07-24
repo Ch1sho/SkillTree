@@ -753,7 +753,7 @@
   "spell.skill_tree_rpgs.warrior_tier_3_spell_1_modifier_1.name": "Endurance",
   "spell.skill_tree_rpgs.warrior_tier_3_spell_1_modifier_2.description": "Next attack after using Charge, stuns the target for {effect_duration} sec.",
   "spell.skill_tree_rpgs.warrior_tier_3_spell_1_modifier_2.name": "Concussion Blow",
-  "spell.skill_tree_rpgs.warrior_tier_3_spell_1_root.description": "Reduces the cooldown of Charge by {cooldown_duration_deduct} sec.",
+  "spell.skill_tree_rpgs.warrior_tier_3_spell_1_root.description": "Charge frees you from movement impairing effects.",
   "spell.skill_tree_rpgs.warrior_tier_3_spell_1_root.name": "Improved Charge",
   "spell.skill_tree_rpgs.warrior_tier_3_spell_2_modifier_1.description": "Shout increases Attack Damage of allies by {bonus}, lasting {effect_duration} sec.",
   "spell.skill_tree_rpgs.warrior_tier_3_spell_2_modifier_1.name": "Battle Shout",

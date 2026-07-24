@@ -34,6 +34,9 @@ public class WarriorSkills {
 
     public static final String THROW = "rogues:throw";
     public static final String CHARGE = "rogues:charge";
+    /// Rogues' Charge status effect (not the spell). Rogues is not a compile dependency, so this is
+    /// referenced by raw id — keep in sync with `RogueEffects.CHARGE`.
+    public static final String CHARGE_EFFECT = "rogues:charge";
     public static final String MORTAL_STRIKE = "rogues:mortal_strike";
     public static final String THROW_NET = "rogues:throw_net";
     public static final String SHOUT = "rogues:shout";
@@ -317,9 +320,31 @@ public class WarriorSkills {
     public static final Skills.Entry warrior_tier_2_spell_1_root = add(SkillsCommon.powerRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
             "warrior_tier_2_spell_1_root", THROW, "Shattering Throw", 0.1F));
-    public static final Skills.Entry warrior_tier_3_spell_1_root = add(SkillsCommon.cooldownRoot(
-            Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
-            "warrior_tier_3_spell_1_root", CHARGE, "Charge", 2F));
+    /// Unlike the other roots this is a passive rather than a MODIFIER: the freedom from movement
+    /// impairing effects used to be hardcoded in Rogues' Charge effect, and reproducing it as a
+    /// modifier isn't possible — it has to re-run for as long as the buff is up. Rogues' charge
+    /// effect is a TickingStatusEffect, so this hooks its tick and dispels on each one.
+    public static final Skills.Entry warrior_tier_3_spell_1_root = add(warrior_tier_3_spell_1_root());
+    private static Skills.Entry warrior_tier_3_spell_1_root() {
+        var id = Identifier.of(NAMESPACE, "warrior_tier_3_spell_1_root");
+        var title = "Improved Charge";
+        var description = "Charge frees you from movement impairing effects.";
+
+        var spell = SkillsCommon.createModifierAlikePassiveSpell();
+        spell.school = ExternalSpellSchools.PHYSICAL_MELEE;
+        spell.range = 0;
+
+        spell.target.type = Spell.Target.Type.FROM_TRIGGER;
+        spell.passive.triggers = List.of(SpellBuilder.Triggers.effectTick(CHARGE_EFFECT));
+
+        var impact = SpellBuilder.Impacts.effectRemoveMovementImpairing();
+        impact.action.apply_to_caster = true;
+        spell.impacts = List.of(impact);
+
+        // No cooldown on purpose: a cooling-down passive is skipped entirely by the trigger
+        // dispatcher, which would silence the dispel for the rest of the Charge.
+        return new Skills.Entry(id, spell, title, description, null, EnumSet.of(Skills.Category.WARRIOR));
+    }
     public static final Skills.Entry warrior_tier_4_spell_1_root = add(SkillsCommon.meleeRoot(
             Skills.Category.WARRIOR, ExternalSpellSchools.PHYSICAL_MELEE,
             "warrior_tier_4_spell_1_root", MORTAL_STRIKE, "Mortal Strike", 0.1F));
